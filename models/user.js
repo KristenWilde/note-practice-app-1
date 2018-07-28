@@ -33,10 +33,12 @@ const User = new Schema({
 });
 
 User.methods.createPassword = (password) => {
-    this.hashedPasscode = require('crypto').pbkdf2Sync(password, new Buffer('sh!', 'utf8'), 1000, 64, 'sha512');
+    this.hashedPasscode = require('crypto').pbkdf2Sync(password, new Buffer('sh!', 'utf8'), 1000, 64, 'sha512').toString('hex');
 };
 
 User.methods.checkPassword = (password) => {
-    var hash = require('crypto').pbkdf2Sync(password, new Buffer('sh!', 'utf8'), 1000, 64, 'sha512');
+    var hash = require('crypto').pbkdf2Sync(password, new Buffer('sh!', 'utf8'), 1000, 64, 'sha512').toString('hex');
+
+    return hash === this.hashedPasscode;
 }
 module.exports = require('mongoose').model('User', User);
