@@ -19,7 +19,8 @@ const User = new Schema({
     },
     email: {
         type: String,
-        match: /([a-zA-Z]+)(@)(\s+)(.com|.co.uk|.net)/
+        match: /([a-zA-Z]+)(@)(\s+)(.com|.co.uk|.net)/,
+        required: true
     },
     username: {
         type: String,
@@ -29,7 +30,13 @@ const User = new Schema({
     goals: [Object],
     pitches: [Object],
     permittedUsers: [String],
-    hashedPasscode: String
+    hashedPasscode: String,
+    isOfAge: {
+        isVerified: {
+            type: Boolean,
+            default: true
+        }
+    }
 });
 
 User.methods.createPassword = (password) => {
