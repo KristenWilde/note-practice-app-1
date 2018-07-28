@@ -1,2 +1,2 @@
-#The API for a music practice app
+#A music practice app
 Still in dev phase
