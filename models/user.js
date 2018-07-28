@@ -32,9 +32,9 @@ const User = new Schema({
     permittedUsers: [String],
     hashedPasscode: String,
     isOfAge: {
-        isVerified: {
-            type: Boolean,
-            default: true
+        type: Object,
+        default: {
+            isVerified: true
         }
     }
 });
