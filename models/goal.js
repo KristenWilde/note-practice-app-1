@@ -18,6 +18,8 @@ GoalSchema.methods.setCurrentProgress = (progress) => {
     this.isCompleted = (this.currentProgress === this.targetProgress);
 };
 
-GoalSchema.methods.timeElapsed = (pitch, currenttime) => {
-    this.pitches[this.pitches.indexOf(pitch)].succeeded = (this.pitches[this.pitches.indexOf(pitch)].targettime === currenttime && this.pitches[this.pitches.indexOf(pitch)].reached);
+GoalSchema.methods.succeededInPitch = (pitch, currenttime) => {
+    this.pitches[this.pitches.indexOf(pitch)].succeeded = (this.pitches[this.pitches.indexOf(pitch)].targettime >= currenttime && this.pitches[this.pitches.indexOf(pitch)].reached);
+
+    return this.pitches[this.pitches.indexOf(pitch)].succeeded;
 };
