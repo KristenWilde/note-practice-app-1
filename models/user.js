@@ -19,12 +19,14 @@ const User = new Schema({
     },
     email: {
         type: String,
-        match: /([a-zA-Z]+)(@)(\s+)(.com|.co.uk|.net)/,
-        required: true
+        match: /([a-zA-Z0-9]+)(@)(\w+)(.com|.co.uk|.net)/,
+        required: true,
+        unique: true
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     userId: Schema.Types.ObjectId,
     goals: [Object],
