@@ -10,7 +10,9 @@ const GoalSchema = new Schema({
     pitches: [Object],
     targetProgress: Number,
     currentProgress: Number,
-    isCompleted: Boolean,  
+    isCompleted: Boolean, 
+    dateSet: Date,
+    dateCompleted: Date 
 });
 
 GoalSchema.methods.setCurrentProgress = (progress) => {
@@ -23,3 +25,5 @@ GoalSchema.methods.succeededInPitch = (pitch, currenttime) => {
 
     return this.pitches[this.pitches.indexOf(pitch)].succeeded;
 };
+
+module.exports = require('mongoose').model('Goal', GoalSchema);
