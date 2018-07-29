@@ -19,7 +19,7 @@ GoalSchema.methods.setCurrentProgress = (progress) => {
 };
 
 GoalSchema.methods.succeededInPitch = (pitch, currenttime) => {
-    this.pitches[this.pitches.indexOf(pitch)].succeeded = (this.pitches[this.pitches.indexOf(pitch)].targettime >= currenttime && this.pitches[this.pitches.indexOf(pitch)].reached);
+    this.pitches[this.pitches.indexOf(pitch)].succeeded = (this.pitches[this.pitches.indexOf(pitch)].targettime >= currenttime && this.pitches[this.pitches.indexOf(pitch)].current === this.pitches[this.pitches.indexOf(pitch)].target);
 
     return this.pitches[this.pitches.indexOf(pitch)].succeeded;
 };
