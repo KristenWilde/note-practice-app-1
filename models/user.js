@@ -19,24 +19,28 @@ const User = new Schema({
     },
     email: {
         type: String,
-        match: /([a-zA-Z]+)(@)(\s+)(.com|.co.uk|.net)/,
-        required: true
+        match: /([a-zA-Z0-9]+)(@)(\w+)(.com|.co.uk|.net)/,
+        required: true,
+        unique: true
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     userId: Schema.Types.ObjectId,
     goals: [Object],
-    pitches: [Object],
-    permittedUsers: [String],
+    //pitches: [Object],
+    permittedUsers: [Object],
     hashedPasscode: String,
     isOfAge: {
         type: Object,
         default: {
             isVerified: true
         }
-    }
+    },
+    requestedUsers: [Object]
+    
 });
 
 User.methods.createPassword = (password) => {
@@ -47,5 +51,13 @@ User.methods.checkPassword = (password) => {
     var hash = require('crypto').pbkdf2Sync(password, new Buffer('sh!', 'utf8'), 1000, 64, 'sha512').toString('hex');
 
     return hash === this.hashedPasscode;
-}
+};
+
+User.methods.setGoal = (goal) => {
+    this.goals.push(goal);
+};
+
+User.methods.deleteGoal = (goal) => {
+    this.goals.splice(this.goals.indexOf(goal), 1);
+};
 module.exports = require('mongoose').model('User', User);
