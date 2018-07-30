@@ -56,10 +56,10 @@ body {
     border-color: rgba(0, 120, 120, 0.3);
     -webkit-transition-property: border;
     -webkit-transition-duration: 1s;
-    -webkit-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in;
     transition-property: border;
-    transition-duration: 2s;
-    transition-timing-function: ease-in-out;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
 }
 
 .input-materializer:focus {
