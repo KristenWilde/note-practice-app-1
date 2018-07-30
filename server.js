@@ -11,8 +11,10 @@ let mongooseOptions = {
 };
 
 app.set('port', process.env.PORT || 4000);
-app.use(express.static(require('path').join(__dirname, '/client/note_practice/public')));
+app.use(express.static(require('path').join(__dirname, '/statics')));
+//app.use(express.static(require('path').join(__dirname, '/views')));
 app.set('client', require('path').join(__dirname, '/client/note_practice/public/'));
+app.set('views', require('path').join(__dirname, '/views'));
 
 require('./settings').config(app);
 require('./settings').routeApp(app);

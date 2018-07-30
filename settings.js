@@ -1,3 +1,5 @@
+const hbs = require('express-handlebars');
+
 module.exports = {
     config : (app) => {
         app.use(require('body-parser')({extended: true}))
@@ -8,6 +10,12 @@ module.exports = {
             res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH');
             next();
         });
+        app.engine('hbs', hbs({
+            defaultLayout: 'main',
+            layoutsDir: require('path').join(app.get('views'), '/layouts'),
+            extname: '.hbs'
+        }));
+        app.set('view engine', 'hbs');
         console.log('App configured');
     },
     routeApp : (app) => {

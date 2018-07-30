@@ -19,7 +19,7 @@ module.exports = {
             else {
                 User.findOne({username: req.body.username}, (err, user) => {
                     if (user) {
-                        res.sattus(500).send('User with given username exists');
+                        res.status(500).send('User with given username exists');
                     }
                     else {
                         let newuser = new User({
@@ -55,6 +55,7 @@ module.exports = {
                                         }
                                         else {
                                             console.log(info);
+                                            res.status(200).json(newuser);
                                         }
                                     });
                                 }
