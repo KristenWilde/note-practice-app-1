@@ -1,0 +1,100 @@
+header {
+  color: #fff;
+  font-size: 18px;
+  overflow: auto;
+}
+
+header, nav ul {
+  box-shadow: 2px 2px 3px rgba(0,0,0,0.3), 2px 2px 2px rgba(0,0,0,0.3);
+  background: #1E1E1E;
+}
+
+header h1, nav li, header p, #nav-toggle {
+  height: 50px;
+  box-sizing: border-box;
+  line-height: 50px;
+  z-index: 2;
+}
+
+nav li {
+  width: 180px;
+  padding-left: 20px;
+  border-top: 1px solid #333;
+}
+
+#nav-toggle{
+  display: block;
+  float: left;
+  cursor: pointer;
+  padding: 20px 0 0 25px;
+  width: 90px;
+}
+
+#nav-toggle span , #nav-toggle span:before , #nav-toggle span:after{
+  position: absolute;
+  content: '';
+  display: block;
+  background: white;
+  width: 33px;
+  height: 4px;
+  border-radius: 1px;
+  transition: all 500ms ease;
+}
+#nav-toggle span:before{
+  top: -8px;
+}
+#nav-toggle span:after{
+  bottom: -8px;
+}
+
+#nav-toggle:active span:before, #nav-toggle.active span:after {
+  top: 0;
+}
+#nav-toggle:active span{
+  background: transparent;
+}
+#nav-toggle:active span:before{
+  transform: rotate(45deg);
+  top: 0;
+}
+#nav-toggle:active span:after{
+  transform: rotate(-45deg);
+  bottom: 0;
+}
+
+#nav-toggle:hover + ul {
+  display: block;
+}
+
+nav ul {
+  position: absolute;
+  top: 50px;
+  z-index: 3;
+  display: none;
+  cursor: pointer;
+}
+
+nav ul:hover {
+  display: block;
+}
+
+nav a, a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+header h1 {
+  font-weight: normal;
+  font-size: 24px;
+  display: inline;
+  width: auto;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  margin-left: -230px;
+}
