@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom'
 import '../css/menubar.css'
 
-class MenuBar extends Component {
-  navigate (e) => {
-
+class MenuBar extends React.Component {
+  menuItems = {
+    'Practice': `/${this.props.userId}/practice`,
+    'Set a Goal': `/${this.props.userId}/goal/new`,
+    'View Progress': `/${this.props.userId}/progress`,
+    'Music Buddies': `/${this.props.userId}/buddies`,
+    'FAQ': '/faq',
+    'My Account':`/${this.props.userId}`,
+    'Log out': '/logout',
   }
 
-  showMenu (e) => {
-    e.currentTarget.classList.toggle('opened');
+  showMenu = event => {
+    event.currentTarget.classList.toggle('opened');
   }
 
   render() {
@@ -18,14 +25,12 @@ class MenuBar extends Component {
           <button id="nav-toggle" onClick={this.showMenu}>
             <span></span>
           </button>
-          <ul onClick={this.navigate}>
-            <li>Practice</li>
-            <li>Set a Goal</li>
-            <li>View Progress</li>
-            <li>Music Buddies</li>
-            <li>FAQ</li>
-            <li>My Account</li>
-            <li>Log Out</li>
+          <ul>
+          {Object.keys(this.menuItems).map(item => (
+            <li key={item}>
+              <Link to={this.menuItems[item]}>{item}</Link>
+            </li>
+          ))}
           </ul>
         </nav>
       </header>

@@ -4,7 +4,10 @@ class SetGoal extends Component {
   render() {
     return (
       <div>
-        <h1>Set a goal</h1>
+        <MenuBar userId={this.props.match.params.userId}/>
+        <main>
+          <h1>Set a goal</h1>
+        </main>
       </div>
     )
   }
