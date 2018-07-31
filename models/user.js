@@ -19,7 +19,7 @@ const User = new Schema({
     },
     email: {
         type: String,
-        match: /([a-zA-Z0-9]+)(@)(\w+)(.com|.co.uk|.net)/,
+        match: /([a-zA-Z]+|[0-9]+)(@)(\w+)(.com|.co.uk|.net)/,
         required: true,
         unique: true
     },
