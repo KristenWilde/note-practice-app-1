@@ -7,9 +7,9 @@ class Practice extends Component {
         <h1>Practice</h1>
         <p>Select a goal to work on.</p>
         <ul>
-        {this.props.goals.map(goal =>{
-          <li>{goal.title}</li>
-        })}
+        {this.props.goals.map( (goal, idx) => {
+          return <li key={idx}>{goal.title}</li>
+          })}
         </ul>
         <button>Start</button>
       </div>

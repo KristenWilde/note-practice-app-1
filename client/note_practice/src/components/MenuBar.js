@@ -7,16 +7,17 @@ class MenuBar extends Component {
       <header>
         <h1>MyNotePractice</h1>
         <nav>
-          <a href="#" id="nav-toggle">
+          <button id="nav-toggle">
             <span></span>
-          </a>
+          </button>
           <ul>
             <li>Practice</li>
             <li>Set a Goal</li>
             <li>View Progress</li>
             <li>Music Buddies</li>
             <li>FAQ</li>
-            <li>My Profile</li>
+            <li>My Account</li>
+            <li>Log Out</li>
           </ul>
         </nav>
       </header>
