@@ -1,5 +1,6 @@
 const User = require('./../models/user');
 const mailer = require('nodemailer');
+const formidable = require('formidable');
 const secrets = require('./../secrets');
 
 let transport = mailer.createTransport({
@@ -45,19 +46,7 @@ module.exports = {
                                     res.status(200).json(newuser);
                                 }
                                 else {
-                                    transport.sendMail({
-                                        from: 'javaprodigy56@gmail.com',
-                                        to: newuser.email,
-                                        html: 'Click the below link to activate profile, <br/> /validate/'+newuser._id
-                                    }, (err, info) => {
-                                        if (err) {
-                                            console.log(err);
-                                        }
-                                        else {
-                                            console.log(info);
-                                            res.status(200).json(newuser);
-                                        }
-                                    });
+                                    res.redirect('/verify'+newuser.firstname+'/'+newuser.lastname);
                                 }
                             }
                         });
@@ -67,5 +56,28 @@ module.exports = {
         });
 
         
+    },
+    sendVerification: (req, res) => {
+        User.findOne({firstname: req.params.first}, (err, user) => {
+            if (req.body.email === user.email) {
+                res.status(500).send("That's your email. Enter a parent's email");
+            }
+            else {
+                transport.sendMail({
+                    from: '"Kingsley Victor" <javaprodigy56@gmail.com>',
+                    to: req.body.email,
+                    html: 'User with the name '+user.firstname+' '+user.lastname+' registered to use an app at <a href="/">Music Notes App</a> and needs your permission to use the app as the person is underaged. <br/> Click the below link to grant consent <br/> <a href="/:userid/:date"'
+                }, (err, info) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    else {
+                        res.redirect('/');
+                        console.log(info);
+                    }
+                });
+            }
+    });
     }
+
 }

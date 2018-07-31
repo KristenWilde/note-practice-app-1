@@ -1,9 +1,15 @@
+<div class="head-item">
+    <h2>
+        Dear {{name}} ! You are underaged and are thereby restricted from using some features of this app except on the consent of a parent. Enter a parent's e-mail below to send a confirmation link
+    </h2>
+</div>
+
 <div class="flex-box">
     <div class="card">
-        <form method="POST" action="#">
-            <input type="email" class="input-materializer" placeholder="Enter Parent's E-mail">
+        <form method="POST" action="/sendlink/{{name}}/{{lastname}}" name="form">
+            <input type="email" class="input-materializer" placeholder="Enter Parent's E-mail" name="email">
             <br/>
-            <button type="submit">Submit</button>
+            <button disabled="checkField()" type="submit" id="button">Submit</button>
         </form>
     </div>
 </div>
