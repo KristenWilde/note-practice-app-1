@@ -27,9 +27,24 @@ class Practice extends Component {
   }
   // temporarily defining state for development
 
-  // Find a lifecycle hook for getting the ajax data
-  // Write a method for fetching the goal data
-  // Write a component for the quiz.
+  componentDidMount() {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+    .then(res => res.json())
+    .then(
+      (result) => {
+        this.setState({
+          isLoaded: true,
+          sampleResult: result
+        });
+      },
+      (error) => {
+        this.setState({
+          isLoaded: true,
+          error
+        });
+      }
+    )
+  }
 
   selectGoal = e => {
     const goalTitle = e.target.innerText;
@@ -45,6 +60,19 @@ class Practice extends Component {
   }
 
   render() {
+    if (this.state.error) {
+      return <div>Error: {this.state.error.message}</div>;
+    }
+
+    if (!this.state.isLoaded) {
+      return (
+        <div>
+          <MenuBar userId={this.props.match.params.userId}/>
+          <main>Loading...</main>
+        </div>
+      )
+    }
+
     if (this.state.started) {
       return <Quiz currentGoal={this.state.currentGoal}/>
     }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 class DisplayPitches extends React.Component {
   render() {
     return (
-      <div>
+      <div style={{'fontSize': '8px'}}>
         <p>This is the display of pitches.</p>
         <p>They are {this.props.pitches.join(', ')}</p>
         <p>This display will be used in various places:</p>
