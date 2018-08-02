@@ -1,7 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font: normal 16pt sans-serif;
+  font: normal 15px sans-serif;
+  overflow-x: hidden;
 }
 
 ul, li {
@@ -26,6 +27,8 @@ button.continue {
 
 }
 
-li.selected {
-  background-color: #cfe;
+
+
+li.current {
+  background-color: #9fe;
 }

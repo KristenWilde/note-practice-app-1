@@ -7,12 +7,14 @@ import Progress from './Progress'
 import Buddies from './Buddies'
 import Account from './Account'
 import FAQ from './FAQ'
-import NotFound from './NotFound'
+import Hello from './Hello'
+// import NotFound from './NotFound'
 
 const Router = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={Home}/>
+      <Route exact path="/hello" component={Hello}/>
       <Route path="/:userId/practice" component={Practice}/>
       <Route path="/:userId/goal/new" component={SetGoal}/>
       <Route path="/:userId/progress" component={Progress}/>
@@ -20,7 +22,7 @@ const Router = () => (
       <Route path='/:userId/account' component={Account}/>
       <Route exact path='/faq' component={FAQ}/>
       <Route exact path="/logout" component={Home}/>
-      <Route component={NotFound} />
+      {/*<Route component={NotFound} />*/}
     </Switch>
   </BrowserRouter>
 )

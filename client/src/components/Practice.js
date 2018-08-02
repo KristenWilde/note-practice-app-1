@@ -12,47 +12,32 @@ class Practice extends Component {
       { title: 'Treble spaces in 5 sec',
         pitches: ['f4t', 'a4t', 'c5t', 'e5t'],
         targetProgress: 5000,
+        current: true,
       },
       { title: 'Treble lines in 8 sec',
         pitches: ['e4t', 'g4t', 'b4t', 'd5t', 'f5t'],
         targetProgress: 8000,
+        current: false,
       }
     ],
-    currentGoal: {
-      title: 'Treble notes in 5 sec',
-      pitches: ['f4t', 'a4t', 'c5t', 'e5t'],
-      targetProgress: 5000,
-    },
+    currentGoalIdx: 0,
     started: false,
   }
-  // temporarily defining state for development
+  // temporarily defining state above for development
 
   componentDidMount() {
-    fetch("https://jsonplaceholder.typicode.com/todos")
-    .then(res => res.json())
-    .then(
-      (result) => {
-        this.setState({
-          isLoaded: true,
-          sampleResult: result
-        });
-      },
-      (error) => {
-        this.setState({
-          isLoaded: true,
-          error
-        });
-      }
-    )
+    // Will fetch goal data from our api and set state.
   }
 
-  selectGoal = e => {
-    const goalTitle = e.target.innerText;
-    const goal = this.state.goals.filter(goal => {
-      return goal.title === goalTitle
-    })[0]
-    localStorage.setItem('currentGoal', goal)
-    this.setState({ currentGoal: goal })
+  selectGoal = idx => {
+    const goals = this.state.goals.slice()
+    console.log(goals)
+    for (let goal of goals) {
+      goal.current = false
+    }
+    console.log(goals)
+    goals[idx].current = true
+    this.setState({ goals, currentGoalIdx: idx })
   }
 
   startQuiz = e => {
@@ -60,21 +45,10 @@ class Practice extends Component {
   }
 
   render() {
-    if (this.state.error) {
-      return <div>Error: {this.state.error.message}</div>;
-    }
-
-    if (!this.state.isLoaded) {
-      return (
-        <div>
-          <MenuBar userId={this.props.match.params.userId}/>
-          <main>Loading...</main>
-        </div>
-      )
-    }
+    const currentGoal = this.state.goals[this.state.currentGoalIdx]
 
     if (this.state.started) {
-      return <Quiz currentGoal={this.state.currentGoal}/>
+      return <Quiz currentGoal={currentGoal}/>
     }
 
     return (
@@ -82,11 +56,12 @@ class Practice extends Component {
         <MenuBar userId={this.props.match.params.userId}/>
         <main>
           <h1>Practice</h1>
-          <p>Select a goal to start practicing.</p>
-          <p><Link to={'/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link></p>
-          <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoal={this.state.currentGoal}/>
-          <DisplayPitches pitches={this.state.currentGoal.pitches}/>
-          <p>Target: { this.state.currentGoal.targetProgress/1000 } seconds per note</p>
+          <p>Select a goal below to start practicing
+          (or <Link to={'/' + this.props.match.params.userId + '/goal/new'}>set a new goal</Link>).
+          </p>
+          <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoal={currentGoal}/>
+          <DisplayPitches pitches={currentGoal.pitches}/>
+          <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>
           <button className="go" onClick={this.startQuiz}>Start</button>
         </main>
       </div>

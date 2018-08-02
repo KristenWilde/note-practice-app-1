@@ -15,7 +15,7 @@ class Home extends Component {
     return (
       <main>
       <h1>This is the Home page.</h1>
-      <p>Here user will be directed to log in or register.</p>
+      <p>This is where user will log in or register.</p>
       <p>Other pages available:</p>
       <ul>
           {Object.keys(this.menuItems).map(item => (

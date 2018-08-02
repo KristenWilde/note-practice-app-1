@@ -1,6 +1,11 @@
 //const User = require('./models/user');
 
 module.exports.route = (app) => {
+    //Test API for working with front end
+    app.get('/api/hello', (req, res) => {
+        res.send({ express: 'Hello' });
+    });
+
     app.get('/', (req, res) => {
         res.sendFile(require('path').join(app.get('client'), '/index.html'));
     });
@@ -10,4 +15,6 @@ module.exports.route = (app) => {
     })
     app.post('/register', require('./controllers/usercontroller').register);
     app.post('/sendlink/:first/:last', require('./controllers/usercontroller').sendVerification);
+
+
 }
