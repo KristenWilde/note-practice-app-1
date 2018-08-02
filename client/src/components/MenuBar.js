@@ -8,9 +8,9 @@ class MenuBar extends React.Component {
     'Set a Goal': `/${this.props.userId}/goal/new`,
     'View Progress': `/${this.props.userId}/progress`,
     'Music Buddies': `/${this.props.userId}/buddies`,
-    'FAQ': '/faq',
-    'My Account':`/${this.props.userId}`,
-    'Log out': '/logout',
+    'FAQ': "/faq",
+    'My Account':`/${this.props.userId}/account`,
+    'Log out': '/',
   }
 
   showMenu = event => {
