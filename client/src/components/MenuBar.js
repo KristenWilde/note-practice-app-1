@@ -10,7 +10,7 @@ class MenuBar extends React.Component {
     'Music Buddies': `/${this.props.userId}/buddies`,
     'FAQ': "/faq",
     'My Account':`/${this.props.userId}/account`,
-    'Log out': '/logout',
+    'Log out': '/',
   }
 
   showMenu = event => {

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MyNotePractice",
+  "name": "App for practicing music note identification",
   "icons": [
     {
       "src": "favicon.ico",
