@@ -1,6 +1,6 @@
 const checkField = () => {
     
-    document.getElementById('button').disabled = !(document.forms['form']['email'].value.match(/([a-aA-Z0-9]+)(@)(\w+)(.com|.co.uk|.net)/))
+    document.getElementById('button').disabled = !(document.forms['form']['email'].value.match(/([a-zA-Z]+|[0-9]+)(@)(\w+)(.com|.co.uk|.net)/))
     
     
 };
