@@ -1,4 +1,5 @@
 import React from 'react'
+import '../css/pickgoal.css'
 
 class PickGoal extends React.Component {
 
@@ -13,7 +14,7 @@ class PickGoal extends React.Component {
 
   render() {
     return (
-      <ul>
+      <ul id="goal-list">
         {this.props.goals.map( (goal, idx) => {
           return (
             <li

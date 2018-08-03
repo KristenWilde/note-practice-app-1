@@ -10,9 +10,10 @@ class Hello extends React.Component {
     fetch("http://localhost:4000/api/hello")
       .then(response => response.json())
       .then(result => {
-        console.log(result.express));
+        console.log(result.express)
         this.setState({ result: result.express })
-      }, error => this.setState({ error })
+        }, error => this.setState({ error })
+      )
   }
 
   render() {

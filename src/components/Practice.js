@@ -22,6 +22,8 @@ class Practice extends Component {
     ],
     currentGoalIdx: 0,
     started: false,
+    paused: false,
+    finished: false
   }
   // temporarily defining state above for development
 
@@ -44,11 +46,32 @@ class Practice extends Component {
     this.setState({ started: true })
   }
 
+  stopQuiz = e => {
+    this.setState({ started: false, paused: true })
+  }
+
+  startOver = e => {
+    this.setState({ paused: false, finished: false })
+  }
+
   render() {
     const currentGoal = this.state.goals[this.state.currentGoalIdx]
 
     if (this.state.started) {
-      return <Quiz currentGoal={currentGoal}/>
+      return <Quiz currentGoal={currentGoal} stopQuiz={this.stopQuiz}/>
+    }
+
+    if (this.state.paused || this.state.finished) {
+      return (
+        <div>
+          <MenuBar userId={this.props.match.params.userId}/>
+          <main>
+            <p>Here are the results of your practice:</p>
+            <button className="go" onClick={this.startQuiz}>Keep practicing</button>
+            <button className="go" onClick={this.startOver}>Pick another goal</button>
+          </main>
+        </div>
+      )
     }
 
     return (
@@ -60,6 +83,7 @@ class Practice extends Component {
           (or <Link to={'/' + this.props.match.params.userId + '/goal/new'}>set a new goal</Link>).
           </p>
           <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoal={currentGoal}/>
+          <h3>{currentGoal.title}</h3>
           <DisplayPitches pitches={currentGoal.pitches}/>
           <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>
           <button className="go" onClick={this.startQuiz}>Start</button>
