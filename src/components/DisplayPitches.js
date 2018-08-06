@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import '../css/staffnotes.css'
 
 /* How this component will be used:
   <li>In Practice, it will show the pitches that are part of currentGoal (small).</li>
@@ -16,12 +17,16 @@ class DisplayPitches extends React.Component {
     if (this.props.pitches) {
       const pitches = this.props.pitches
     } else {
-      const pitches = ['a4t', 'b4t', 'c5t', 'd5t']
+      const pitches = {'a4t': {status: ''}, 'b4t': {status: ''}, 'c5t': {status: ''}, 'd5t': {status: ''}}
     }
 
     return (
       <div id="display-pitches">
-        <p>Current pitches are {this.props.pitches.join(', ')}</p>
+        <p>Current pitches are:</p>
+        {Object.keys(this.props.pitches).map( pitch => {
+          console.log(pitch)
+          return <div className={`note ${pitch} ${this.props.pitches[pitch].status}`} key={pitch}>{pitch}</div>
+        })}
       </div>
     )
   }

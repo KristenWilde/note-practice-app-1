@@ -11,7 +11,9 @@ export const bassLedgerNames = ['c2b', 'd2b', 'e2b', 'f2b',
 export const trebleLedgerNames = ['g3t', 'a3t', 'b3t',
                                   'g5t', 'a5t', 'b5t', 'c6t']
 
-export const allNoteNames = bassNoteNames.concat(trebleNoteNames, trebleLedgerNames, bassLedgerNames)
+export const altoNoteNames = ['f3a', 'g3a', 'a3a', 'b3a', 'c4a', 'd4a', 'e4a', 'f4a', 'g4a']
+
+export const altoLedgerNames = ['c3a', 'd3a', 'e3a', 'a4a', 'b4a', 'c5a', 'd5a', 'e5a', 'f5a', 'g5a']
 
 function NoteObj(noteName) {
   this.name = noteName
@@ -20,5 +22,22 @@ function NoteObj(noteName) {
   this.staff = noteName[2]
 }
 
-export const allNotes = allNoteNames.map( name => new NoteObj(name) )
+function notes(noteNames) {
+  const result = {}
+  for (var i = 0; i < noteNames.length; i++) {
+    result[noteNames[i]] = new NoteObj(noteNames[i])
+  }
+  return result
+}
+
+export const bassNotes = notes(bassNoteNames)
+export const bassLedgerNotes = notes(bassLedgerNames)
+export const trebleNotes = notes(trebleNoteNames)
+export const trebleLedgerNotes = notes(trebleLedgerNames)
+export const altoNotes = notes(altoNoteNames)
+export const altoLedgerNotes = notes(altoLedgerNames)
+
+
+
+
 
