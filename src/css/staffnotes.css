@@ -1,4 +1,8 @@
-
+#staff {
+  position: relative;
+  height: 8em;
+  margin: 6em auto;
+}
 
 .note {
   width: 3em;
@@ -8,6 +12,7 @@
   border-radius: 50%;
   text-align: center;
   line-height: 2em;
+  position: absolute;
 }
 
 .selected {

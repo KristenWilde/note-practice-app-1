@@ -1,47 +1,82 @@
 import React, { Component } from 'react';
 import MenuBar from './MenuBar';
 import DisplayPitches from './DisplayPitches'
-import { bassNotes, bassLedgerNotes, trebleNotes, trebleLedgerNotes, altoNotes, altoLedgerNotes } from '../music'
+import { trebleData, bassData } from '../music'
 
 class SetGoal extends Component {
   state = {
     title: null,
-    seconds: null,
-    showStaff: {
-      'bass': true,
-      'treble': true,
-      'alto': false
-    },
-    showLedger: false,
-    pitchesCount: 0,
-    pitchesSelected: [],
+    targetProgress: null,
+    trebleData,
+    bassData,
+    treblePitchesSelected: [],
+    bassPitchesSelected: [],
   }
 
-  toggleStaff = e => {
-    const staff = e.target.name
-    const showStaff = { ...this.state.showStaff }
-    showStaff[staff] = e.target.checked
-    if (staff === 'alto') {
-      showStaff.bass = false
-      showStaff.treble = false
-    } else {
-      showStaff.alto = false
+  setTitle = e => {
+    this.setState({ title: e.target.value })
+  }
+
+  setSeconds = e => {
+    this.setState({ targetProgress: Number(e.target.value) * 1000 })
+  }
+
+  toggleTreble = e => {
+    const trebleData = { ...this.state.trebleData }
+    trebleData.showStaff = e.target.checked
+    this.setState({ trebleData })
+  }
+
+  toggleBass = e => {
+    const bassData = { ...this.state.bassData }
+    bassData.showStaff = e.target.checked
+    this.setState({ bassData })
+  }
+
+  selectPitch = (pitch, staff) => {
+    if (staff === 'treble') {
+      this.selectTrebleNote(pitch)
+    } else if (staff = 'bass') {
+      this.selectBassNote(pitch)
     }
-    this.setState({ showStaff })
   }
 
-  toggleLedger = e => {
-    this.setState({ showLedger: e.target.checked })
+  selectTrebleNote(pitch) {
+    const data = { ...this.state.trebleData }
+    const note = data.notes[pitch]
+    note.status === 'selected' ? note.status = '' : note.status = 'selected'
+
+    const treblePitchesSelected = this.updateSelectedPitches(data.notes)
+    this.setState({ trebleData, treblePitchesSelected })
   }
 
-  notesToDisplay() {
-    const bass = this.state.showStaff.bass ? bassNotes : {}
-    const bassLedger = (this.state.showStaff.bass && this.state.showLedger) ? bassLedgerNotes : {}
-    const treble = this.state.showStaff.treble ? trebleNotes : {}
-    const trebleLedger = (this.state.showStaff.treble && this.state.showLedger) ? trebleLedgerNotes : {}
-    const alto = this.state.showStaff.alto ? altoNotes : {}
-    const altoLedger = (this.state.showStaff.alto && this.state.showLedger) ? altoLedgerNotes : {}
-    return Object.assign({}, bass, bassLedger, treble, trebleLedger, alto, altoLedger)
+  selectBassNote(pitch) {
+    const data = { ...this.state.bassData }
+    const note = data.notes[pitch]
+    note.status === 'selected' ? note.status = '' : note.status = 'selected'
+
+    const bassPitchesSelected = this.updateSelectedPitches(data.notes)
+    this.setState({ bassData, bassPitchesSelected })
+  }
+
+  updateSelectedPitches(notes) { // returns an array of pitch names.
+    const array = Object.keys(notes).filter( note => (notes[note].status === 'selected') )
+    console.log(array)
+    return array
+  }
+
+  countSelectedPitches() {
+    return this.state.trebleData.selectedPitches.length + this.state.bassData.selectedPitches.length
+  }
+
+  saveGoal = e => {
+    e.preventDefault()
+    const goal = {
+      title: this.state.title,
+      targetProgress: this.state.targetProgress,
+      pitches: this.state.treblePitchesSelected.concat(this.state.bassPitchesSelected)
+    }
+    console.log(goal)
   }
 
   render() {
@@ -54,31 +89,31 @@ class SetGoal extends Component {
             <fieldset>
               <h3>1. Enter a title for your goal.</h3>
               <p>Examples: "Treble lines", "Violin D string"</p>
-              <input type="text" name="title"/>
+              <input type="text" placeholder="Title" onBlur={this.setTitle}/>
             </fieldset>
             <fieldset>
               <h3>2. Enter a number of seconds for each note.</h3>
               <p>We suggest 3-6 seconds for beginners.</p>
-              <input type="number" name="targetProgress" defaultValue="5"/>
+              <label><input type="number" name="targetProgress" defaultValue="4.5" onBlur={this.setSeconds}/> seconds</label>
             </fieldset>
             <fieldset>
               <h3>3. Select a set of notes for this goal.</h3>
-              <h4>Options</h4>
               <fieldset id="options">
-                <label>
+              <legend>Options:</legend>
+                {/*<label>
                   <input
                     type="checkbox"
                     name="ledger"
                     onChange={this.toggleLedger}
                   />
                   Ledger Lines
-                </label>
+                </label>*/}
                 <label>
                   <input
                     type="checkbox"
                     name="treble"
                     onChange={this.toggleStaff}
-                    checked={this.state.showStaff.treble}
+                    checked={this.state.showtreble}
                   />
                   Treble clef
                 </label>
@@ -87,11 +122,11 @@ class SetGoal extends Component {
                     type="checkbox"
                     name="bass"
                     onChange={this.toggleStaff}
-                    checked={this.state.showStaff.bass}
+                    checked={this.state.showBass}
                   />
                   Bass clef
                 </label>
-                <label>
+                {/*<label>
                   <input
                     type="checkbox"
                     name="alto"
@@ -99,10 +134,25 @@ class SetGoal extends Component {
                     checked={this.state.showStaff.alto}
                   />
                   Alto clef
-                </label>
+                </label>*/}
               </fieldset>
-              <DisplayPitches pitches={this.notesToDisplay()}/>
+              {this.state.trebleData.showStaff &&
+                <DisplayPitches
+                  pitches={this.state.trebleData.notes}
+                  staff="treble"
+                  selectPitch={this.selectPitch}
+                />
+              }
+              {this.state.bassData.showStaff &&
+                <DisplayPitches
+                  pitches={this.state.bassData.notes}
+                  staff="bass"
+                  selectPitch={this.selectPitch}
+                />
+              }
+              <p>You have selected {this.state.treblePitchesSelected.length + this.state.bassPitchesSelected.length} notes.</p>
             </fieldset>
+            <button type="submit" className="go">Save</button>
           </form>
         </main>
       </div>

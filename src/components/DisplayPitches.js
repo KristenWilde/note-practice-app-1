@@ -12,20 +12,32 @@ import '../css/staffnotes.css'
    When one is clicked, it will appear 'disabled' and will not be included in the goal. (large)</li>*/
 
 class DisplayPitches extends React.Component {
+  // props: notes with status (word 'selected or empty string) and position (number),
+  //        staff ('treble' or 'bass'),
+  //        selectPitch function - takes (pitch, staff)
 
   render() {
     if (this.props.pitches) {
       const pitches = this.props.pitches
     } else {
-      const pitches = {'a4t': {status: ''}, 'b4t': {status: ''}, 'c5t': {status: ''}, 'd5t': {status: ''}}
+      const pitches = {'a4t': {status: '', position: 3}, 'b4t': {status: '', position: 4} }
     }
 
     return (
-      <div id="display-pitches">
+      <div id="staff">
         <p>Current pitches are:</p>
         {Object.keys(this.props.pitches).map( pitch => {
-          console.log(pitch)
-          return <div className={`note ${pitch} ${this.props.pitches[pitch].status}`} key={pitch}>{pitch}</div>
+          return (
+            <div
+              className={`note ${pitch} ${this.props.pitches[pitch].status}`}
+              style={{bottom: `${this.props.pitches[pitch].position}em`}}
+              onClick={() => this.props.selectPitch(pitch, this.props.staff)}
+              key={pitch}
+              data-name={pitch}
+            >
+              {pitch}
+            </div>
+          )
         })}
       </div>
     )
