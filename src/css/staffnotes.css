@@ -1,7 +1,7 @@
 #staff {
   position: relative;
-  height: 8em;
-  margin: 6em auto;
+  height: 19em;
+  margin: 1em auto;
 }
 
 .note {
@@ -17,4 +17,32 @@
 
 .selected {
   background-color: red;
+}
+
+.lines {
+  position: absolute;
+  bottom: 4.97em;
+}
+
+.lines > div {
+  width: 20em;
+  height: 2em;
+  border-bottom: 1px solid #444;
+  box-sizing: border-box;
+}
+
+#trebleclef {
+  height: 16rem;
+  z-index: 0;
+  position: absolute;
+  top: -4rem;
+  left: .5rem;
+}
+
+#bassclef {
+  height: 7rem;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  left: 1rem;
 }

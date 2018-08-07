@@ -95,7 +95,7 @@ class SetGoal extends Component {
             <fieldset>
               <h3>1. Enter a title for your goal.</h3>
               <p>Examples: "Treble lines", "Violin D string"</p>
-              <input type="text" placeholder="Title" onBlur={this.setTitle} minlength="4" pattern="[a-zA-Z0-9]+.*" required/>
+              <input type="text" placeholder="Title" onBlur={this.setTitle} minLength="4" pattern="[a-zA-Z0-9]+.*" required/>
             </fieldset>
             <fieldset>
               <h3>2. Enter a number of seconds for each note.</h3>

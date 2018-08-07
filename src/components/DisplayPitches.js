@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import '../css/staffnotes.css'
+// import '../images/bassclef.png'
+// import '../images/trebleclef.png'
 
 /* How this component will be used:
   <li>In Practice, it will show the pitches that are part of currentGoal (small).</li>
@@ -15,6 +17,14 @@ class DisplayPitches extends React.Component {
   // props: notes with status (word 'selected or empty string) and position (number),
   //        staff ('treble' or 'bass'),
   //        selectPitch function - takes (pitch, staff)
+  left(position) {
+    return `${Math.abs(position % 2) * 5 + 7}em`
+  }
+
+  bottom(position) {
+    const offset = 4
+    return `${position + offset}em`
+  }
 
   render() {
     if (this.props.pitches) {
@@ -23,14 +33,25 @@ class DisplayPitches extends React.Component {
       const pitches = {'a4t': {status: '', position: 3}, 'b4t': {status: '', position: 4} }
     }
 
+    const htmlLines = <div className="lines">
+      {this.props.staff === 'treble' && <img id="trebleclef" src="../images/trebleclef.png" alt="treble clef sign"></img>}
+      {this.props.staff === 'bass' && <img id="bassclef" src="../images/bassclef.png" alt="bass clef sign"></img>}
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
     return (
-      <div id="staff">
-        <p>Current pitches are:</p>
+      <div id="staff" style={{}}>
+        {htmlLines}
         {Object.keys(this.props.pitches).map( pitch => {
+          const { position, status } = this.props.pitches[pitch]
           return (
             <div
-              className={`note ${pitch} ${this.props.pitches[pitch].status}`}
-              style={{bottom: `${this.props.pitches[pitch].position}em`}}
+              className={`note ${pitch} ${status}`}
+              style={{bottom: this.bottom(position), left: this.left(position)}}
               onClick={() => this.props.selectPitch(pitch, this.props.staff)}
               key={pitch}
               data-name={pitch}

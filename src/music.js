@@ -22,7 +22,7 @@ export const bassData = {
     c4: { position: 10, status: null },
     d4: { position: 11, status: null },
     e4: { position: 12, status: null },
-    f4: { position: 13, status: null },
+    // f4: { position: 13, status: null },
   },
   showStaff: true,
   showLedger: false,
