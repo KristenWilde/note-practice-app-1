@@ -35,4 +35,16 @@ describe('Register Component', () => {
     expect(wrapper.contains(<input id='lname' name='lname' 
       type='text' minlength='2' maxlength='80' required />)).toBe(true);
   });
+
+  it('Render a username label element', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<label className='register-text__username-label'
+      for='username'>Username</label>)).toBe(true);
+  });
+
+  it('Render a username input text box', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<input id='username' name='username'
+      type='text' minlength='8' maxlength='40' required />)).toBe(true);
+  });
 });

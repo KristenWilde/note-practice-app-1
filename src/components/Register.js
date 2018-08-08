@@ -1,4 +1,5 @@
 import React from 'react';
+import RegisterPassword from '../components/RegisterPassword';
 
 function Register(props) {
   return (
@@ -9,6 +10,9 @@ function Register(props) {
         <input id='fname' name='fname' type='text' minlength='2' maxlength='80' required />
         <label className='register-text__lastname-label' for='lname'>Last Name</label>
         <input id='lname' name='lname' type='text' minlength='2' maxlength='80' required />
+        <label className='register-text__username-label' for='username'>Username</label>
+        <input id='username' name='username' type='text' minlength='8' maxlength='40' required />
+        <RegisterPassword />
       </form>
     </div>
   );
