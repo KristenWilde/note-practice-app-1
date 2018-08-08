@@ -5,7 +5,7 @@
 }
 
 .note {
-  width: 3em;
+  width: 2.7em;
   height: 2em;
   background-color: #222;
   color: #fff;
@@ -13,6 +13,7 @@
   text-align: center;
   line-height: 2em;
   position: absolute;
+  z-index: 2;
 }
 
 .selected {
@@ -31,18 +32,37 @@
   box-sizing: border-box;
 }
 
+.ledger:before {
+  width: 3.9em;
+  height: 1em;
+  z-index: -1;
+  border-bottom: 1px solid #222;
+  left: -0.6em;
+  position: absolute;
+  content: '';
+}
+
+.line-through:before {
+  top: 0;
+}
+
+.line-below:before {
+  top: 1em;
+}
+
 #trebleclef {
-  height: 14rem;
+  height: 14.7em;
   z-index: -1;
   position: absolute;
-  bottom: -3.5rem;
-  left: .5rem;
+  bottom: -3.6em;
+  left: .5em;
 }
 
 #bassclef {
-  height: 6rem;
+  height: 6.5em;
   z-index: -1;
   position: absolute;
-  bottom: 1.45rem;
-  left: .8rem;
+  bottom: 1.45em;
+  left: .8em;
 }
+

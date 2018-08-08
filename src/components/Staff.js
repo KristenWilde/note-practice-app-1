@@ -60,7 +60,6 @@ class Staff extends React.Component {
               style={{bottom: this.bottom(position), left: this.left(position)}}
               onClick={() => this.props.selectPitch(pitch, this.props.staff)}
               key={pitch}
-              data-name={pitch}
             >
               {pitch[0].toUpperCase()}
               {this.ledgerLine(position)}
