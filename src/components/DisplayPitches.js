@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import '../css/staffnotes.css'
-// import '../images/bassclef.png'
-// import '../images/trebleclef.png'
+import bassClefSign from '../images/bassclef.png'
+import trebleClefSign from '../images/trebleclef.png'
 
 /* How this component will be used:
   <li>In Practice, it will show the pitches that are part of currentGoal (small).</li>
@@ -18,7 +18,7 @@ class DisplayPitches extends React.Component {
   //        staff ('treble' or 'bass'),
   //        selectPitch function - takes (pitch, staff)
   left(position) {
-    return `${Math.abs(position % 2) * 5 + 7}em`
+    return `${Math.abs(position % 2) * 5 + 9}em`
   }
 
   bottom(position) {
@@ -34,8 +34,8 @@ class DisplayPitches extends React.Component {
     }
 
     const htmlLines = <div className="lines">
-      {this.props.staff === 'treble' && <img id="trebleclef" src="../images/trebleclef.png" alt="treble clef sign"></img>}
-      {this.props.staff === 'bass' && <img id="bassclef" src="../images/bassclef.png" alt="bass clef sign"></img>}
+      {this.props.staff === 'treble' && <img id="trebleclef" src={trebleClefSign} alt="treble clef sign"></img>}
+      {this.props.staff === 'bass' && <img id="bassclef" src={bassClefSign} alt="bass clef sign"></img>}
       <div></div>
       <div></div>
       <div></div>
@@ -56,8 +56,10 @@ class DisplayPitches extends React.Component {
               key={pitch}
               data-name={pitch}
             >
-              {pitch}
+              {pitch[0].toUpperCase()}
+
             </div>
+
           )
         })}
       </div>
