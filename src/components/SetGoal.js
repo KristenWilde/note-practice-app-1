@@ -8,7 +8,7 @@ class SetGoal extends Component {
     targetProgress: null,
     validationMessage: null,
     pitchesSelected: null,
-    totalPitchesSelected: 0,
+    numPitchesSelected: 0,
   }
 
   setTitle = e => {
@@ -20,7 +20,7 @@ class SetGoal extends Component {
   }
 
   updatePitchesSelected = pitches => {
-    this.setState({ pitchesSelected: pitches, totalPitchesSelected: pitches.length })
+    this.setState({ pitchesSelected: pitches, numPitchesSelected: pitches.length })
   }
 
   saveGoal = e => {
@@ -58,7 +58,7 @@ class SetGoal extends Component {
             <fieldset>
               <h3>3. Select a set of notes for this goal.</h3>
               <PickNotes updatePitchesSelected={this.updatePitchesSelected}/>
-              <p>You have selected {this.state.totalPitchesSelected} notes.</p>
+              <p>You have selected {this.state.numPitchesSelected} notes.</p>
               {this.state.validationMessage && <p className="warning">{this.state.validationMessage}</p>}
             </fieldset>
             <button type="submit" className="go">Save</button>

@@ -1,6 +1,5 @@
 import React from 'react'
 // import PropTypes from 'prop-types';
-import '../css/quiz.css'
 import '../css/staffnotes.css'
 
 class Note extends React.Component {
@@ -10,28 +9,31 @@ class Note extends React.Component {
   //        selectPitch - function.
 
   left(position) {
-    return `${Math.abs(position % 2) * 6 + 9}em`
-  }
-
-  ledgerLines(position) {
-
+    return Math.abs(position % 2) * 6 + 9
   }
 
   render() {
     const { id, position, status } = this.props
+    const ledgerLineBelow1 = <div className="ledger-line" style={{bottom: '-2em', left: `${this.left(position) - .6}em`}}></div>
+    const ledgerLineBelow2 = <div className="ledger-line" style={{bottom: '-4em', left: `${this.left(position) - .6}em`}}></div>
+    const ledgerLineAbove1 = <div className="ledger-line" style={{bottom: '10em', left: `${this.left(position) - .6}em`}}></div>
+    const ledgerLineAbove2 = <div className="ledger-line" style={{bottom: '12em', left: `${this.left(position) - .6}em`}}></div>
 
     return(
       <div>
         <div
           id={id}
           className={`note ${status}`}
-          style={{bottom: `${position}em`, left: this.left(position)}}
+          style={{bottom: `${position}em`, left: `${this.left(position)}em` }}
           onClick={() => this.props.selectPitch(id, this.props.staff)}
           key={id}
         >
           {id[0].toUpperCase()}
         </div>
-        {this.ledgerLines(position)}
+        {position >= 11 && ledgerLineAbove2}
+        {position >= 9 && ledgerLineAbove1}
+        {position < -2 && ledgerLineBelow1}
+        {position < -4 && ledgerLineBelow2}
       </div>
     )
   }

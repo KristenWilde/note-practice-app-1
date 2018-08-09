@@ -12,7 +12,7 @@
 .line {
   width: 100%;
   height: 2em;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid #000;
   box-sizing: border-box;
   z-index: 0;
 }
@@ -21,7 +21,7 @@
   position: absolute;
   width: 2.7em;
   height: 2em;
-  background-color: #222;
+  background-color: #000;
   color: #fff;
   border-radius: 50%;
   text-align: center;
@@ -33,23 +33,12 @@
   background-color: red;
 }
 
-.ledger {
+.ledger-line {
   position: absolute;
   width: 3.9em;
   height: 1em;
   z-index: -1;
-  border-bottom: 1px solid #222;
-  left: -0.6em;
-
-  content: '';
-}
-
-.line-through {
-  top: 0;
-}
-
-.line-below {
-  top: 1em;
+  border-bottom: 1px solid #000;
 }
 
 #trebleclef {
@@ -61,7 +50,7 @@
 }
 
 #bassclef {
-  height: 6.5em;
+  height: 6.6em;
   z-index: -1;
   position: absolute;
   bottom: 1.45em;

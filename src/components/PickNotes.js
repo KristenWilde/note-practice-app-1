@@ -19,10 +19,14 @@ class PickNotes extends Component {
   }
 
   toggleTreble = e => {
+    const visibleSelection = this.getVisibleSelection(this.state.treblePitchesSelected, e.target.checked, this.state.bassPitchesSelected, this.state.showBass)
+    this.props.updatePitchesSelected(visibleSelection)
     this.setState({ showTreble: e.target.checked })
   }
 
   toggleBass = e => {
+    const visibleSelection = this.getVisibleSelection(this.state.bassPitchesSelected, e.target.checked, this.state.treblePitchesSelected, this.state.showTreble)
+    this.props.updatePitchesSelected(visibleSelection)
     this.setState({ showBass: e.target.checked })
   }
 
@@ -40,12 +44,7 @@ class PickNotes extends Component {
     note.status === 'selected' ? note.status = '' : note.status = 'selected'
 
     const treblePitchesSelected = this.selectedPitches(data)
-
-    let visibleSelection = this.state.showTreble ? treblePitchesSelected : []
-    if (this.state.showBass) {
-      visibleSelection = visibleSelection.concat(this.state.bassPitchesSelected)
-    }
-    console.log('visible selection ', visibleSelection)
+    const visibleSelection = this.getVisibleSelection(treblePitchesSelected, this.state.showTreble, this.state.bassPitchesSelected, this.state.showBass)
     this.props.updatePitchesSelected(visibleSelection)
 
     this.setState({ trebleData: data, treblePitchesSelected })
@@ -57,15 +56,18 @@ class PickNotes extends Component {
     note.status === 'selected' ? note.status = '' : note.status = 'selected'
 
     const bassPitchesSelected = this.selectedPitches(data)
-
-    let visibleSelection = this.state.showBass ? bassPitchesSelected : []
-    if (this.state.showTreble) {
-      visibleSelection = visibleSelection.concat(this.state.treblePitchesSelected)
-    }
-    console.log('visible selection ', visibleSelection)
+    const visibleSelection = this.getVisibleSelection(bassPitchesSelected, this.state.showBass, this.state.treblePitchesSelected, this.state.showTreble)
     this.props.updatePitchesSelected(visibleSelection)
 
     this.setState({ bassData: data, bassPitchesSelected })
+  }
+
+  getVisibleSelection(thisAr, thisShowing, otherAr, otherShowing) {
+    let ar = thisShowing ? thisAr : []
+    if (otherShowing) {
+      ar = ar.concat(otherAr)
+    }
+    return ar
   }
 
   selectedPitches(notes) { // returns an array of pitch names.
