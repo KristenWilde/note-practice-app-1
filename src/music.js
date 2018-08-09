@@ -8,16 +8,48 @@ export const trebleNoteIds = ['g3t', 'a3t', 'b3t', 'c4t', 'd4t', 'e4t', 'f4t',
 export const altoNoteIds = ['c3a', 'd3a', 'e3a', 'f3a', 'g3a', 'a3a', 'b3a', 'c4a', 'd4a', 'e4a', 'f4a',
                               'g4a', 'a4a', 'b4a', 'c5a', 'd5a', 'e5a', 'f5a', 'g5a']
 
-function data(noteIds, lowestPosition) {
+function noteDataObj(noteIds, lowestPosition) {
   return noteIds.reduce(function(obj, noteId, idx) {
     obj[noteId] = { position: idx + lowestPosition, status: '' }
     return obj
   }, {})
 }
 
-export const bassData = data(bassNoteIds, -5)
+export const bassData = noteDataObj(bassNoteIds, -5)
 
-export const trebleData = data(trebleNoteIds, -6)
+export const trebleData = noteDataObj(trebleNoteIds, -6)
 
-export const altoData = data(altoNoteIds, -6)
+export const altoData = noteDataObj(altoNoteIds, -6)
+
+export const noteData = {
+  treble: trebleData,
+  bass: bassData,
+  alto: altoData,
+}
+
+export const staffName = function(noteId) {
+  switch (noteId[2]) {
+    case 't':
+    return 'treble'
+    case 'b':
+    return 'bass'
+    case 'a':
+    return 'alto'
+  }
+}
+
+export function goalData(allNoteIds, staff) {
+
+
+  const noteIds = allNoteIds.filter(function(id) {
+    return staffName(id) === staff
+  })
+  console.log(noteIds)
+  if (noteIds.length === 0) { return null }
+
+  return noteIds.reduce(function(obj, noteId) {
+    obj[noteId] = noteData[staff][noteId]
+    return obj
+  }, {})
+}
 

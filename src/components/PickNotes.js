@@ -119,14 +119,14 @@ class PickNotes extends Component {
         </fieldset>
         {this.state.showTreble &&
           <Staff
-            pitches={this.state.trebleData}
+            pitchObj={this.state.trebleData}
             staff="treble"
             selectPitch={this.selectPitch}
           />
         }
         {this.state.showBass &&
           <Staff
-            pitches={this.state.bassData}
+            pitchObj={this.state.bassData}
             staff="bass"
             selectPitch={this.selectPitch}
           />

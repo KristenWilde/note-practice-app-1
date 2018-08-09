@@ -12,6 +12,12 @@ class Note extends React.Component {
     return Math.abs(position % 2) * 6 + 9
   }
 
+  handleClick = e => {
+    if (this.props.selectPitch) {
+      this.props.selectPitch(e.target.id, this.props.staff)
+    }
+  }
+
   render() {
     const { id, position, status } = this.props
     const ledgerLineBelow1 = <div className="ledger-line" style={{bottom: '-2em', left: `${this.left(position) - .6}em`}}></div>
@@ -25,7 +31,7 @@ class Note extends React.Component {
           id={id}
           className={`note ${status}`}
           style={{bottom: `${position}em`, left: `${this.left(position)}em` }}
-          onClick={() => this.props.selectPitch(id, this.props.staff)}
+          onClick={this.handleClick}
           key={id}
         >
           {id[0].toUpperCase()}

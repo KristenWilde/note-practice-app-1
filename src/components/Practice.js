@@ -84,7 +84,7 @@ class Practice extends Component {
           </p>
           <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoal={currentGoal}/>
           <h3>{currentGoal.title}</h3>
-          <DisplayPitches pitches={currentGoal.pitches}/>
+          <DisplayPitches noteIds={currentGoal.pitches}/>
           <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>
           <button className="go" onClick={this.startQuiz}>Start</button>
         </main>
