@@ -46,17 +46,17 @@ class SetGoal extends Component {
           <h1>Set a goal</h1>
           <form onSubmit={this.saveGoal}>
             <fieldset>
-              <h3>1. Enter a title for your goal.</h3>
+              <p className="step">1. Enter a title for your goal.</p>
               <p>Examples: "Treble lines", "Violin D string"</p>
               <input type="text" placeholder="Title" onBlur={this.setTitle} minLength="4" pattern="[a-zA-Z0-9]+.*" required/>
             </fieldset>
             <fieldset>
-              <h3>2. Enter a number of seconds for each note.</h3>
+              <p className="step">2. Enter a number of seconds for each note.</p>
               <p>We suggest 3-6 seconds for beginners.</p>
               <label><input type="number" name="targetProgress" defaultValue="4.5" onBlur={this.setSeconds} step=".01" required/> seconds</label>
             </fieldset>
             <fieldset>
-              <h3>3. Select a set of notes for this goal.</h3>
+              <p className="step">3. Select a set of notes for this goal.</p>
               <PickNotes updatePitchesSelected={this.updatePitchesSelected}/>
               <p>You have selected {this.state.numPitchesSelected} notes.</p>
               {this.state.validationMessage && <p className="warning">{this.state.validationMessage}</p>}

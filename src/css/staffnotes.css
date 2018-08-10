@@ -1,3 +1,4 @@
+/*  Colors:  */
 .staff-wrapper {
   height: 19em;
   margin: 1em auto;
@@ -26,7 +27,7 @@
   z-index: 1; }
 
 .selected {
-  background-color: red; }
+  background-color: #de5c9f; }
 
 .ledger-line {
   position: absolute;

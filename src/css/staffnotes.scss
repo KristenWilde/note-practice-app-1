@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 .staff-wrapper {
   height: 19em;
   margin: 1em auto;
@@ -30,7 +32,7 @@
 }
 
 .selected {
-  background-color: red;
+  background-color: $pink;
 }
 
 .ledger-line {

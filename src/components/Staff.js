@@ -26,7 +26,16 @@ class Staff extends React.Component {
         <div className="staff-lines">
           {Object.keys(this.props.pitchObj).map( pitch => {
             const { position, status } = this.props.pitchObj[pitch]
-            return <Note id={pitch} position={position} status={status} selectPitch={this.props.selectPitch} staff={this.props.staff}/>
+            return (
+              <Note
+                id={pitch}
+                position={position}
+                status={status}
+                selectPitch={this.props.selectPitch}
+                staff={this.props.staff}
+                key={pitch}
+                />
+              )
           })}
           {this.props.staff === 'treble' && <img id="trebleclef" src={trebleClefSign} alt="treble clef sign"></img>}
           {this.props.staff === 'bass' && <img id="bassclef" src={bassClefSign} alt="bass clef sign"></img>}
