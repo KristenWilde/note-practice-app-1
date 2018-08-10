@@ -14,24 +14,22 @@ import { goalData } from '../music.js'
 class DisplayPitches extends React.Component {
   // props: noteIds: array of pitch id's
   // This component will display Staff components by mapping to trebleData, bassData. (Staff components need: note data object,
-  state = {
-    trebleData: goalData(this.props.noteIds, 'treble'),
-    bassData: goalData(this.props.noteIds, 'bass')
+
+  goalHasStaff(staff) {
+    return this.props.noteIds.some(function(id) {
+      return id[2] === staff[0]
+    })
   }
 
-  // Bug alert: state will not update based on props!
-
-  // componentDidUpdate() {
-  //   const trebleData = goalData(this.props.noteIds, 'treble')
-  //   const bassData = goalData(this.props.noteIds, 'bass')
-  //   this.setState({ trebleData, bassData })
-  // }
-
   render() {
+    if (this.goalHasStaff('alto')) {
+      return <Staff staff="alto" pitchObj={goalData(this.props.noteIds, 'alto')}/>
+    }
+
     return(
       <div>
-        {this.state.trebleData && <Staff staff="treble" pitchObj={goalData(this.props.noteIds, 'treble')}/>}
-        {this.state.bassData && <Staff staff="bass" pitchObj={goalData(this.props.noteIds, 'bass')}/>}
+        {this.goalHasStaff('treble') && <Staff staff="treble" pitchObj={goalData(this.props.noteIds, 'treble')}/>}
+        {this.goalHasStaff('bass') && <Staff staff="bass" pitchObj={goalData(this.props.noteIds, 'bass')}/>}
       </div>
     )
   }

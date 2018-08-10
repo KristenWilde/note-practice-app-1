@@ -3,3 +3,9 @@
 
 #Ignore environment variables
 /.env
+
+#Ignore css files (keep scss files)
+src/css/*.css
+
+#Ignore operating system files
+.DS_Store

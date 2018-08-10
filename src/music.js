@@ -40,7 +40,6 @@ export const staffName = function(noteId) {
 
 export function goalData(allNoteIds, staff) {
 
-
   const noteIds = allNoteIds.filter(function(id) {
     return staffName(id) === staff
   })

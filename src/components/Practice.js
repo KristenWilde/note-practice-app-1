@@ -18,6 +18,17 @@ class Practice extends Component {
         pitches: ['e4t', 'g4t', 'b4t', 'd5t', 'f5t'],
         targetProgress: 8000,
         current: false,
+      },
+      { title: 'Primer book notes',
+        pitches: ['a3b', 'b3b', 'd4t', 'e4t', 'f4t'],
+        targetProgress: 5550,
+        current: false,
+      },
+      {
+        title: 'Low notes',
+        pitches: ['g2b', 'a2b', 'b2b', 'c2b'],
+        targetProgress: 2500,
+        current: false,
       }
     ],
     currentGoalIdx: 0,
