@@ -1,25 +1,30 @@
 header {
   color: #fff;
-  padding: 0 20px; }
+  padding: 0 20px;
+}
 
 header, nav ul {
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3), 2px 2px 2px rgba(0, 0, 0, 0.3);
-  background: #222; }
+  box-shadow: 2px 2px 2px rgba(0,0,0,0.3), 2px 2px 2px rgba(0,0,0,0.3);
+  background: #222;
+}
 
 header h1, nav li, #nav-toggle {
   height: 40px;
   line-height: 40px;
   box-sizing: border-box;
-  z-index: 2; }
+  z-index: 2;
+}
 
 header h1 {
   font-weight: normal;
   font-size: 22px;
   line-height: 40px;
-  display: inline-block; }
+  display: inline-block;
+}
 
 nav {
-  float: right; }
+  float: right;
+}
 
 nav a {
   display: block;
@@ -27,21 +32,25 @@ nav a {
   box-sizing: border-box;
   padding-left: 25px;
   border-top: 1px solid #444;
-  font-size: 16px; }
+  font-size: 16px;
+}
 
 nav a, a:visited {
   color: inherit;
-  text-decoration: none; }
+  text-decoration: none;
+}
 
 nav a:hover {
-  text-decoration: underline; }
+  text-decoration: underline;
+}
 
-button#nav-toggle {
+button#nav-toggle{
   width: 40px;
   cursor: pointer;
   background: inherit;
   border: none;
-  outline: none; }
+  outline: none;
+}
 
 nav ul {
   position: absolute;
@@ -49,9 +58,10 @@ nav ul {
   top: 40px;
   z-index: 3;
   cursor: pointer;
-  transition: all 500ms ease; }
+  transition: all 500ms ease
+}
 
-#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+#nav-toggle span , #nav-toggle span:before , #nav-toggle span:after{
   position: absolute;
   content: '';
   display: block;
@@ -59,24 +69,31 @@ nav ul {
   width: 28px;
   height: 3px;
   border-radius: 1px;
-  transition: all 500ms ease; }
+  transition: all 500ms ease;
+}
+#nav-toggle span:before{
+  top: -8px;
+}
+#nav-toggle span:after{
+  bottom: -8px;
+}
 
-#nav-toggle span:before {
-  top: -8px; }
-
-#nav-toggle span:after {
-  bottom: -8px; }
-
-#nav-toggle:active span, #nav-toggle.opened span {
-  background: transparent; }
-
+#nav-toggle:active span, #nav-toggle.opened span{
+  background: transparent;
+}
 #nav-toggle:active span:before, #nav-toggle.opened span:before {
   transform: rotate(45deg);
-  top: 0; }
-
-#nav-toggle:active span:after, #nav-toggle.opened span:after {
+  top: 0;
+}
+#nav-toggle:active span:after, #nav-toggle.opened span:after{
   transform: rotate(-45deg);
-  bottom: 0; }
+  bottom: 0;
+}
 
 .opened + ul {
-  right: 0; }
+  right: 0;
+}
+
+
+
+

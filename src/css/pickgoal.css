@@ -1,14 +1,8 @@
 #goal-list {
   max-width: 400px;
   margin: 15px 0;
-  border: 1px solid #999;
-}
-
-#goal-list li {
-  padding: 5px;
-}
-
-li.current {
-  background-color: #9d5;
-}
-
+  border: 1px solid #999; }
+  #goal-list li {
+    padding: 5px; }
+  #goal-list li.current {
+    background-color: #9d5; }
