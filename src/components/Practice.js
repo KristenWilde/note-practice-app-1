@@ -12,23 +12,19 @@ class Practice extends Component {
       { title: 'Treble spaces in 5 sec',
         pitches: ['f4t', 'a4t', 'c5t', 'e5t'],
         targetProgress: 5000,
-        current: true,
       },
       { title: 'Treble lines in 8 sec',
         pitches: ['e4t', 'g4t', 'b4t', 'd5t', 'f5t'],
         targetProgress: 8000,
-        current: false,
       },
       { title: 'Primer book notes',
         pitches: ['a3b', 'b3b', 'd4t', 'e4t', 'f4t'],
         targetProgress: 5550,
-        current: false,
       },
       {
         title: 'Low notes',
         pitches: ['g2b', 'a2b', 'b2b', 'c2b'],
         targetProgress: 2500,
-        current: false,
       }
     ],
     currentGoalIdx: 0,
@@ -69,7 +65,14 @@ class Practice extends Component {
     const currentGoal = this.state.goals[this.state.currentGoalIdx]
 
     if (this.state.started) {
-      return <Quiz currentGoal={currentGoal} stopQuiz={this.stopQuiz}/>
+      return (
+        <Quiz
+          pitches={currentGoal.pitches}
+          title={currentGoal.title}
+          targetProgress={currentGoal.targetProgress}
+          stopQuiz={this.stopQuiz}
+        />
+      )
     }
 
     if (this.state.paused || this.state.finished) {
@@ -93,7 +96,7 @@ class Practice extends Component {
           <p>Select a goal below to start practicing
           (or <Link to={'/' + this.props.match.params.userId + '/goal/new'}>set a new goal</Link>).
           </p>
-          <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoal={currentGoal}/>
+          <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
           <h3>{currentGoal.title}</h3>
           <DisplayPitches noteIds={currentGoal.pitches}/>
           <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>

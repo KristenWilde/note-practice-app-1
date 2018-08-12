@@ -38,12 +38,12 @@ export const staffName = function(noteId) {
   }
 }
 
-export function goalData(allNoteIds, staff) {
+// returns object for one staff {'e4t': {position: -1, status: ''}, 'f4t': {position: 0, status: ''}}
 
+export function goalData(allNoteIds, staff) {
   const noteIds = allNoteIds.filter(function(id) {
     return staffName(id) === staff
   })
-  console.log(noteIds)
   if (noteIds.length === 0) { return null }
 
   return noteIds.reduce(function(obj, noteId) {
@@ -52,3 +52,20 @@ export function goalData(allNoteIds, staff) {
   }, {})
 }
 
+export function noteScores(noteIds) {
+  return noteIds.reduce(function(obj, noteId) {
+    obj[noteId] = []
+    return obj
+  }, {})
+}
+
+export function hasStaff(noteIds, staff) {
+  return noteIds.some(function(id) {
+    console.log(staffName(id))
+    return id[2] === staff[0]
+  })
+}
+
+export function randomizedIds(noteIds) {
+  return noteIds
+}
