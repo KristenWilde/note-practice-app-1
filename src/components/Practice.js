@@ -10,20 +10,20 @@ class Practice extends Component {
   state = {
     goals: [
       { title: 'Treble spaces in 5 sec',
-        pitches: ['f4t', 'a4t', 'c5t', 'e5t'],
+        pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
         targetProgress: 5000,
       },
       { title: 'Treble lines in 8 sec',
-        pitches: ['e4t', 'g4t', 'b4t', 'd5t', 'f5t'],
+        pitches: ['e4t-1', 'g4t01', 'b4t03', 'd5t05', 'f5t07'],
         targetProgress: 8000,
       },
       { title: 'Primer book notes',
-        pitches: ['a3b', 'b3b', 'd4t', 'e4t', 'f4t'],
+        pitches: ['a3b07', 'b3b08', 'd4t-2', 'e4t-1', 'f4t00'],
         targetProgress: 5550,
       },
       {
         title: 'Low notes',
-        pitches: ['g2b', 'a2b', 'b2b', 'c2b'],
+        pitches: ['g2b-1', 'a2b00', 'b2b01', 'c2b02'],
         targetProgress: 2500,
       }
     ],

@@ -18,23 +18,37 @@ class Staff extends React.Component {
   // props: pitchObj: an object where keys are noteId's, values are empty string or 'selected'
   //        staff ('treble' or 'bass'),
   //        selectPitch function - takes (pitch, staff). Optional.
+  //        quizPitch: a note id for the current quiz pitch.
+  //        quizPitchStatus: a string 'incorrect', 'correct', ''
 
   render() {
+    let notes;
+    let quizNote;
+
+    if (this.props.pitchesObj) {
+      notes = Object.keys(this.props.pitchesObj).map( noteId => {
+        return (<Note
+                  id={noteId}
+                  status={this.props.pitchesObj ? this.props.pitchesObj[noteId] : null}
+                  selectPitch={this.props.selectPitch}
+                  staff={this.props.staff}
+                  key={noteId}
+                />)
+      })
+    }
+
+    if (this.props.quizPitchId) {
+      quizNote = <Note
+                  id={this.props.quizPitchId}
+                  className='quizNote'
+                />
+    }
 
     return (
       <section className="staff-wrapper">
         <div className="staff-lines">
-          {Object.keys(this.props.pitchObj).map( noteId => {
-            return (
-              <Note
-                id={noteId}
-                status={this.props.pitchObj[noteId]}
-                selectPitch={this.props.selectPitch}
-                staff={this.props.staff}
-                key={noteId}
-                />
-              )
-          })}
+          {this.props.pitchesObj && notes}
+          {this.props.quizPitchId && quizNote}
           {this.props.staff === 'treble' && <img id="trebleclef" src={trebleClefSign} alt="treble clef sign"></img>}
           {this.props.staff === 'bass' && <img id="bassclef" src={bassClefSign} alt="bass clef sign"></img>}
           <div className="line"></div>

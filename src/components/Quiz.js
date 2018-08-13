@@ -14,10 +14,12 @@ class Quiz extends React.Component {
     treble: hasStaff(this.props.pitches, 'treble'),
     bass: hasStaff(this.props.pitches, 'bass'),
     alto: hasStaff(this.props.pitches, 'alto'),
-    noteScores: noteScores(this.props.pitches),
+    noteScores: noteScores(this.props.pitches), //
     randomized: randomizedIds(this.props.pitches),
     currentIdx: 0,
-    currentPitch: null,
+    currentPitch: null, // a noteId
+    startTime: null,
+    endTime: null,
   }
 
   componentDidMount() {
@@ -28,7 +30,6 @@ class Quiz extends React.Component {
     let { currentIdx, currentPitch } = { ...this.state }
     currentIdx === this.props.pitches.length - 1 ? currentIdx = 0 : currentIdx++
     currentPitch = this.state.randomized[currentIdx]
-    console.log(currentIdx, currentPitch)
     this.setState({ currentPitch, currentIdx })
   }
 
@@ -39,12 +40,13 @@ class Quiz extends React.Component {
   // 5. When a correct answer is entered, set endTime to new Date().
   // 6. Subtract and save the difference under noteScores[currentPitch].
 
-  // Need to refactor so that Staff can just take a pitchId, not an object.
-  // This includes writing all positions to staffnotes.css.
+// Next steps:
+// Get a note displayed.
+// Make answer buttons.
+// Make answer function.
+
 
   render() {
-    let startTime
-    let endTime
 
     return (
       <main>
@@ -52,8 +54,8 @@ class Quiz extends React.Component {
           <a className="pause" onClick={this.props.stopQuiz}>Stop</a>
         </p>
 
-        {this.state.treble && <Staff staff='treble' pitchId={this.state.currentPitch}/>}
-        {this.state.bass && <Staff staff='bass' pitchId={this.state.currentPitch}/>}
+        {this.state.treble && <Staff staff='treble' quizPitchId={this.state.currentPitch}/>}
+        {this.state.bass && <Staff staff='bass' quizPitchId={this.state.currentPitch}/>}
         <section id="answers">
         Answer buttons go here.
         </section>

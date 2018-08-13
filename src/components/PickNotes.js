@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Staff from './Staff'
-import { trebleNoteStatus, bassNoteStatus, altoNoteStatus } from '../music'
+import { trebleNotesObj, bassNotesObj, altoNotesObj } from '../music'
 
 class PickNotes extends Component {
   state = {
     noteStatus: {
-      treble: trebleNoteStatus,
-      bass: bassNoteStatus,
-      alto: altoNoteStatus,
+      treble: trebleNotesObj,
+      bass: bassNotesObj,
+      alto: altoNotesObj,
     },
     showStaff: {
       treble: true,
@@ -25,7 +25,7 @@ class PickNotes extends Component {
 
   selectPitch = (pitch, staff) => {
     const noteStatus = { ...this.state.noteStatus }
-    if (noteStatus[staff][pitch] === '') {
+    if (noteStatus[staff][pitch] !== 'selected') {
       noteStatus[staff][pitch] = 'selected'
     } else {
       noteStatus[staff][pitch] = ''
@@ -92,14 +92,14 @@ class PickNotes extends Component {
         </fieldset>
         {this.state.showStaff.treble &&
           <Staff
-            pitchObj={this.state.noteStatus.treble}
+            pitchesObj={this.state.noteStatus.treble}
             staff="treble"
             selectPitch={this.selectPitch}
           />
         }
         {this.state.showStaff.bass &&
           <Staff
-            pitchObj={this.state.noteStatus.bass}
+            pitchesObj={this.state.noteStatus.bass}
             staff="bass"
             selectPitch={this.selectPitch}
           />

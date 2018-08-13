@@ -3,7 +3,7 @@ import React from 'react'
 import '../css/staffnotes.css'
 
 class Note extends React.Component {
-  // Props: id - 'a4t'
+  // Props: id - 'a4t02'
   //        status -  'selected' or ''
   //        position - positive or neg integer. 0 is bottom space.
   //        selectPitch - function.
