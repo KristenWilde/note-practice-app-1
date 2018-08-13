@@ -15,7 +15,7 @@ import Note from './Note'
    When one is clicked, it will appear 'disabled' and will not be included in the goal. (large)</li>*/
 
 class Staff extends React.Component {
-  // props: pitchObj: an object where keys are noteId's, values are object {status: (word 'selected or empty string), position: (number)}
+  // props: pitchObj: an object where keys are noteId's, values are empty string or 'selected'
   //        staff ('treble' or 'bass'),
   //        selectPitch function - takes (pitch, staff). Optional.
 
@@ -24,16 +24,14 @@ class Staff extends React.Component {
     return (
       <section className="staff-wrapper">
         <div className="staff-lines">
-          {Object.keys(this.props.pitchObj).map( pitch => {
-            const { position, status } = this.props.pitchObj[pitch]
+          {Object.keys(this.props.pitchObj).map( noteId => {
             return (
               <Note
-                id={pitch}
-                position={position}
-                status={status}
+                id={noteId}
+                status={this.props.pitchObj[noteId]}
                 selectPitch={this.props.selectPitch}
                 staff={this.props.staff}
-                key={pitch}
+                key={noteId}
                 />
               )
           })}

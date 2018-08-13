@@ -1,12 +1,12 @@
 
-export const bassNoteIds = ['c2b', 'd2b', 'e2b', 'f2b', 'g2b', 'a2b', 'b2b', 'c3b', 'd3b', 'e3b', 'f3b',
-                             'g3b', 'a3b', 'b3b', 'c4b', 'd4b', 'e4b']
+export const bassNoteIds = ['c2b-5', 'd2b-4', 'e2b-3', 'f2b-2', 'g2b-1', 'a2b00', 'b2b01', 'c3b02', 'd3b03', 'e3b04', 'f3b05',
+                             'g3b06', 'a3b07', 'b3b08', 'c4b09', 'd4b10', 'e4b11']
 
-export const trebleNoteIds = ['g3t', 'a3t', 'b3t', 'c4t', 'd4t', 'e4t', 'f4t',
-                             'g4t', 'a4t', 'b4t', 'c5t', 'd5t', 'e5t', 'f5t', 'g5t', 'a5t', 'b5t', 'c6t']
+export const trebleNoteIds = ['g3t-6', 'a3t-5', 'b3t-4', 'c4t-3', 'd4t-2', 'e4t-1', 'f4t00',
+                             'g4t01', 'a4t02', 'b4t03', 'c5t04', 'd5t05', 'e5t06', 'f5t07', 'g5t08', 'a5t09', 'b5t10', 'c6t11']
 
-export const altoNoteIds = ['c3a', 'd3a', 'e3a', 'f3a', 'g3a', 'a3a', 'b3a', 'c4a', 'd4a', 'e4a', 'f4a',
-                              'g4a', 'a4a', 'b4a', 'c5a', 'd5a', 'e5a', 'f5a', 'g5a']
+export const altoNoteIds = ['c3a-4', 'd3a-3', 'e3a-2', 'f3a-1', 'g3a00', 'a3a01', 'b3a02', 'c4a03', 'd4a04', 'e4a05', 'f4a06',
+                              'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11', 'e5a12', 'f5a13']
 
 function noteDataObj(noteIds, lowestPosition) {
   return noteIds.reduce(function(obj, noteId, idx) {
@@ -15,16 +15,22 @@ function noteDataObj(noteIds, lowestPosition) {
   }, {})
 }
 
-export const bassData = noteDataObj(bassNoteIds, -5)
+function NoteStatus(noteIds) {
+  for (let i = 0; i < noteIds.length; i++) {
+    this[noteIds[i]] = ''
+  }
+}
 
-export const trebleData = noteDataObj(trebleNoteIds, -6)
+export const bassNoteStatus = new NoteStatus(bassNoteIds)
 
-export const altoData = noteDataObj(altoNoteIds, -6)
+export const trebleNoteStatus = new NoteStatus(trebleNoteIds)
+
+export const altoNoteStatus = new NoteStatus(altoNoteIds)
 
 export const noteData = {
-  treble: trebleData,
-  bass: bassData,
-  alto: altoData,
+  treble: trebleNoteStatus,
+  bass: bassNoteStatus,
+  alto: altoNoteStatus,
 }
 
 export const staffName = function(noteId) {

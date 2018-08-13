@@ -19,7 +19,8 @@ class Note extends React.Component {
   }
 
   render() {
-    const { id, position, status } = this.props
+    const position = parseInt(this.props.id.slice(3,5), 10)
+
     const ledgerLineBelow1 = <div className="ledger-line" style={{bottom: '-2em', left: `${this.left(position) - .6}em`}}></div>
     const ledgerLineBelow2 = <div className="ledger-line" style={{bottom: '-4em', left: `${this.left(position) - .6}em`}}></div>
     const ledgerLineAbove1 = <div className="ledger-line" style={{bottom: '10em', left: `${this.left(position) - .6}em`}}></div>
@@ -28,13 +29,13 @@ class Note extends React.Component {
     return(
       <div>
         <div
-          id={id}
-          className={`note ${status}`}
+          id={this.props.id}
+          className={`note ${this.props.status}`}
           style={{bottom: `${position}em`, left: `${this.left(position)}em` }}
           onClick={this.handleClick}
-          key={id}
+          key={this.props.id}
         >
-          {id[0].toUpperCase()}
+          {this.props.id[0].toUpperCase()}
         </div>
         {position >= 11 && ledgerLineAbove2}
         {position >= 9 && ledgerLineAbove1}

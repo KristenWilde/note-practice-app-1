@@ -1,79 +1,56 @@
 import React, { Component } from 'react';
-import MenuBar from './MenuBar';
 import Staff from './Staff'
-import { trebleData, bassData } from '../music'
+import { trebleNoteStatus, bassNoteStatus, altoNoteStatus } from '../music'
 
 class PickNotes extends Component {
-  //Props: pitchesSelected - an array, empty at first.
-  //       updatePitchesSelected - a function that takes an array of pitches and saves it as pitchesSelected.
-
   state = {
-    trebleData,
-    bassData,
-    treblePitchesSelected: [],
-    bassPitchesSelected: [],
-    showTreble: true,
-    showBass: true,
+    noteStatus: {
+      treble: trebleNoteStatus,
+      bass: bassNoteStatus,
+      alto: altoNoteStatus,
+    },
+    showStaff: {
+      treble: true,
+      bass: true,
+      alto: false,
+    },
     showLedger: false,
-    visibleSelection: []
   }
 
-  toggleTreble = e => {
-    const visibleSelection = this.getVisibleSelection(this.state.treblePitchesSelected, e.target.checked, this.state.bassPitchesSelected, this.state.showBass)
-    this.props.updatePitchesSelected(visibleSelection)
-    this.setState({ showTreble: e.target.checked })
-  }
-
-  toggleBass = e => {
-    const visibleSelection = this.getVisibleSelection(this.state.bassPitchesSelected, e.target.checked, this.state.treblePitchesSelected, this.state.showTreble)
-    this.props.updatePitchesSelected(visibleSelection)
-    this.setState({ showBass: e.target.checked })
+  toggleStaff(staff, value) {
+    const showStaff = { ...this.state.showStaff }
+    showStaff[staff] = value
+    this.setState({ showStaff }, this.update)
   }
 
   selectPitch = (pitch, staff) => {
-    if (staff === 'treble') {
-      this.selectTrebleNote(pitch)
-    } else if (staff = 'bass') {
-      this.selectBassNote(pitch)
+    const noteStatus = { ...this.state.noteStatus }
+    if (noteStatus[staff][pitch] === '') {
+      noteStatus[staff][pitch] = 'selected'
+    } else {
+      noteStatus[staff][pitch] = ''
     }
+    this.setState({ noteStatus }, this.update)
   }
 
-  selectTrebleNote(pitch) {
-    const data = { ...this.state.trebleData }
-    const note = data[pitch]
-    note.status === 'selected' ? note.status = '' : note.status = 'selected'
-
-    const treblePitchesSelected = this.selectedPitches(data)
-    const visibleSelection = this.getVisibleSelection(treblePitchesSelected, this.state.showTreble, this.state.bassPitchesSelected, this.state.showBass)
-    this.props.updatePitchesSelected(visibleSelection)
-
-    this.setState({ trebleData: data, treblePitchesSelected })
+  update() {
+    this.props.updatePitchesSelected(this.getVisibleSelection())
   }
 
-  selectBassNote(pitch) {
-    const data = { ...this.state.bassData }
-    const note = data[pitch]
-    note.status === 'selected' ? note.status = '' : note.status = 'selected'
-
-    const bassPitchesSelected = this.selectedPitches(data)
-    const visibleSelection = this.getVisibleSelection(bassPitchesSelected, this.state.showBass, this.state.treblePitchesSelected, this.state.showTreble)
-    this.props.updatePitchesSelected(visibleSelection)
-
-    this.setState({ bassData: data, bassPitchesSelected })
+  getVisibleSelection() {
+    //Returns array of noteId's from visible staff(s) where this.state.noteStatus[staff].noteId === 'selected.'
+    let selection = []
+    const staves = ['treble', 'bass', 'alto']
+    staves.forEach(function(staff) {
+      if (this.state.showStaff[staff]) {
+        selection = selection.concat(this.selectedPitches(this.state.noteStatus[staff]))
+      }
+    }, this)
+    return selection
   }
 
-  getVisibleSelection(thisAr, thisShowing, otherAr, otherShowing) {
-    let ar = thisShowing ? thisAr : []
-    if (otherShowing) {
-      ar = ar.concat(otherAr)
-    }
-    return ar
-  }
-
-  selectedPitches(notes) { // returns an array of pitch names.
-    const array = Object.keys(notes).filter( note => (notes[note].status === 'selected') )
-    console.log(array)
-    return array
+  selectedPitches(noteObj) { // returns an array of pitch names for one staff.
+    return Object.keys(noteObj).filter( id => noteObj[id] === 'selected')
   }
 
   render() {
@@ -81,7 +58,7 @@ class PickNotes extends Component {
       <div>
         <fieldset id="options">
         <legend>Options:</legend>
-          {/*<label>
+          {/*<label>            // Feature to add later
             <input
               type="checkbox"
               name="ledger"
@@ -92,8 +69,7 @@ class PickNotes extends Component {
           <label>
             <input
               type="checkbox"
-              name="treble"
-              onChange={this.toggleTreble}
+              onChange={e => this.toggleStaff('treble', e.target.checked)}
               defaultChecked
             />
             Treble clef
@@ -101,32 +77,29 @@ class PickNotes extends Component {
           <label>
             <input
               type="checkbox"
-              name="bass"
-              onChange={this.toggleBass}
+              onChange={e => this.toggleStaff('bass', e.target.checked)}
               defaultChecked
             />
             Bass clef
           </label>
-          {/*<label>
+          {/*<label>      // Feature to add later
             <input
               type="checkbox"
-              name="alto"
-              onChange={this.toggleStaff}
-              checked={this.state.showStaff.alto}
+              onChange={e => this.toggleStaff('alto', e.target.checked)}
             />
             Alto clef
           </label>*/}
         </fieldset>
-        {this.state.showTreble &&
+        {this.state.showStaff.treble &&
           <Staff
-            pitchObj={this.state.trebleData}
+            pitchObj={this.state.noteStatus.treble}
             staff="treble"
             selectPitch={this.selectPitch}
           />
         }
-        {this.state.showBass &&
+        {this.state.showStaff.bass &&
           <Staff
-            pitchObj={this.state.bassData}
+            pitchObj={this.state.noteStatus.bass}
             staff="bass"
             selectPitch={this.selectPitch}
           />

@@ -15,6 +15,7 @@ class Home extends Component {
     return (
       <main>
         <h1>This is the Home page.</h1>
+        <p>The react version is {React.version}</p>
         <p>This is where user will log in or register.</p>
         <p>Other pages available:</p>
         <ul>
