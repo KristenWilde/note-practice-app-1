@@ -72,6 +72,13 @@ export function hasStaff(noteIds, staff) {
   })
 }
 
-export function randomizedIds(noteIds) {
-  return noteIds
+export function shuffleIds(noteIds) {
+  let ids = noteIds.slice()
+  const result = ids.splice(1, 1) // Start with the second element in the old array, to avoid same pitch twice in a row.
+  while (ids.length > 0) {
+    const idx = Math.floor(Math.random() * ids.length)
+    const id = ids.splice(idx, 1)[0]
+    result.push(id)
+  }
+  return result
 }

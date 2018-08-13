@@ -20,6 +20,9 @@ class Staff extends React.Component {
   //        selectPitch function - takes (pitch, staff). Optional.
   //        quizPitch: a note id for the current quiz pitch.
   //        quizPitchStatus: a string 'incorrect', 'correct', ''
+  quizNoteBelongs(){
+    return this.props.quizPitchId[2] === this.props.staff[0]
+  }
 
   render() {
     let notes;
@@ -27,20 +30,20 @@ class Staff extends React.Component {
 
     if (this.props.pitchesObj) {
       notes = Object.keys(this.props.pitchesObj).map( noteId => {
-        return (<Note
+        return <Note
                   id={noteId}
                   status={this.props.pitchesObj ? this.props.pitchesObj[noteId] : null}
                   selectPitch={this.props.selectPitch}
                   staff={this.props.staff}
                   key={noteId}
-                />)
+                />
       })
     }
 
-    if (this.props.quizPitchId) {
+    if (this.props.quizPitchId && this.quizNoteBelongs()) {
       quizNote = <Note
                   id={this.props.quizPitchId}
-                  className='quizNote'
+                  className={'quizNote ' + this.props.pitchStatus }
                 />
     }
 

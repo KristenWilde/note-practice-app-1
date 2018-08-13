@@ -1,0 +1,9 @@
+/*  Colors:  */
+#answers {
+  display: grid; }
+
+.correct {
+  background-color: #874991; }
+
+.incorrect {
+  background-color: #ff9e3d; }

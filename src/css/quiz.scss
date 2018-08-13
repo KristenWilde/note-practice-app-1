@@ -1,2 +1,13 @@
+@import './variables.scss';
 
+#answers {
+  display: grid;
+}
 
+.correct {
+  background-color: $purple;
+}
+
+.incorrect {
+  background-color: $orange;
+}
