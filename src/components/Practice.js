@@ -30,7 +30,8 @@ class Practice extends Component {
     currentGoalIdx: 0,
     started: false,
     paused: false,
-    finished: false
+    finished: false,
+    results: null
   }
   // temporarily defining state above for development
 
@@ -53,8 +54,8 @@ class Practice extends Component {
     this.setState({ started: true })
   }
 
-  stopQuiz = e => {
-    this.setState({ started: false, paused: true })
+  stopQuiz = (e, results) => {
+    this.setState({ started: false, paused: true, results })
   }
 
   startOver = e => {
@@ -81,6 +82,11 @@ class Practice extends Component {
           <MenuBar userId={this.props.match.params.userId}/>
           <main>
             <p>Here are the results of your practice:</p>
+            <ul>
+              {Object.keys(this.state.results).map(noteId => {
+                return <li>{noteId}: {this.state.results[noteId]}</li>
+              })}
+            </ul>
             <button className="go" onClick={this.startQuiz}>Keep practicing</button>
             <button className="go" onClick={this.startOver}>Pick another goal</button>
           </main>

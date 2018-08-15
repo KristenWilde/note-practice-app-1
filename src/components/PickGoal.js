@@ -11,7 +11,7 @@ class PickGoal extends React.Component {
             <li
               key={idx}
               className={idx == this.props.currentGoalIdx ? 'current' : ''}
-              onClick={() => this.props.selectGoal(idx)}
+              onClick={e => this.props.selectGoal(idx)}
             >
               {goal.title}
             </li>
