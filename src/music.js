@@ -82,3 +82,13 @@ export function shuffleIds(noteIds) {
   }
   return result
 }
+
+export function randomizedQuizIds(noteIds, rounds){
+  let result = []
+  let shuffled = noteIds
+  for (let i = 0; i <= rounds; i++) {
+    shuffled = shuffleIds(shuffled)
+    result = result.concat(shuffled)
+  }
+  return result;
+}
