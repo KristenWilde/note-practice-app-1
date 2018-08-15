@@ -92,4 +92,39 @@ describe('Register Component', () => {
     const wrapper = shallow(<Register />);
     expect(wrapper.contains(<p id='password-strength__text'></p>)).toBe(true);
   });
+
+  it('Render a label element for dob', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<label className='register-form__dob--label' for='dob'>Date of Birth</label>)).toBe(true);
+  });
+
+  it('Render a date element for dob', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<input type='date' id='dob' name='dob' />)).toBe(true);
+  });
+
+  it('Render a email label element', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<label className='register-form__email--label' for='email'>Email</label>)).toBe(true);
+  });
+
+  it('Render a email input element', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<input type='email' id='email' name='email' />)).toBe(true);
+  });
+
+  it('Render a repeat email label element', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<label className='register-form__repeat-email--label' for='repeat-email'>Repeat Email</label>)).toBe(true);
+  });
+
+  it('Render a repeat email input element', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<input type='email' id='repeat-email' name='repeat-email' />)).toBe(true);
+  });
+
+  it('Render a disabled submit button', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<input type='submit' name='submit' value='Submit' disabled />)).toBe(true);
+  })
 });
