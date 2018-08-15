@@ -107,14 +107,24 @@ class Quiz extends React.Component {
         </p>
         {this.state.showStaff.treble && <Staff staff='treble' quizPitchId={this.state.currentPitch} pitchStatus={this.state.correct}/>}
         {this.state.showStaff.bass   && <Staff staff='bass' quizPitchId={this.state.currentPitch} pitchStatus={this.state.correct} />}
-        <section id="answers" onClick={this.handleAnyAnswer}>
-          <div className="answer-button" ref={this.c}>C</div>
-          <div className="answer-button" ref={this.d}>D</div>
-          <div className="answer-button" ref={this.e}>E</div>
-          <div className="answer-button" ref={this.f}>F</div>
-          <div className="answer-button" ref={this.g}>G</div>
-          <div className="answer-button" ref={this.a}>A</div>
-          <div className="answer-button" ref={this.b}>B</div>
+        <section id="keyboard">
+          <div id="black-key-wrapper">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <div id="answers" onClick={this.handleAnyAnswer}>
+            <div className="answer-button" ref={this.c}><span>C</span></div>
+            <div className="answer-button" ref={this.d}><span>D</span></div>
+            <div className="answer-button" ref={this.e}><span>E</span></div>
+            <div className="answer-button" ref={this.f}><span>F</span></div>
+            <div className="answer-button" ref={this.g}><span>G</span></div>
+            <div className="answer-button" ref={this.a}><span>A</span></div>
+            <div className="answer-button" ref={this.b}><span>B</span></div>
+          </div>
         </section>
 
       </main>

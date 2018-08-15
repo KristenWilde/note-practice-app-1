@@ -1,8 +1,55 @@
 @import './variables.scss';
 
+#keyboard {
+  position: relative;
+  max-width: 400px;
+  height: 200px;
+  margin: 0 auto;
+}
+
 #answers {
   display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  height: 100%;
+  border-top: 1px solid #222;
+  border-right: 1px solid #222;
+  border-bottom: 1px solid #222;
 }
+
+.answer-button {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  text-align: center;
+  position: relative;
+  border-left: 1px solid #222;
+  span {
+    position: absolute;
+    bottom: 40px;
+    margin-left: -.5em;
+  }
+}
+
+#black-key-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  div {
+    display: inline-block;
+    position: relative;
+    left: 7.14%;
+    width: 7.14%;
+    margin: 0px 3.57%;
+    height: 100%;
+    background-color: #222;
+  }
+  div:nth-child(3) {
+    background-color: transparent;
+  }
+}
+
 
 .correct {
   background-color: $purple;
