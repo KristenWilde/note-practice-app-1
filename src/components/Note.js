@@ -9,7 +9,10 @@ class Note extends React.Component {
   //        selectPitch - function.
 
   left(position) {
-    return Math.abs(position % 2) * 6 + 9
+    if (this.props.noteType === 'quiz-note') {
+      return 15
+    }
+    return Math.abs(position % 2) * 7 + 9
   }
 
   handleClick = e => {
@@ -30,7 +33,7 @@ class Note extends React.Component {
       <div>
         <div
           id={this.props.id}
-          className={`note ${this.props.status}`}
+          className={`note ${this.props.noteType} ${this.props.status}`}
           style={{bottom: `${position}em`, left: `${this.left(position)}em` }}
           onClick={this.handleClick}
           key={this.props.id}

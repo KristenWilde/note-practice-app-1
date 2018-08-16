@@ -76,4 +76,11 @@ a.pause {
   border-radius: 3px;
 }
 
-
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

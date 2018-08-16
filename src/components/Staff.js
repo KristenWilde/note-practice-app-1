@@ -43,7 +43,8 @@ class Staff extends React.Component {
     if (this.props.quizPitchId && this.quizNoteBelongs()) {
       quizNote = <Note
                   id={this.props.quizPitchId}
-                  className={'quizNote ' + this.props.pitchStatus }
+                  status={this.props.pitchStatus}
+                  noteType='quiz-note'
                 />
     }
 

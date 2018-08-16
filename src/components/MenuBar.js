@@ -19,7 +19,7 @@ class MenuBar extends React.Component {
 
   render() {
     return (
-      <header>
+      <header className="main">
         <h1>MyNotePractice</h1>
         <nav>
           <button id="nav-toggle" onClick={this.showMenu}>

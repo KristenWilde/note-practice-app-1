@@ -19,6 +19,7 @@ class Quiz extends React.Component {
     this.g = React.createRef()
     this.a = React.createRef()
     this.b = React.createRef()
+    this.quiz = React.createRef()
   }
 
   state = {
@@ -46,8 +47,8 @@ class Quiz extends React.Component {
     }
     const noteId = this.state.quizIds[idx]
     this.showPitch(noteId)
-    .then((noteId) => this.start(noteId)) // starts timer, attaches event listener to correct note.
-    .then(this.end)           // ends timer, saves score, animates note.
+    .then(this.startTimer) // starts timer, attaches event listener to correct note.
+    .then(this.startAnimation)           // ends timer, saves score, animates note.
     .then(() => this.gameLoop(idx + 1))
   }
 
@@ -57,23 +58,22 @@ class Quiz extends React.Component {
     })
   }
 
-  start = noteId => {
+  startTimer = noteId => {
     const answer = noteId[0]
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       this.setState({ startTime: Date.now() })
       this[answer].current.addEventListener('click', e => resolve(e, noteId))
     })
   }
 
-  end = noteId => {
+  startAnimation = noteId => {
     const time = Date.now() - this.state.startTime
     let noteScores = { ...this.state.noteScores }
     noteScores[this.state.currentPitch].push(time)
-    console.log(noteScores)
     this.setState({ noteScores, correct: 'correct', startTime: null })
 
     return new Promise((resolve, reject) => {
-      setTimeout(resolve, 1000)
+      setTimeout(() => resolve(), 990)
     })
   }
 
@@ -101,20 +101,17 @@ class Quiz extends React.Component {
 
 
     return (
-      <main>
-        <p><span className="title">{this.props.title}</span><span>{this.state.problemsLeft}</span> to go!
-          <a className="pause" onClick={this.finishQuiz}>Stop</a>
-        </p>
+      <main ref={this.quiz}>
+        <header>
+          <p className="title"><h4>{this.props.title}</h4></p>
+          <p className="problemsleft">{this.state.quizIds.length - this.state.currentIdx} notes to go!</p>
+          <p><a className="pause" onClick={this.finishQuiz}>Pause</a></p>
+        </header>
         {this.state.showStaff.treble && <Staff staff='treble' quizPitchId={this.state.currentPitch} pitchStatus={this.state.correct}/>}
         {this.state.showStaff.bass   && <Staff staff='bass' quizPitchId={this.state.currentPitch} pitchStatus={this.state.correct} />}
         <section id="keyboard">
           <div id="black-key-wrapper">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+
           </div>
           <div id="answers" onClick={this.handleAnyAnswer}>
             <div className="answer-button" ref={this.c}><span>C</span></div>
@@ -125,6 +122,16 @@ class Quiz extends React.Component {
             <div className="answer-button" ref={this.a}><span>A</span></div>
             <div className="answer-button" ref={this.b}><span>B</span></div>
           </div>
+          <div id="black-key1" className="black-key"><div></div>
+          <div></div></div>
+          <div id="black-key2" className="black-key"><div></div>
+          <div></div></div>
+          <div id="black-key3" className="black-key"><div></div>
+          <div></div></div>
+          <div id="black-key4" className="black-key"><div></div>
+          <div></div></div>
+          <div id="black-key5" className="black-key"><div></div>
+          <div></div></div>
         </section>
 
       </main>

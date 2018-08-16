@@ -22,7 +22,7 @@
 .note {
   position: absolute;
   width: 2.7em;
-  height: 2em;
+  height: 2.06em;
   background-color: #000;
   color: #fff;
   border-radius: 50%;
@@ -31,8 +31,33 @@
   z-index: 1;
 }
 
+.quiz-note {
+  content: '';
+  z-index: -2
+}
+
+.quiz-note:after {
+  position: absolute;
+  width: 1.4em;
+  left: 50%;
+  margin-left: -.7em;
+  top: .2em;
+  bottom: .2em;
+  background-color: white;
+  border-radius: 50%;
+  z-index: -1;
+  content: "";
+  transform: skewX(19deg);
+}
+
 .selected {
   background-color: $pink;
+}
+
+.correct {
+  background-color: $pink;
+  animation-name: 'fade-out';
+  animation-duration: 1s;
 }
 
 .ledger-line {

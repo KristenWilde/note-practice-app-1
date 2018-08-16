@@ -62,3 +62,9 @@ a.pause {
   background-color: #ff9e3d;
   padding: 10px;
   border-radius: 3px; }
+
+@keyframes fade-out {
+  0% {
+    opacity: 1; }
+  100% {
+    opacity: 0; } }
