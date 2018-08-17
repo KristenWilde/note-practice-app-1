@@ -35,7 +35,6 @@ class Quiz extends React.Component {
       return
     }
     const currentPitch = this.state.quizIds[idx]
-
     this.setState({
       currentPitch,
       correct: null,
