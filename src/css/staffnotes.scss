@@ -21,7 +21,7 @@
 
 .note {
   position: absolute;
-  width: 2.7em;
+  width: 3em;
   height: 2.06em;
   background-color: #000;
   color: #fff;
@@ -58,6 +58,11 @@
   background-color: $pink;
   animation-name: 'fade-out';
   animation-duration: 1s;
+}
+
+.incorrect {
+  animation-name: 'shake';
+  animation-duration: .3s;
 }
 
 .ledger-line {

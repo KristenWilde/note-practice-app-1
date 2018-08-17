@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types';
 import '../css/quiz.css'
-import { noteScores, randomizedQuizIds, hasStaff } from '../music' // change name of 'music.js' to 'helpers.js'
+import { noteScores, randomizedQuizIds, hasStaff, averageScores } from '../music' // change name of 'music.js' to 'helpers.js'
 import Staff from './Staff'
 
 class Quiz extends React.Component {
@@ -10,18 +10,6 @@ class Quiz extends React.Component {
          pitches: ['a3b', 'b3b', 'd4t', 'e4t', 'f4t'],
          targetProgress: 5550,
   */
-  // constructor(props) {
-  //   super(props);
-  //   this.c = React.createRef()
-  //   this.d = React.createRef()
-  //   this.e = React.createRef()
-  //   this.f = React.createRef()
-  //   this.g = React.createRef()
-  //   this.a = React.createRef()
-  //   this.b = React.createRef()
-  //   this.quiz = React.createRef()
-  // }
-
   state = {
     showStaff: {
       treble: hasStaff(this.props.pitches, 'treble'),
@@ -40,22 +28,10 @@ class Quiz extends React.Component {
     this.showNextPitch()
   }
 
-  // gameLoop = (idx) => {
-  //   if (idx >= 9) { //this.state.quizIds.length
-  //     this.props.stopQuiz(undefined, this.averages())
-  //     return
-  //   }
-  //   const noteId = this.state.quizIds[idx]
-  //   this.showPitch(noteId)
-  //   .then(this.startTimer) // starts timer, attaches event listener to correct note.
-  //   .then(this.startAnimation)           // ends timer, saves score, animates note.
-  //   .then(() => this.gameLoop(idx + 1))
-  // }
-
-  showNextPitch = e => {
+  showNextPitch = () => {
     const idx = this.state.idx
-    if (idx >= 6){//this.state.quizIds.length) {
-      this.props.stopQuiz(this.averages())
+    if (idx >= this.state.quizIds.length) {
+      this.props.stopQuiz(averageScores(this.state.noteScores))
       return
     }
     const currentPitch = this.state.quizIds[idx]
@@ -78,10 +54,6 @@ class Quiz extends React.Component {
     } else {
       this.setState({ correct: 'incorrect' })
     }
-    // Could use the following if there's a problem with this.state.correct.
-    // function reset() {
-    //   setTimeout(() => this.setState({ correct: null}), 500)
-    // }
   }
 
   stopTimerAndStartAnimation() {
@@ -91,24 +63,17 @@ class Quiz extends React.Component {
     this.setState({ noteScores, correct: 'correct', startTime: null })
   }
 
-  averages() {
-    const averages = this.props.pitches.reduce((obj, noteId) => {
-      const scores = this.state.noteScores[noteId]
-      obj[noteId] = scores.reduce((sum, score) => sum + score) / scores.length
-      return obj
-    }, {})
-    console.log(averages)
-    return averages
+  resetStatus = () => {
+    this.setState({ correct: null})
   }
 
   render() {
-
     return (
-      <main ref={this.quiz}>
-        <header>
-          <p className="title"><h4>{this.props.title}</h4></p>
-          <p className="problemsleft">{this.state.quizIds.length - this.state.currentIdx} notes to go!</p>
-          <p><a className="pause" onClick={this.finishQuiz}>Pause</a></p>
+      <main>
+        <header className="quiz">
+          <h4>{this.props.title}</h4>
+          <p className="problemsleft">{this.state.quizIds.length - this.state.idx + 1} notes to go!</p>
+          {/*<a className="pause" onClick={this.pause}>Pause</a>*/}
         </header>
         {this.state.showStaff.treble &&
           <Staff
@@ -116,6 +81,7 @@ class Quiz extends React.Component {
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
+            resetStatus={this.resetStatus}
           />
         }
         {this.state.showStaff.bass &&
@@ -124,17 +90,18 @@ class Quiz extends React.Component {
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
+            resetStatus={this.resetStatus}
           />
         }
         <section id="keyboard">
           <div id="answers" onClick={this.handleAnswer}>
-            <div className="answer-button" ref={this.c}><span>C</span></div>
-            <div className="answer-button" ref={this.d}><span>D</span></div>
-            <div className="answer-button" ref={this.e}><span>E</span></div>
-            <div className="answer-button" ref={this.f}><span>F</span></div>
-            <div className="answer-button" ref={this.g}><span>G</span></div>
-            <div className="answer-button" ref={this.a}><span>A</span></div>
-            <div className="answer-button" ref={this.b}><span>B</span></div>
+            <div className="answer-button"><span>C</span></div>
+            <div className="answer-button"><span>D</span></div>
+            <div className="answer-button"><span>E</span></div>
+            <div className="answer-button"><span>F</span></div>
+            <div className="answer-button"><span>G</span></div>
+            <div className="answer-button"><span>A</span></div>
+            <div className="answer-button"><span>B</span></div>
           </div>
           <div id="black-key1" className="black-key"><div></div><div></div></div>
           <div id="black-key2" className="black-key"><div></div><div></div></div>
@@ -142,7 +109,6 @@ class Quiz extends React.Component {
           <div id="black-key4" className="black-key"><div></div><div></div></div>
           <div id="black-key5" className="black-key"><div></div><div></div></div>
         </section>
-
       </main>
     )
   }

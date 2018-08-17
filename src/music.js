@@ -86,9 +86,20 @@ export function shuffleIds(noteIds) {
 export function randomizedQuizIds(noteIds, rounds){
   let result = []
   let shuffled = noteIds
-  for (let i = 0; i <= rounds; i++) {
+  for (let i = 0; i < rounds; i++) {
     shuffled = shuffleIds(shuffled)
     result = result.concat(shuffled)
+    console.log(result)
   }
   return result;
 }
+
+export function averageScores(noteScores) {
+    const averages = Object.keys(noteScores).reduce((obj, noteId) => {
+      const scores = noteScores[noteId]
+      obj[noteId] = scores.reduce((sum, score) => sum + score) / scores.length
+      return obj
+    }, {})
+    console.log(averages)
+    return averages
+  }

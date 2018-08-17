@@ -24,6 +24,8 @@ class Note extends React.Component {
   handleAnimationEnd = e => {
     if (e.animationName === 'fade-out'){
       this.props.showNextPitch()
+    } else {
+      this.props.resetStatus()
     }
   }
 
