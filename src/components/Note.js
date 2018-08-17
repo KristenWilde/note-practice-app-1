@@ -21,6 +21,12 @@ class Note extends React.Component {
     }
   }
 
+  handleAnimationEnd = e => {
+    if (e.animationName === 'fade-out'){
+      this.props.showNextPitch()
+    }
+  }
+
   render() {
     const position = parseInt(this.props.id.slice(3,5), 10)
 
@@ -37,6 +43,7 @@ class Note extends React.Component {
           style={{bottom: `${position}em`, left: `${this.left(position)}em` }}
           onClick={this.handleClick}
           key={this.props.id}
+          onAnimationEnd={this.handleAnimationEnd}
         >
           {this.props.id[0].toUpperCase()}
         </div>

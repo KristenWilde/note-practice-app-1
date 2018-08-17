@@ -54,7 +54,7 @@ class Practice extends Component {
     this.setState({ started: true })
   }
 
-  stopQuiz = (e, results) => {
+  stopQuiz = (results) => {
     this.setState({ started: false, paused: true, results })
   }
 

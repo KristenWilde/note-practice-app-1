@@ -45,6 +45,7 @@ class Staff extends React.Component {
                   id={this.props.quizPitchId}
                   status={this.props.pitchStatus}
                   noteType='quiz-note'
+                  showNextPitch={this.props.showNextPitch}
                 />
     }
 
