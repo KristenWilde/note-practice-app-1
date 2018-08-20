@@ -25,6 +25,11 @@ class Practice extends Component {
         title: 'Low notes',
         pitches: ['g2b-1', 'a2b00', 'b2b01', 'c2b02'],
         targetProgress: 2500,
+      },
+      {
+        title: 'Viola beginning',
+        pitches: ['d4a04', 'e4a05', 'f4a06', 'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11'],
+        targetProgress: 3000,
       }
     ],
     currentGoalIdx: 0,

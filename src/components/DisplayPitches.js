@@ -30,6 +30,7 @@ class DisplayPitches extends React.Component {
       <div>
         {trebleNotesObj && <Staff staff="treble" pitchesObj={trebleNotesObj}/>}
         {bassNotesObj && <Staff staff="bass" pitchesObj={bassNotesObj}/>}
+        {altoNotesObj && <Staff staff="alto" pitchesObj={altoNotesObj}/>}
       </div>
     )
   }

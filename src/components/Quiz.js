@@ -72,7 +72,7 @@ class Quiz extends React.Component {
         <header className="quiz">
           <h4>{this.props.title}</h4>
           <p className="problemsleft">{this.state.quizIds.length - this.state.idx + 1} notes to go!</p>
-          {/*<a className="pause" onClick={this.pause}>Pause</a>*/}
+          {<a className="pause" onClick={this.pause}>Pause</a>}
         </header>
         {this.state.showStaff.treble &&
           <Staff
@@ -86,6 +86,15 @@ class Quiz extends React.Component {
         {this.state.showStaff.bass &&
           <Staff
             staff='bass'
+            quizPitchId={this.state.currentPitch}
+            pitchStatus={this.state.correct}
+            showNextPitch={this.showNextPitch}
+            resetStatus={this.resetStatus}
+          />
+        }
+        {this.state.showStaff.alto &&
+          <Staff
+            staff='alto'
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}

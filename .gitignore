@@ -9,3 +9,5 @@ src/css/*.css
 
 #Ignore operating system files
 .DS_Store
+
+src/token.js

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import MenuBar from './MenuBar'
 
 class Progress extends React.Component {
+
+
+
   render() {
     return (
       <div>

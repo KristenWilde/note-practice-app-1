@@ -2,7 +2,8 @@
 .staff-wrapper {
   height: 19em;
   margin: 1em auto;
-  width: 100%; }
+  width: 80%;
+  font-size: 13px; }
 
 .staff-lines {
   position: relative;
@@ -75,3 +76,10 @@
   position: absolute;
   bottom: 1.45em;
   left: .8em; }
+
+#altoclef {
+  height: 8.05em;
+  z-index: -1;
+  position: absolute;
+  bottom: 0.02em;
+  left: .5em; }

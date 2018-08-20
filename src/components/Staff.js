@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import '../css/staffnotes.css'
 import bassClefSign from '../images/bassclef.png'
 import trebleClefSign from '../images/trebleclef.png'
+import altoClefSign from '../images/altoclef.png'
 import Note from './Note'
 
 /* How this component will be used:
@@ -57,6 +58,7 @@ class Staff extends React.Component {
           {this.props.quizPitchId && quizNote}
           {this.props.staff === 'treble' && <img id="trebleclef" src={trebleClefSign} alt="treble clef sign"></img>}
           {this.props.staff === 'bass' && <img id="bassclef" src={bassClefSign} alt="bass clef sign"></img>}
+          {this.props.staff === 'alto' && <img id="altoclef" src={altoClefSign} alt="alto clef sign"></img>}
           <div className="line"></div>
           <div className="line"></div>
           <div className="line"></div>

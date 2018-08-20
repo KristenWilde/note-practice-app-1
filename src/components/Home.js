@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import token from '../token'
 
 class Home extends Component {
   menuItems = {
@@ -10,6 +11,20 @@ class Home extends Component {
     FAQ: "/faq",
     "My Account": `/${this.props.userId}/account`
   };
+
+  getUsers() {
+    const url = "http://musical-app.herokuapp.com/global"
+    const myHeaders = new Headers()
+    myHeaders.append('token', token)
+
+    fetch(url, { method: 'GET', headers: myHeaders })
+    .then(result => result.json())
+    .then(result => console.log(result), err => console.log(err))
+  }
+
+  componentDidMount() {
+    this.getUsers()
+  }
 
   render() {
     return (
