@@ -8,8 +8,8 @@ header.quiz > * {
 
 #keyboard {
   position: relative;
-  max-width: 380px;
-  height: 200px;
+  max-width: 350px;
+  height: 190px;
   margin: 0 auto;
   box-shadow: $largeshadow;
 }
@@ -34,7 +34,7 @@ header.quiz > * {
     position: absolute;
     bottom: 30px;
     margin-left: -.5em;
-    font: bold italic 18px Palatino;
+    font: bold 18px Palatino;
   }
 }
 
@@ -55,12 +55,12 @@ header.quiz > * {
     div:first-child {
       margin-bottom: 15%;
       height: 84%;
-      background: linear-gradient(#000, #222);
+      background: linear-gradient(#000, #333);
       border-radius: 0 0 8px 8px;
     }
     div:last-child {
       height: 12%;
-      background: #222;
+      background: linear-gradient(#292929, #191919);
       border-radius: 8px 8px 0 0;
     }
 }

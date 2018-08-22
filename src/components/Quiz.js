@@ -35,11 +35,14 @@ class Quiz extends React.Component {
       return
     }
     const currentPitch = this.state.quizIds[idx]
-    this.setState({
-      currentPitch,
-      correct: null,
-      idx: idx + 1,
-    }, this.startTimer)
+    this.setState(
+      {
+        currentPitch,
+        correct: null,
+        idx: idx + 1,
+      },
+      this.startTimer
+    )
   }
 
   startTimer() {
@@ -63,7 +66,7 @@ class Quiz extends React.Component {
   }
 
   resetStatus = () => {
-    this.setState({ correct: null})
+    this.setState({ correct: null })
   }
 
   render() {
@@ -72,50 +75,83 @@ class Quiz extends React.Component {
         <header className="quiz">
           <h4>{this.props.title}</h4>
           <p className="problemsleft">{this.state.quizIds.length - this.state.idx + 1} notes to go!</p>
-          {<a className="pause" onClick={this.pause}>Pause</a>}
+          {
+            <a className="pause" onClick={this.pause}>
+              Pause
+            </a>
+          }
         </header>
-        {this.state.showStaff.treble &&
+        {this.state.showStaff.treble && (
           <Staff
-            staff='treble'
+            staff="treble"
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
             resetStatus={this.resetStatus}
           />
-        }
-        {this.state.showStaff.bass &&
+        )}
+        {this.state.showStaff.bass && (
           <Staff
-            staff='bass'
+            staff="bass"
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
             resetStatus={this.resetStatus}
           />
-        }
-        {this.state.showStaff.alto &&
+        )}
+        {this.state.showStaff.alto && (
           <Staff
-            staff='alto'
+            staff="alto"
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
             resetStatus={this.resetStatus}
           />
-        }
+        )}
         <section id="keyboard">
           <div id="answers" onClick={this.handleAnswer}>
-            <div className="answer-button"><span>C</span></div>
-            <div className="answer-button"><span>D</span></div>
-            <div className="answer-button"><span>E</span></div>
-            <div className="answer-button"><span>F</span></div>
-            <div className="answer-button"><span>G</span></div>
-            <div className="answer-button"><span>A</span></div>
-            <div className="answer-button"><span>B</span></div>
+            <div className="answer-button">
+              <span>C</span>
+            </div>
+            <div className="answer-button">
+              <span>D</span>
+            </div>
+            <div className="answer-button">
+              <span>E</span>
+            </div>
+            <div className="answer-button">
+              <span>F</span>
+            </div>
+            <div className="answer-button">
+              <span>G</span>
+            </div>
+            <div className="answer-button">
+              <span>A</span>
+            </div>
+            <div className="answer-button">
+              <span>B</span>
+            </div>
           </div>
-          <div id="black-key1" className="black-key"><div></div><div></div></div>
-          <div id="black-key2" className="black-key"><div></div><div></div></div>
-          <div id="black-key3" className="black-key"><div></div><div></div></div>
-          <div id="black-key4" className="black-key"><div></div><div></div></div>
-          <div id="black-key5" className="black-key"><div></div><div></div></div>
+          <div id="black-key1" className="black-key">
+            <div />
+            <div />
+          </div>
+          <div id="black-key2" className="black-key">
+            <div />
+            <div />
+          </div>
+          <div id="black-key3" className="black-key">
+            <div />
+            <div />
+          </div>
+          <div id="black-key4" className="black-key">
+            <div />
+            <div />
+          </div>
+          <div id="black-key5" className="black-key">
+            <div />
+            <div />
+          </div>
         </section>
       </main>
     )
