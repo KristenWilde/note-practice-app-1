@@ -94,12 +94,15 @@ export function randomizedQuizIds(noteIds, rounds){
   return result;
 }
 
-export function averageScores(noteScores) {
-    const averages = Object.keys(noteScores).reduce((obj, noteId) => {
-      const scores = noteScores[noteId]
-      obj[noteId] = scores.reduce((sum, score) => sum + score) / scores.length
-      return obj
-    }, {})
-    console.log(averages)
-    return averages
+export function quizResults(noteScores) {
+  const result = {
+    userdate: new Date().toDateString(),
+    speeds: []
   }
+  Object.keys(noteScores).forEach((noteId) => {
+    const scores = noteScores[noteId]
+    const averageSpeed = scores.reduce((sum, score) => sum + score) / scores.length
+    result.speeds.push({ id: noteId, speed: averageSpeed })
+  })
+  return result
+}

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import MenuBar from './MenuBar';
 import PickNotes from './PickNotes'
+import token, { sampleUserId } from '../token'
 
 class SetGoal extends Component {
   state = {
     title: null,
-    targetProgress: null,
+    targetProgress: 4500,
     validationMessage: null,
     pitchesSelected: null,
     numPitchesSelected: 0,
@@ -23,20 +24,42 @@ class SetGoal extends Component {
     this.setState({ pitchesSelected: pitches, numPitchesSelected: pitches.length })
   }
 
-  saveGoal = e => {
+  submit = e => {
     e.preventDefault()
+
     const goal = {
-      title: this.state.title,
-      targetProgress: this.state.targetProgress,
-      pitches: this.state.pitchesSelected
+      goaltitle: this.state.title,
+      targetprogress: this.state.targetProgress,
+      // pitches: this.state.pitchesSelected
     }
-    console.log(goal)
-    if (goal.pitches.length < 4) {
-      this.setState({ validationMessage: 'You must select 4 pitches or more.'})
-    } else {
-      this.setState({ validationMessage: null })
-    }
+
+    // if (goal.pitches.length < 4) {
+    //   this.setState({ validationMessage: 'You must select 4 pitches or more.'})
+    // } else {
+    //   this.setState({ validationMessage: null })
+    //   this.save(goal)
+    // }
+    this.save(goal)
   }
+
+  save(goal) {
+    const url = `http://musical-app.herokuapp.com/${sampleUserId}/newgoal`
+    const myHeaders = new Headers()
+    myHeaders.append('token', token)
+    myHeaders.append('Content-Type', 'application/json')
+
+    const body = JSON.stringify(goal)
+    console.log(body)
+
+    fetch(url, { method: 'POST', headers: myHeaders, body: body })
+    .then(result => result.json())
+    .then(result => {
+        console.log(result)
+      }
+    ).catch(err => console.log(err))
+  }
+
+
 
   render() {
     return (
@@ -44,7 +67,7 @@ class SetGoal extends Component {
         <MenuBar userId={this.props.match.params.userId}/>
         <main>
           <h1>Set a goal</h1>
-          <form onSubmit={this.saveGoal}>
+          <form onSubmit={this.submit}>
             <fieldset>
               <p className="step">1. Enter a title for your goal.</p>
               <p>Examples: "Treble lines", "Violin D string"</p>

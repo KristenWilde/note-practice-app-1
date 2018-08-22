@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types';
 import '../css/quiz.css'
-import { noteScores, randomizedQuizIds, hasStaff, averageScores } from '../music' // change name of 'music.js' to 'helpers.js'
+import { noteScores, randomizedQuizIds, hasStaff, quizResults } from '../music' // change name of 'music.js' to 'helpers.js'
 import Staff from './Staff'
 
 class Quiz extends React.Component {
@@ -31,7 +31,7 @@ class Quiz extends React.Component {
   showNextPitch = () => {
     const idx = this.state.idx
     if (idx >= this.state.quizIds.length) {
-      this.props.stopQuiz(averageScores(this.state.noteScores))
+      this.props.stopQuiz(quizResults(this.state.noteScores))
       return
     }
     const currentPitch = this.state.quizIds[idx]

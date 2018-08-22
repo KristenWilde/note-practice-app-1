@@ -36,9 +36,9 @@ class Practice extends Component {
     started: false,
     paused: false,
     finished: false,
-    results: null
+    resultSpeeds: null
   }
-  // temporarily defining state above for development
+  // resultSpeeds: [{id: 'g3b-1', speed: 4352}, {id: 'a3b00', speed: 6764}]
 
   componentDidMount() {
     // Will fetch goal data from our api and set state.
@@ -60,7 +60,7 @@ class Practice extends Component {
   }
 
   stopQuiz = (results) => {
-    this.setState({ started: false, paused: true, results })
+    this.setState({ started: false, paused: true, resultSpeeds: results.speeds })
   }
 
   startOver = e => {
@@ -88,8 +88,8 @@ class Practice extends Component {
           <main>
             <p>Here are the results of your practice:</p>
             <ul>
-              {Object.keys(this.state.results).map(noteId => {
-                return <li>{noteId}: {this.state.results[noteId]}</li>
+              {this.state.resultSpeeds.map(result => {
+                return <li key={result.id}>{result.id.slice(0,2)}: {(result.speed/1000).toFixed(2)} seconds</li>
               })}
             </ul>
             <button className="go" onClick={this.startQuiz}>Keep practicing</button>

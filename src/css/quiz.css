@@ -8,7 +8,8 @@ header.quiz > * {
   position: relative;
   max-width: 380px;
   height: 200px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 1px 2px 3px rgba(0, 0, 0, 0.2); }
 
 #answers {
   display: grid;
@@ -23,8 +24,7 @@ header.quiz > * {
   position: relative;
   border: 1px solid #888;
   z-index: 1;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2); }
+  border-radius: 0 0 5px 5px; }
   .answer-button span {
     position: absolute;
     bottom: 30px;
@@ -42,7 +42,8 @@ header.quiz > * {
   background-color: #000;
   z-index: 2;
   padding: 0 3px 1px;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2), 1px 2px 3px rgba(0, 0, 0, 0.2); }
   .black-key div:first-child {
     margin-bottom: 15%;
     height: 84%;

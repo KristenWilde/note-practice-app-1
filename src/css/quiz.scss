@@ -11,6 +11,7 @@ header.quiz > * {
   max-width: 380px;
   height: 200px;
   margin: 0 auto;
+  box-shadow: $largeshadow;
 }
 
 #answers {
@@ -28,7 +29,7 @@ header.quiz > * {
   border: 1px solid #888;
   z-index: 1;
   border-radius: 0 0 5px 5px;
-  box-shadow: $smallshadow;
+  // box-shadow: $smallshadow;
   span {
     position: absolute;
     bottom: 30px;
@@ -50,6 +51,7 @@ header.quiz > * {
     z-index: 2;
     padding: 0 3px 1px;
     box-sizing: border-box;
+    box-shadow: $largeshadow;
     div:first-child {
       margin-bottom: 15%;
       height: 84%;
