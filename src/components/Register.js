@@ -15,17 +15,17 @@ export default class Register extends Component {
     return (
       <div>
         <h2 className='register__heading--text'>Register</h2>
-        <form className='register-form' method="POST">
+        <form action='/register' className='register-form' method="POST">
           <label className='register-form__firstname--label' for='fname'>First Name</label>
           <input id='fname' name='fname' type='text' minlength='2' maxlength='80' required />
           <label className='register-form__lastname--label' for='lname'>Last Name</label>
           <input id='lname' name='lname' type='text' minlength='2' maxlength='80' required />
           <label className='register-form__dob--label' for='dob'>Date of Birth</label> 
-          <input type='date' id='dob' name='dob' />
+          <input type='date' id='dob' name='dob' required />
           <label className='register-form__email--label' for='email'>Email</label>
-          <input type='email' id='email' name='email' />
+          <input type='email' id='email' name='email' required />
           <label className='register-form__repeat-email--label' for='repeat-email'>Repeat Email</label>
-          <input type='email' id='repeat-email' name='repeat-email' />
+          <input type='email' id='repeat-email' name='repeat-email' required />
           <label className='register-form__username--label' for='username'>Username</label>
           <input id='username' name='username' type='text' minlength='8' maxlength='40' required />
           <label className='register-form__password--label' for='password'>Password</label>
