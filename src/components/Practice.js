@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import MenuBar from './MenuBar'
 import SetGoal from './SetGoal'
 import PickGoal from './PickGoal'
+import DisplayGoal from './DisplayGoal'
 import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
 import token, { sampleUserId } from '../token'
-import { saveQuizResults } from '../api-helpers'
+import { saveQuizResults, getGoals } from '../api-helpers'
 
 class Practice extends Component {
   state = {
@@ -42,31 +43,11 @@ class Practice extends Component {
     finished: false,
     resultSpeeds: null
   }
-  // resultSpeeds: [{id: 'g3b-1', speed: 4352}, {id: 'a3b00', speed: 6764}]
 
   componentDidMount() {
     // Will fetch goal data from our api and set state.
-    this.getGoals()
-  }
-
-  getGoals() {
-    const url = `http://musical-app.herokuapp.com/${sampleUserId}`
-    const myHeaders = new Headers()
-    myHeaders.append('token', token)
-
-    fetch(url, { method: 'GET', headers: myHeaders })
-    .then(result => result.json())
-    .then(result => {
-      const goals = result.goals.map( goal => {
-        return {
-          title: goal.title,
-          targetProgress: goal.targetProgress,
-          goalId: goal._id,
-          pitches: goal.pitches.map( pitch => pitch.pitchid )
-        }
-      }).reverse()
-      this.setState({ goals })
-    }, err => console.log(err))
+    const goals = getGoals(this.state.userId)
+    this.setState({ goals })
   }
 
   selectGoal = idx => {
@@ -136,9 +117,7 @@ class Practice extends Component {
           (or <Link to={'/' + this.props.match.params.userId + '/goal/new'}>set a new goal</Link>).
           </p>
           <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
-          <h3>{currentGoal.title}</h3>
-          <DisplayPitches noteIds={currentGoal.pitches}/>
-          <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>
+          <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
         </main>
       </div>
