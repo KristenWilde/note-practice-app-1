@@ -5,13 +5,17 @@ import SetGoal from './SetGoal'
 import PickGoal from './PickGoal'
 import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
+import token, { sampleUserId } from '../token'
+import { saveQuizResults } from '../api-helpers'
 
 class Practice extends Component {
   state = {
+    userId: sampleUserId,
     goals: [
       { title: 'Treble spaces in 5 sec',
         pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
         targetProgress: 5000,
+        goalId: '32452345246'
       },
       { title: 'Treble lines in 8 sec',
         pitches: ['e4t-1', 'g4t01', 'b4t03', 'd5t05', 'f5t07'],
@@ -42,6 +46,27 @@ class Practice extends Component {
 
   componentDidMount() {
     // Will fetch goal data from our api and set state.
+    this.getGoals()
+  }
+
+  getGoals() {
+    const url = `http://musical-app.herokuapp.com/${sampleUserId}`
+    const myHeaders = new Headers()
+    myHeaders.append('token', token)
+
+    fetch(url, { method: 'GET', headers: myHeaders })
+    .then(result => result.json())
+    .then(result => {
+      const goals = result.goals.map( goal => {
+        return {
+          title: goal.title,
+          targetProgress: goal.targetProgress,
+          goalId: goal._id,
+          pitches: goal.pitches.map( pitch => pitch.pitchid )
+        }
+      }).reverse()
+      this.setState({ goals })
+    }, err => console.log(err))
   }
 
   selectGoal = idx => {
@@ -60,6 +85,9 @@ class Practice extends Component {
   }
 
   stopQuiz = (results) => {
+    const goalId = this.state.goals[this.state.currentGoalIdx].goalId
+    console.log('goalId is ', goalId)
+    saveQuizResults(results, this.state.userId, goalId)
     this.setState({ started: false, paused: true, resultSpeeds: results.speeds })
   }
 
@@ -87,11 +115,11 @@ class Practice extends Component {
           <MenuBar userId={this.props.match.params.userId}/>
           <main>
             <p>Here are the results of your practice:</p>
-            <ul>
+            {/*<ul>
               {this.state.resultSpeeds.map(result => {
                 return <li key={result.id}>{result.id.slice(0,2)}: {(result.speed/1000).toFixed(2)} seconds</li>
               })}
-            </ul>
+            </ul>*/}
             <button className="go" onClick={this.startQuiz}>Keep practicing</button>
             <button className="go" onClick={this.startOver}>Pick another goal</button>
           </main>

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import MenuBar from './MenuBar';
 import PickNotes from './PickNotes'
-import token, { sampleUserId } from '../token'
+import { sampleUserId } from '../token'
+import { saveGoal } from '../api-helpers'
 
 class SetGoal extends Component {
   state = {
+    userId: sampleUserId,
     title: null,
     targetProgress: 4500,
     validationMessage: null,
@@ -26,40 +28,19 @@ class SetGoal extends Component {
 
   submit = e => {
     e.preventDefault()
-
     const goal = {
       goaltitle: this.state.title,
       targetprogress: this.state.targetProgress,
-      // pitches: this.state.pitchesSelected
+      pitches: this.state.pitchesSelected
     }
 
-    // if (goal.pitches.length < 4) {
-    //   this.setState({ validationMessage: 'You must select 4 pitches or more.'})
-    // } else {
-    //   this.setState({ validationMessage: null })
-    //   this.save(goal)
-    // }
-    this.save(goal)
+    if (goal.pitches.length < 4) {
+      this.setState({ validationMessage: 'You must select 4 pitches or more.'})
+    } else {
+      this.setState({ validationMessage: null })
+      saveGoal(goal, this.state.userId)
+    }
   }
-
-  save(goal) {
-    const url = `http://musical-app.herokuapp.com/${sampleUserId}/newgoal`
-    const myHeaders = new Headers()
-    myHeaders.append('token', token)
-    myHeaders.append('Content-Type', 'application/json')
-
-    const body = JSON.stringify(goal)
-    console.log(body)
-
-    fetch(url, { method: 'POST', headers: myHeaders, body: body })
-    .then(result => result.json())
-    .then(result => {
-        console.log(result)
-      }
-    ).catch(err => console.log(err))
-  }
-
-
 
   render() {
     return (
