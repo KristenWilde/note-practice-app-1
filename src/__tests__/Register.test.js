@@ -1,5 +1,8 @@
+/**
+ * @jest-environment jsdom
+*/
 import React from 'react';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
 import Register from '../components/Register';
 
 describe('Register Component', () => {
@@ -100,7 +103,7 @@ describe('Register Component', () => {
 
   it('Render a date element for dob', () => {
     const wrapper = shallow(<Register />);
-    expect(wrapper.contains(<input type='date' id='dob' name='dob' />)).toBe(true);
+    expect(wrapper.contains(<input type='date' id='dob' name='dob' required />)).toBe(true);
   });
 
   it('Render a email label element', () => {
@@ -110,7 +113,7 @@ describe('Register Component', () => {
 
   it('Render a email input element', () => {
     const wrapper = shallow(<Register />);
-    expect(wrapper.contains(<input type='email' id='email' name='email' />)).toBe(true);
+    expect(wrapper.contains(<input type='email' id='email' name='email' required />)).toBe(true);
   });
 
   it('Render a repeat email label element', () => {
@@ -120,11 +123,29 @@ describe('Register Component', () => {
 
   it('Render a repeat email input element', () => {
     const wrapper = shallow(<Register />);
-    expect(wrapper.contains(<input type='email' id='repeat-email' name='repeat-email' />)).toBe(true);
+    expect(wrapper.contains(<input type='email' id='repeat-email' name='repeat-email' required />)).toBe(true);
   });
 
   it('Render a disabled submit button', () => {
     const wrapper = shallow(<Register />);
     expect(wrapper.contains(<input type='submit' name='submit' value='Submit' disabled />)).toBe(true);
-  })
+  });
+
+  it('Render a checkbox input for email as username', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<input type='checkbox' id='emailAsUsername' name='email-as-user' value='yes' />)).toBe(true);
+  });
+
+  it('Render a checkbox label for email as username', () => {
+    const wrapper = shallow(<Register />);
+    expect(wrapper.contains(<label className='register-form__email-as-user--checkbox'
+     htmlFor='emailAsUsername'>Use email as username?</label>)).toBe(true);
+  });
+
+  it('Button should be enabled once all form elements are filled out', () => {
+    const wrapper = mount(<Register />);
+    const mockedEvent = { "target": { "value": 'Miguel'} };
+    wrapper.find('input#fname').simulate('change', mockedEvent);
+    expect(wrapper.find('input#fname').value).toBe('Miguel');
+  });
 });
