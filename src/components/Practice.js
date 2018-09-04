@@ -7,7 +7,7 @@ import DisplayGoal from './DisplayGoal'
 import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
 import token, { sampleUserId } from '../token'
-import { saveQuizResults, getGoals } from '../api-helpers'
+import { saveQuizResults, getUser, getGoals } from '../api-helpers'
 
 class Practice extends Component {
   state = {
@@ -44,19 +44,17 @@ class Practice extends Component {
     resultSpeeds: null
   }
 
-  componentDidMount() {
+  componentDidMount = async function() {
     // Will fetch goal data from our api and set state.
-    const goals = getGoals(this.state.userId)
-    this.setState({ goals })
+    const user = await getUser(this.state.userId)
+    this.setState({ goals: getGoals(user) })
   }
 
   selectGoal = idx => {
     const goals = this.state.goals.slice()
-    console.log(goals)
     for (let goal of goals) {
       goal.current = false
     }
-    console.log(goals)
     goals[idx].current = true
     this.setState({ goals, currentGoalIdx: idx })
   }
@@ -69,7 +67,7 @@ class Practice extends Component {
     const goalId = this.state.goals[this.state.currentGoalIdx].goalId
     console.log('goalId is ', goalId)
     saveQuizResults(results, this.state.userId, goalId)
-    this.setState({ started: false, paused: true, resultSpeeds: results.speeds })
+    this.setState({ started: false, paused: true, resultSpeeds: results.pitches })
   }
 
   startOver = e => {

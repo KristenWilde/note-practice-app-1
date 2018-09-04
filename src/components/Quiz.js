@@ -16,7 +16,7 @@ class Quiz extends React.Component {
       bass: hasStaff(this.props.pitches, 'bass'),
       alto: hasStaff(this.props.pitches, 'alto'),
     },
-    quizIds: randomizedQuizIds(this.props.pitches, 5), // returns array for whole quiz. 2nd arg is number of times for each pitch
+    quizIds: randomizedQuizIds(this.props.pitches, 1), // returns array for whole quiz. 2nd arg is number of times for each pitch
     noteScores: noteScores(this.props.pitches),
     idx: 0,
     currentPitch: null, // a noteId

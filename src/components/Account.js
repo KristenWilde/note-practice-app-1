@@ -2,21 +2,41 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MenuBar from './MenuBar'
 import {sampleUserId} from '../token'
-import { getUser, getGoals } from '../api-helpers.js'
+import { getUser, getGoals, destroyGoal } from '../api-helpers.js'
 import PickGoal from './PickGoal'
 import DisplayGoal from './DisplayGoal'
 
 class Account extends React.Component {
   state = {
-    user: null,
-    goals: null,
+    userId: sampleUserId,
+    user: {},
+    goals: [{title: "", targetProgress: "", goalId: "", pitches: []}],
     currentGoalIdx: 0,
   }
 
-  componentDidMount() {
-    const user = getUser(sampleUserId)
-    const goals = getGoals(sampleUserId)
+  componentDidMount = async function() {
+    const user = await getUser(sampleUserId)
+    const goals = getGoals(user)
     this.setState({ user, goals })
+  }
+
+  deleteGoal = async (goalId, title) => {
+    // const confirmation = Window.confirm(`Press 'OK' to permanently delete "${title}". This cannot be undone.`)
+    // if (confirmation) {
+      console.log(goalId, title)
+      const user = await destroyGoal(this.state.userId, goalId)
+      const goals = getGoals(user)
+      this.setState({ user, goals })
+    // }
+  }
+
+  selectGoal = idx => {
+    const goals = this.state.goals.slice()
+    for (let goal of goals) {
+      goal.current = false
+    }
+    goals[idx].current = true
+    this.setState({ goals, currentGoalIdx: idx })
   }
 
   render() {
@@ -34,9 +54,8 @@ class Account extends React.Component {
             goals={this.state.goals}
             selectGoal={this.selectGoal}
             currentGoalIdx={this.state.currentGoalIdx}
-            deleteGoal={this.deleteGoal}
           />
-          <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
+          <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]} deleteGoal={this.deleteGoal}/>
         </main>
       </div>
     )
