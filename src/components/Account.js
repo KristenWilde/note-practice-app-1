@@ -1,35 +1,42 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import MenuBar from './MenuBar'
-import token, {sampleUserId} from '../token'
+import {sampleUserId} from '../token'
+import { getUser, getGoals } from '../api-helpers.js'
+import PickGoal from './PickGoal'
+import DisplayGoal from './DisplayGoal'
 
 class Account extends React.Component {
-
-  getUser() {
-    const url = "http://musical-app.herokuapp.com/" + sampleUserId
-    const myHeaders = new Headers()
-    myHeaders.append('token', token)
-
-    fetch(url, { method: 'GET', headers: myHeaders })
-    .then(result => result.json())
-    .then(result => {
-        console.log(result)
-
-      }, err => console.log(err)
-    )
+  state = {
+    user: null,
+    goals: null,
+    currentGoalIdx: 0,
   }
 
   componentDidMount() {
-    this.getUser();
+    const user = getUser(sampleUserId)
+    const goals = getGoals(sampleUserId)
+    this.setState({ user, goals })
   }
 
   render() {
-
     return (
       <div>
         <MenuBar userId={this.props.match.params.userId}/>
         <main>
-          This is the Account view. Here user can change his/her password.
+          <h1>Account</h1>
+          <p>Here is your account info. You may update your personal information or delete goals.</p>
+          <form action="">
+          <h2>Personal information</h2>
+          </form>
+          <h2>Goals</h2>
+          <PickGoal
+            goals={this.state.goals}
+            selectGoal={this.selectGoal}
+            currentGoalIdx={this.state.currentGoalIdx}
+            deleteGoal={this.deleteGoal}
+          />
+          <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
         </main>
       </div>
     )

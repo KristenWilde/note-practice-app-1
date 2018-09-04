@@ -12,7 +12,7 @@ import { staffNotesObj } from '../music.js'
    */
 
 class DisplayPitches extends React.Component {
-  // props: noteIds: array of pitch id's
+  // props: noteIds: array of pitch id's.
   // This component will display Staff components by mapping to trebleData, bassData.
   // Staff components need: note object, staff.
 

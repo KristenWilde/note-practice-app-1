@@ -2,6 +2,7 @@ import React from 'react'
 import '../css/pickgoal.css'
 
 class PickGoal extends React.Component {
+  //props: currentGoalIdx, goals, selectGoal
 
   render() {
     return (

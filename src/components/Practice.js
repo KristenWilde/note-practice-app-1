@@ -3,15 +3,20 @@ import { Link } from 'react-router-dom'
 import MenuBar from './MenuBar'
 import SetGoal from './SetGoal'
 import PickGoal from './PickGoal'
+import DisplayGoal from './DisplayGoal'
 import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
+import token, { sampleUserId } from '../token'
+import { saveQuizResults, getGoals } from '../api-helpers'
 
 class Practice extends Component {
   state = {
+    userId: sampleUserId,
     goals: [
       { title: 'Treble spaces in 5 sec',
         pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
         targetProgress: 5000,
+        goalId: '32452345246'
       },
       { title: 'Treble lines in 8 sec',
         pitches: ['e4t-1', 'g4t01', 'b4t03', 'd5t05', 'f5t07'],
@@ -38,10 +43,11 @@ class Practice extends Component {
     finished: false,
     resultSpeeds: null
   }
-  // resultSpeeds: [{id: 'g3b-1', speed: 4352}, {id: 'a3b00', speed: 6764}]
 
   componentDidMount() {
     // Will fetch goal data from our api and set state.
+    const goals = getGoals(this.state.userId)
+    this.setState({ goals })
   }
 
   selectGoal = idx => {
@@ -60,6 +66,9 @@ class Practice extends Component {
   }
 
   stopQuiz = (results) => {
+    const goalId = this.state.goals[this.state.currentGoalIdx].goalId
+    console.log('goalId is ', goalId)
+    saveQuizResults(results, this.state.userId, goalId)
     this.setState({ started: false, paused: true, resultSpeeds: results.speeds })
   }
 
@@ -87,11 +96,11 @@ class Practice extends Component {
           <MenuBar userId={this.props.match.params.userId}/>
           <main>
             <p>Here are the results of your practice:</p>
-            <ul>
+            {/*<ul>
               {this.state.resultSpeeds.map(result => {
                 return <li key={result.id}>{result.id.slice(0,2)}: {(result.speed/1000).toFixed(2)} seconds</li>
               })}
-            </ul>
+            </ul>*/}
             <button className="go" onClick={this.startQuiz}>Keep practicing</button>
             <button className="go" onClick={this.startOver}>Pick another goal</button>
           </main>
@@ -108,9 +117,7 @@ class Practice extends Component {
           (or <Link to={'/' + this.props.match.params.userId + '/goal/new'}>set a new goal</Link>).
           </p>
           <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
-          <h3>{currentGoal.title}</h3>
-          <DisplayPitches noteIds={currentGoal.pitches}/>
-          <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>
+          <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
         </main>
       </div>
