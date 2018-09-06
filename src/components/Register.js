@@ -63,7 +63,9 @@ export default class Register extends Component {
     const days = range(1, 32).map((d) => {
       return <option value={d < 10 ? `0${d}` : d.toString()}>{d}</option>
     });
-    const years = range(1918, 2019).map((y) => {
+    const currentDate = new Date(Date.now());
+    const years = range(currentDate.getFullYear() - 100,
+     currentDate.getFullYear() + 1).map((y) => {
       return <option value={y.toString()}>{y}</option>
     });
 
