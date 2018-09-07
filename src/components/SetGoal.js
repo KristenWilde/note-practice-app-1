@@ -39,6 +39,7 @@ class SetGoal extends Component {
     } else {
       this.setState({ validationMessage: null })
       saveGoal(goal, this.state.userId)
+      this.props.history.push(`/${this.props.userId}/practice`)
     }
   }
 

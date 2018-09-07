@@ -7,9 +7,12 @@ import DisplayGoal from './DisplayGoal'
 import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
 import token, { sampleUserId } from '../token'
-import { saveQuizResults, getUser, getGoals } from '../api-helpers'
+import { saveQuizResults, getUser, getGoals, destroyGoal } from '../api-helpers'
+import { selectGoal } from '../misc-helpers'
 
 class Practice extends Component {
+  selectGoal = selectGoal.bind(this)
+
   state = {
     userId: sampleUserId,
     goals: [
@@ -50,28 +53,30 @@ class Practice extends Component {
     this.setState({ goals: getGoals(user) })
   }
 
-  selectGoal = idx => {
-    const goals = this.state.goals.slice()
-    for (let goal of goals) {
-      goal.current = false
-    }
-    goals[idx].current = true
-    this.setState({ goals, currentGoalIdx: idx })
-  }
-
   startQuiz = e => {
     this.setState({ started: true })
   }
 
   stopQuiz = (results) => {
     const goalId = this.state.goals[this.state.currentGoalIdx].goalId
-    console.log('goalId is ', goalId)
+    // console.log('goalId is ', goalId)
     saveQuizResults(results, this.state.userId, goalId)
     this.setState({ started: false, paused: true, resultSpeeds: results.pitches })
   }
 
   startOver = e => {
     this.setState({ paused: false, finished: false })
+  }
+
+  deleteGoal = async () => {
+    // const confirmation = Window.confirm(`Press 'OK' to permanently delete "${title}". This cannot be undone!`)
+    // if (confirmation) {
+      const goalId = this.state.goals[this.state.currentGoalIdx].goalId
+      console.log('Deleting '+ goalId)
+      const user = await destroyGoal(this.state.userId, goalId)
+      const goals = getGoals(user)
+      this.setState({ user, goals, currentGoalIdx: 0 })
+    // }
   }
 
   render() {
@@ -111,12 +116,11 @@ class Practice extends Component {
         <MenuBar userId={this.props.match.params.userId}/>
         <main>
           <h1>Practice</h1>
-          <p>Select a goal below to start practicing
-          (or <Link to={'/' + this.props.match.params.userId + '/goal/new'}>set a new goal</Link>).
-          </p>
           <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
           <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
+          <Link to={'/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link>
+          <p><a href="#" onClick={this.deleteGoal}>Permanently delete the selected goal</a></p>
         </main>
       </div>
     )
