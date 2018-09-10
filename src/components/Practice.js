@@ -19,7 +19,8 @@ class Practice extends Component {
       { title: 'Treble spaces in 5 sec',
         pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
         targetProgress: 5000,
-        goalId: '32452345246'
+        goalId: '32452345246',
+        current: true,
       },
       { title: 'Treble lines in 8 sec',
         pitches: ['e4t-1', 'g4t01', 'b4t03', 'd5t05', 'f5t07'],

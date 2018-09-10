@@ -1,31 +1,61 @@
 import React from 'react'
 // import PropTypes from 'prop-types';
 import '../css/quiz.css'
-import { noteScores, randomizedQuizIds, hasStaff, quizResults } from '../music' // change name of 'music.js' to 'helpers.js'
+import { noteScores, randomizedQuizIds, hasStaff, quizResults, staffNotesObj, staffLinesTop, staffWrapperHeight } from '../music' // change name of 'music.js' to 'helpers.js'
 import Staff from './Staff'
 
 class Quiz extends React.Component {
   /*
   Props: title: 'Primer book notes',
-         pitches: ['a3b', 'b3b', 'd4t', 'e4t', 'f4t'],
+         pitches: ['a3b00', 'b3b01', 'd4t-2', 'e4t-1', 'f4t00'],
          targetProgress: 5550,
   */
   state = {
-    showStaff: {
-      treble: hasStaff(this.props.pitches, 'treble'),
-      bass: hasStaff(this.props.pitches, 'bass'),
-      alto: hasStaff(this.props.pitches, 'alto'),
-    },
+    showTreble: hasStaff(this.props.pitches, 'treble'),
+    showBass: hasStaff(this.props.pitches, 'bass'),
+    showAlto: hasStaff(this.props.pitches, 'alto'),
     quizIds: randomizedQuizIds(this.props.pitches, 1), // returns array for whole quiz. 2nd arg is number of times for each pitch
     noteScores: noteScores(this.props.pitches),
     idx: 0,
     currentPitch: null, // a noteId
     startTime: null,
     correct: null,
+    // trebleTop: 0,
+    // trebleHeight: 12,
+    // bassTop: 0,
+    // bassHeight: 10,
+    // altoTop: 0,
+    // altoHeight: 10,
   }
 
+
   componentDidMount() {
+    this.setSpacing()
     this.showNextPitch()
+  }
+
+  setSpacing() {
+    let trebleTop = 0
+    let trebleHeight = 12
+    let bassTop = 0
+    let bassHeight = 10
+    let altoTop = 0
+    let altoHeight = 10
+    if (hasStaff(this.props.pitches, 'treble')){
+      const treblePitches = staffNotesObj(this.props.pitches, 'treble')
+      console.log(treblePitches)
+      trebleTop = staffLinesTop(staffNotesObj(this.props.pitches, 'treble'))
+      trebleHeight = staffWrapperHeight(staffNotesObj(this.props.pitches, 'treble'))
+    }
+    if (hasStaff(this.props.pitches, 'bass')){
+      bassTop = staffLinesTop(staffNotesObj(this.props.pitches, 'bass'))
+      bassHeight = staffWrapperHeight(staffNotesObj(this.props.pitches, 'bass'))
+    }
+    if (hasStaff(this.props.pitches, 'alto')){
+      altoTop = staffLinesTop(staffNotesObj(this.props.pitches, 'alto'))
+      altoHeight = staffWrapperHeight(staffNotesObj(this.props.pitches, 'alto'))
+    }
+    this.setState({ trebleTop, trebleHeight, bassTop, bassHeight, altoTop, altoHeight })
   }
 
   showNextPitch = () => {
@@ -81,31 +111,37 @@ class Quiz extends React.Component {
             </a>
           }
         </header>
-        {this.state.showStaff.treble && (
+        {this.state.showTreble && (
           <Staff
             staff="treble"
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
             resetStatus={this.resetStatus}
+            top={this.state.trebleTop}
+            height={this.state.trebleHeight}
           />
         )}
-        {this.state.showStaff.bass && (
+        {this.state.showBass && (
           <Staff
             staff="bass"
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
             resetStatus={this.resetStatus}
+            top={this.state.bassTop}
+            height={this.state.bassHeight}
           />
         )}
-        {this.state.showStaff.alto && (
+        {this.state.showAlto && (
           <Staff
             staff="alto"
             quizPitchId={this.state.currentPitch}
             pitchStatus={this.state.correct}
             showNextPitch={this.showNextPitch}
             resetStatus={this.resetStatus}
+            top={this.state.altoTop}
+            height={this.state.altoHeight}
           />
         )}
         <section id="keyboard">

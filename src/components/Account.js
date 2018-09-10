@@ -6,8 +6,6 @@ import { getUser } from '../api-helpers.js'
 
 
 class Account extends React.Component {
-  selectGoal = selectGoal.bind(this)
-
   state = {
     userId: sampleUserId,
   }

@@ -1,13 +1,13 @@
 /*  Colors:  */
 .staff-wrapper {
-  height: 19em;
+  height: 18em;
   margin: 1em auto;
   width: 80%;
-  font-size: 13px; }
+  font-size: 9px; }
 
 .staff-lines {
   position: relative;
-  top: 4em; }
+  top: 0em; }
 
 .line {
   width: 100%;

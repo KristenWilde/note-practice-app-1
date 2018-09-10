@@ -5,6 +5,7 @@ import bassClefSign from '../images/bassclef.png'
 import trebleClefSign from '../images/trebleclef.png'
 import altoClefSign from '../images/altoclef.png'
 import Note from './Note'
+import { staffLinesTop, staffWrapperHeight } from '../music'
 
 /* How this component will be used:
   <li>In Practice, it will show the pitches that are part of currentGoal (small).</li>
@@ -52,8 +53,8 @@ class Staff extends React.Component {
     }
 
     return (
-      <section className="staff-wrapper">
-        <div className="staff-lines">
+      <section className="staff-wrapper" style={{height: (this.props.height || staffWrapperHeight(this.props.pitchesObj)) + 'em'}}>
+        <div className="staff-lines" style={{top: (this.props.top || staffLinesTop(this.props.pitchesObj)) + 'em'}}>
           {this.props.pitchesObj && notes}
           {this.props.quizPitchId && quizNote}
           {this.props.staff === 'treble' && <img id="trebleclef" src={trebleClefSign} alt="treble clef sign"></img>}
