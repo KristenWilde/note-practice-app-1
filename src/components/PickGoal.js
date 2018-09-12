@@ -21,7 +21,7 @@ class PickGoal extends React.Component {
     return (
       <form id="goal-list">
         <h2>Goal:</h2>
-        <ul ref={this.ulRef}>
+        <ul ref={this.ulRef} className="hidden">
         {this.props.goals.map( (goal, idx) => {
           return (
             <li className={idx == this.props.currentGoalIdx ? 'current' : ''} key={idx} >

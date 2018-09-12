@@ -49,8 +49,8 @@ class Practice extends Component {
 
   componentDidMount = async function() {
     // Will fetch goal data from our api and set state.
-    const user = await getUser(this.props.match.params.userId)
-    this.setState({ goals: getGoals(user) })
+    // const user = await getUser(this.props.match.params.userId)
+    // this.setState({ goals: getGoals(user) })
   }
 
   startQuiz = e => {

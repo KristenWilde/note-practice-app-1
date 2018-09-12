@@ -1,7 +1,7 @@
 /*  Colors:  */
 #goal-list {
   text-align: center;
-  margin: 20px 0; }
+  margin: 40px 0; }
   #goal-list ul, #goal-list h2, #goal-list .showListButton {
     display: inline-block;
     vertical-align: top;
@@ -12,7 +12,8 @@
     border-radius: 7px 0 0 7px;
     height: 2.1em;
     border: 1px solid #ccc;
-    border-right: none; }
+    border-right: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2); }
   #goal-list ul {
     width: 350px; }
   #goal-list .showListButton {
@@ -22,32 +23,35 @@
     padding: 8px;
     border-radius: 0 7px 7px 0;
     height: 2.1em;
-    text-align: center; }
+    text-align: center;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2); }
   #goal-list li {
     text-align: left;
     height: 2.1em;
     box-sizing: border-box;
     border: 1px solid #ccc;
-    border-top: none; }
-  #goal-list li:first-child {
-    border-top: 1px solid #ccc; }
+    border-top: none;
+    box-shadow: 2px 0 2px -2px rgba(0, 0, 0, 0.2), -2px 0 2px -2px rgba(0, 0, 0, 0.2); }
   #goal-list li:last-child {
-    border-radius: 0 0 7px 7px; }
+    border-radius: 0 0 7px 7px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.2); }
+  #goal-list li:first-child {
+    border-top: 1px solid #ccc;
+    box-shadow: 0 0; }
   #goal-list li.current {
-    background-color: #eee;
-    border-radius: 0; }
+    background-color: #eee; }
   #goal-list input[type="radio"] {
     width: 0;
     height: 0;
     opacity: 0; }
-  #goal-list ul.hidden {
+  #goal-list ul.hidden li {
+    display: none; }
+  #goal-list ul.hidden li.current {
+    display: block;
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2);
     border-radius: 0; }
-    #goal-list ul.hidden li {
-      display: none; }
-    #goal-list ul.hidden li.current {
-      display: block;
-      border-top: 1px solid #ccc;
-      background-color: #fff; }
   #goal-list span {
     font-size: 1.3em; }
   #goal-list ul.hidden + div > span {
