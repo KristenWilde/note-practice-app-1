@@ -65,7 +65,10 @@ export function saveGoal(goal, userId) {
 }
 
 export async function destroyGoal(userId, goalId) {
-  console.log('Deleting goal. goalId: ' + goalId)
+  const oldUser = await getUser(userId)
+  console.log('goalIds for user: ', oldUser.goals.map(goal => goal._id))
+
+  console.log('Deleting goalId: ' + goalId)
   const url = `${baseUrl}/${userId}/${goalId}/deletegoal`
   const myHeaders = new Headers()
   myHeaders.append('token', token)
@@ -73,7 +76,8 @@ export async function destroyGoal(userId, goalId) {
   const user = await fetch(url, {method: 'DELETE', headers: myHeaders})
   .then(result => result.json())
   .then(result => {
-    console.log('Successfully deleted goal. goalId:' + goalId)
+    console.log('Successfully deleted goal.')
+    console.log('Remaining goalIDs: ', result.goals.map(goal => goal._id))
     return result
   })
   .catch(err => console.log(err))

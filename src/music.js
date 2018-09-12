@@ -115,7 +115,6 @@ export function staffLinesTop(pitchAr){
     const position = parseInt(pitchId.slice(3,5))
     return highest > position ? highest : position
   },0)
-  console.log(highestPosition)
   if (highestPosition < 8) {
     return 0
   }
