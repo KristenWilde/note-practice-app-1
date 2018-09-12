@@ -107,8 +107,8 @@ export function quizResults(noteScores) {
   return result
 }
 
-export function staffLinesTop(pitchObj){
-  const highestPosition = Object.keys(pitchObj).reduce((highest, pitchId) => {
+export function staffLinesTop(pitchAr){
+  const highestPosition = pitchAr.reduce((highest, pitchId) => {
     const position = parseInt(pitchId.slice(3,5))
     return highest > position ? highest : position
   },0)
@@ -119,17 +119,20 @@ export function staffLinesTop(pitchObj){
   return highestPosition % 8
 }
 
-export function staffWrapperHeight(pitchObj){
-  const lowestPosition = Object.keys(pitchObj).reduce((lowest, pitchId) => {
+export function staffWrapperHeight(pitchAr){
+  const lowestPosition = pitchAr.reduce((lowest, pitchId) => {
     const position = parseInt(pitchId.slice(3,5))
     return lowest < position ? lowest : position
   }, 0)
-  console.log('lowest: ' + lowestPosition, 'top: ' + staffLinesTop(pitchObj))
-  const top = staffLinesTop(pitchObj)
+  const top = staffLinesTop(pitchAr)
   if (lowestPosition < -2) {
     return - lowestPosition + top + 10
   }
   return top + 13
+}
+
+export function pitchIdsForStaff(allPitchIds, staff) {
+  return allPitchIds.filter(pitchId => pitchId[2] === staff[0])
 }
 
 

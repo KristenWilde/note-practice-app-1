@@ -57,7 +57,6 @@ class PickNotes extends Component {
     return (
       <div>
         <fieldset id="options">
-        <legend>Options:</legend>
           {/*<label>            // Feature to add later
             <input
               type="checkbox"
@@ -90,20 +89,28 @@ class PickNotes extends Component {
             Alto clef
           </label>*/}
         </fieldset>
-        {this.state.showStaff.treble &&
-          <Staff
-            pitchesObj={this.state.noteStatus.treble}
-            staff="treble"
-            selectPitch={this.selectPitch}
-          />
-        }
-        {this.state.showStaff.bass &&
-          <Staff
-            pitchesObj={this.state.noteStatus.bass}
-            staff="bass"
-            selectPitch={this.selectPitch}
-          />
-        }
+        <fieldset>
+          {this.state.showStaff.treble &&
+            <Staff
+              pitchesObj={this.state.noteStatus.treble}
+              staff="treble"
+              selectPitch={this.selectPitch}
+              top="3"
+              height="18"
+              size="12"
+            />
+          }
+          {this.state.showStaff.bass &&
+            <Staff
+              pitchesObj={this.state.noteStatus.bass}
+              staff="bass"
+              selectPitch={this.selectPitch}
+              top="3"
+              height="16"
+              size="12"
+            />
+          }
+        </fieldset>
       </div>
     )
   }

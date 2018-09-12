@@ -22,6 +22,8 @@ class Staff extends React.Component {
   //        selectPitch function - takes (pitch, staff). Optional.
   //        quizPitch: a note id for the current quiz pitch.
   //        quizPitchStatus: a string 'incorrect', 'correct', ''
+  //        top: integer
+  //        height: integer
   quizNoteBelongs(){
     return this.props.quizPitchId[2] === this.props.staff[0]
   }
@@ -53,8 +55,8 @@ class Staff extends React.Component {
     }
 
     return (
-      <section className="staff-wrapper" style={{height: (this.props.height || staffWrapperHeight(this.props.pitchesObj)) + 'em'}}>
-        <div className="staff-lines" style={{top: (this.props.top || staffLinesTop(this.props.pitchesObj)) + 'em'}}>
+      <section className="staff-wrapper" style={{height: this.props.height + 'em', fontSize: this.props.size + 'px'}}>
+        <div className="staff-lines" style={{top: this.props.top + 'em'}}>
           {this.props.pitchesObj && notes}
           {this.props.quizPitchId && quizNote}
           {this.props.staff === 'treble' && <img id="trebleclef" src={trebleClefSign} alt="treble clef sign"></img>}

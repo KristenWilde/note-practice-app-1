@@ -6,7 +6,6 @@ import { saveGoal } from '../api-helpers'
 
 class SetGoal extends Component {
   state = {
-    userId: sampleUserId,
     title: null,
     targetProgress: 4500,
     validationMessage: null,
@@ -38,8 +37,8 @@ class SetGoal extends Component {
       this.setState({ validationMessage: 'You must select 4 pitches or more.'})
     } else {
       this.setState({ validationMessage: null })
-      saveGoal(goal, this.state.userId)
-      this.props.history.push(`/${this.props.userId}/practice`)
+      saveGoal(goal, this.props.match.params.userId)
+      this.props.history.push(`/${this.props.match.params.userId}/practice`)
     }
   }
 
@@ -57,8 +56,8 @@ class SetGoal extends Component {
             </fieldset>
             <fieldset>
               <p className="step">2. Enter a number of seconds for each note.</p>
-              <p>We suggest 3-6 seconds for beginners.</p>
-              <label><input type="number" name="targetProgress" defaultValue="4.5" onBlur={this.setSeconds} step=".01" required/> seconds</label>
+              <p>We suggest 1-5 seconds.</p>
+              <label><input type="number" name="targetProgress" defaultValue="3.5" onBlur={this.setSeconds} step=".01" required/> seconds</label>
             </fieldset>
             <fieldset>
               <p className="step">3. Select a set of notes for this goal.</p>

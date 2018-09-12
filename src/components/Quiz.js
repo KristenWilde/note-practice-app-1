@@ -1,7 +1,7 @@
 import React from 'react'
 // import PropTypes from 'prop-types';
 import '../css/quiz.css'
-import { noteScores, randomizedQuizIds, hasStaff, quizResults, staffNotesObj, staffLinesTop, staffWrapperHeight } from '../music' // change name of 'music.js' to 'helpers.js'
+import { noteScores, randomizedQuizIds, hasStaff, quizResults, pitchIdsForStaff, staffLinesTop, staffWrapperHeight } from '../music' // change name of 'music.js' to 'helpers.js'
 import Staff from './Staff'
 
 class Quiz extends React.Component {
@@ -20,12 +20,6 @@ class Quiz extends React.Component {
     currentPitch: null, // a noteId
     startTime: null,
     correct: null,
-    // trebleTop: 0,
-    // trebleHeight: 12,
-    // bassTop: 0,
-    // bassHeight: 10,
-    // altoTop: 0,
-    // altoHeight: 10,
   }
 
 
@@ -42,18 +36,19 @@ class Quiz extends React.Component {
     let altoTop = 0
     let altoHeight = 10
     if (hasStaff(this.props.pitches, 'treble')){
-      const treblePitches = staffNotesObj(this.props.pitches, 'treble')
-      console.log(treblePitches)
-      trebleTop = staffLinesTop(staffNotesObj(this.props.pitches, 'treble'))
-      trebleHeight = staffWrapperHeight(staffNotesObj(this.props.pitches, 'treble'))
+      const treblePitchIds = pitchIdsForStaff(this.props.pitches, 'treble')
+      trebleTop = staffLinesTop(treblePitchIds)
+      trebleHeight = staffWrapperHeight(treblePitchIds)
     }
     if (hasStaff(this.props.pitches, 'bass')){
-      bassTop = staffLinesTop(staffNotesObj(this.props.pitches, 'bass'))
-      bassHeight = staffWrapperHeight(staffNotesObj(this.props.pitches, 'bass'))
+      const bassPitchIds = pitchIdsForStaff(this.props.pitches, 'bass')
+      bassTop = staffLinesTop(bassPitchIds)
+      bassHeight = staffWrapperHeight(bassPitchIds)
     }
     if (hasStaff(this.props.pitches, 'alto')){
-      altoTop = staffLinesTop(staffNotesObj(this.props.pitches, 'alto'))
-      altoHeight = staffWrapperHeight(staffNotesObj(this.props.pitches, 'alto'))
+      const altoPitchIds = pitchIdsForStaff(this.props.pitches, 'alto')
+      altoTop = staffLinesTop(altoPitchIds)
+      altoHeight = staffWrapperHeight(altoPitchIds)
     }
     this.setState({ trebleTop, trebleHeight, bassTop, bassHeight, altoTop, altoHeight })
   }

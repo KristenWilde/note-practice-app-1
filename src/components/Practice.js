@@ -14,7 +14,6 @@ class Practice extends Component {
   selectGoal = selectGoal.bind(this)
 
   state = {
-    userId: sampleUserId,
     goals: [
       { title: 'Treble spaces in 5 sec',
         pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
@@ -50,7 +49,7 @@ class Practice extends Component {
 
   componentDidMount = async function() {
     // Will fetch goal data from our api and set state.
-    const user = await getUser(this.state.userId)
+    const user = await getUser(this.props.match.params.userId)
     this.setState({ goals: getGoals(user) })
   }
 
@@ -61,7 +60,7 @@ class Practice extends Component {
   stopQuiz = (results) => {
     const goalId = this.state.goals[this.state.currentGoalIdx].goalId
     // console.log('goalId is ', goalId)
-    saveQuizResults(results, this.state.userId, goalId)
+    saveQuizResults(results, this.props.match.params.userId, goalId)
     this.setState({ started: false, paused: true, resultSpeeds: results.pitches })
   }
 
@@ -74,7 +73,7 @@ class Practice extends Component {
     // if (confirmation) {
       const goalId = this.state.goals[this.state.currentGoalIdx].goalId
       console.log('Deleting '+ goalId)
-      const user = await destroyGoal(this.state.userId, goalId)
+      const user = await destroyGoal(this.props.match.params.userId, goalId)
       const goals = getGoals(user)
       this.setState({ user, goals, currentGoalIdx: 0 })
     // }

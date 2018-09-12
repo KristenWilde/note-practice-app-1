@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import Staff from './Staff'
-import { staffNotesObj } from '../music.js'
+import { staffNotesObj, pitchIdsForStaff, staffLinesTop, staffWrapperHeight } from '../music.js'
 
 /* How this component will be used:
   <li>In Practice, it will show the pitches that are part of currentGoal (small).</li>
@@ -21,15 +21,37 @@ class DisplayPitches extends React.Component {
     const trebleNotesObj = staffNotesObj(this.props.noteIds, 'treble')
     const bassNotesObj = staffNotesObj(this.props.noteIds, 'bass')
     const altoNotesObj = staffNotesObj(this.props.noteIds, 'alto')
+    const trebleIds = pitchIdsForStaff(this.props.noteIds, 'treble')
+    const bassIds = pitchIdsForStaff(this.props.noteIds, 'bass')
+    const altoIds = pitchIdsForStaff(this.props.noteIds, 'alto')
 
     if (altoNotesObj) {
-      return <Staff staff="alto" pitchObj={altoNotesObj}/>
+      return (
+        <Staff
+          staff="alto"
+          pitchObj={altoNotesObj}
+          top={staffLinesTop(altoIds)}
+          height={staffWrapperHeight(altoIds)}
+        />
+      )
     }
 
     return(
       <div>
-        {trebleNotesObj && <Staff staff="treble" pitchesObj={trebleNotesObj}/>}
-        {bassNotesObj && <Staff staff="bass" pitchesObj={bassNotesObj}/>}
+        {trebleNotesObj &&
+          <Staff
+            staff="treble"
+            pitchesObj={trebleNotesObj}
+            top={staffLinesTop(trebleIds)}
+            height={staffWrapperHeight(trebleIds)}
+            />}
+        {bassNotesObj &&
+          <Staff
+          staff="bass"
+          pitchesObj={bassNotesObj}
+          top={staffLinesTop(bassIds)}
+          height={staffWrapperHeight(bassIds)}
+          />}
       </div>
     )
   }
