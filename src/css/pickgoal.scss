@@ -1,13 +1,80 @@
 @import './variables.scss';
 
 #goal-list {
-  max-width: 400px;
-  margin: 15px 0;
-  border: 1px solid #999;
+  text-align: center;
+  margin: 20px 0;
+  ul, h2, .showListButton {
+    display: inline-block;
+    vertical-align: top;
+    font: bold $h2-size $fancy-family;
+    box-sizing: border-box;
+  }
+  h2 {
+    padding: 8px;
+    border-radius: 7px 0 0 7px;
+    height: 2.1em;
+    border: 1px solid #ccc;
+    border-right: none;
+  }
+  ul {
+    width:350px;
+  }
+  .showListButton {
+    width: 40px;
+    border: 1px solid #ccc;
+    border-left: none;
+    padding: 8px;
+    border-radius: 0 7px 7px 0;
+    height: 2.1em;
+    text-align: center;
+  }
   li {
-    padding: 5px;
+    text-align: left;
+    height: 2.1em;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-top: none
+  }
+  li:first-child {
+    border-top: 1px solid #ccc;
+  }
+  li:last-child {
+    border-radius: 0 0 7px 7px;
   }
   li.current {
-    background-color: $green;
+    background-color: #eee;
+    border-radius: 0;
+  }
+  input[type="radio"] {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+  ul.hidden {
+    border-radius: 0;
+    li {
+      display: none;
+    }
+    li.current {
+      display: block;
+      border-top: 1px solid #ccc;
+      background-color: #fff;
+    }
+  }
+  span {
+    font-size: 1.3em;
+  }
+  ul.hidden + div > span {
+    display: inline-block;
+    transform: rotateX(180deg);
+    position: relative;
+    top: -5px;
+  }
+  label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    box-sizing: border-box;
   }
 }

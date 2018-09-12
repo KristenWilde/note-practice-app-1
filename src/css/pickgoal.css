@@ -1,9 +1,63 @@
 /*  Colors:  */
 #goal-list {
-  max-width: 400px;
-  margin: 15px 0;
-  border: 1px solid #999; }
+  text-align: center;
+  margin: 20px 0; }
+  #goal-list ul, #goal-list h2, #goal-list .showListButton {
+    display: inline-block;
+    vertical-align: top;
+    font: bold 1.2em "Trebuchet MS", Tahoma, Geneva, sans-serif;
+    box-sizing: border-box; }
+  #goal-list h2 {
+    padding: 8px;
+    border-radius: 7px 0 0 7px;
+    height: 2.1em;
+    border: 1px solid #ccc;
+    border-right: none; }
+  #goal-list ul {
+    width: 350px; }
+  #goal-list .showListButton {
+    width: 40px;
+    border: 1px solid #ccc;
+    border-left: none;
+    padding: 8px;
+    border-radius: 0 7px 7px 0;
+    height: 2.1em;
+    text-align: center; }
   #goal-list li {
-    padding: 5px; }
+    text-align: left;
+    height: 2.1em;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-top: none; }
+  #goal-list li:first-child {
+    border-top: 1px solid #ccc; }
+  #goal-list li:last-child {
+    border-radius: 0 0 7px 7px; }
   #goal-list li.current {
-    background-color: #60C782; }
+    background-color: #eee;
+    border-radius: 0; }
+  #goal-list input[type="radio"] {
+    width: 0;
+    height: 0;
+    opacity: 0; }
+  #goal-list ul.hidden {
+    border-radius: 0; }
+    #goal-list ul.hidden li {
+      display: none; }
+    #goal-list ul.hidden li.current {
+      display: block;
+      border-top: 1px solid #ccc;
+      background-color: #fff; }
+  #goal-list span {
+    font-size: 1.3em; }
+  #goal-list ul.hidden + div > span {
+    display: inline-block;
+    transform: rotateX(180deg);
+    position: relative;
+    top: -5px; }
+  #goal-list label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    box-sizing: border-box; }

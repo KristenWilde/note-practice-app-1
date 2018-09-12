@@ -21,7 +21,10 @@ h1, h2, h3, h4 {
   font-family: "Trebuchet MS", Tahoma, Geneva, sans-serif; }
 
 h1 {
-  font-size: 24px; }
+  font-size: 1.32em; }
+
+h2 {
+  font-size: 1.2em; }
 
 fieldset {
   border: none; }
@@ -62,6 +65,9 @@ a.pause {
   background-color: #ff9e3d;
   padding: 10px;
   border-radius: 3px; }
+
+.display-goal {
+  text-align: center; }
 
 @keyframes fade-out {
   0% {
