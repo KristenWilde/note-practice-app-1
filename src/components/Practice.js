@@ -6,6 +6,7 @@ import PickGoal from './PickGoal'
 import DisplayGoal from './DisplayGoal'
 import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
+import GoalProgress from './GoalProgress'
 import token, { sampleUserId } from '../token'
 import { saveQuizResults, getUser, getGoals, destroyGoal } from '../api-helpers'
 import { selectGoal } from '../misc-helpers'
@@ -115,9 +116,10 @@ class Practice extends Component {
       <div>
         <MenuBar userId={this.props.match.params.userId}/>
         <main>
-          <h1>Practice</h1>
+          <h1>{}'s Goals</h1>
           <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
           <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
+          <GoalProgress goal={this.state.goals[this.state.currentGoalIdx]}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
           <Link to={'/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link>
           <p><a href="#" onClick={this.deleteGoal}>Permanently delete the selected goal</a></p>

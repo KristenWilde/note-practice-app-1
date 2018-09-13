@@ -52,12 +52,12 @@ class SetGoal extends Component {
             <fieldset>
               <p className="step">1. Enter a title for your goal.</p>
               <p>Examples: "Treble lines", "Violin D string"</p>
-              <input type="text" placeholder="Title" onBlur={this.setTitle} minLength="4" pattern="[a-zA-Z0-9]+.*" required/>
+              <input type="text" placeholder="Title" onBlur={this.setTitle} minLength="4" maxLength="38" pattern="[a-zA-Z0-9]+.*" required/>
             </fieldset>
             <fieldset>
               <p className="step">2. Enter a number of seconds for each note.</p>
               <p>We suggest 1-5 seconds.</p>
-              <label><input type="number" name="targetProgress" defaultValue="3.5" onBlur={this.setSeconds} step=".01" required/> seconds</label>
+              <label><input type="number" name="targetProgress" defaultValue="3.5" onBlur={this.setSeconds} step=".1" min="0.5" required/> seconds</label>
             </fieldset>
             <fieldset>
               <p className="step">3. Select a set of notes for this goal.</p>

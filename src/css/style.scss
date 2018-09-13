@@ -21,7 +21,7 @@ ul, li {
 }
 
 h1, h2, h3, h4 {
-  margin: 0;
+  margin: .3em 0 1em;
   font-family: $fancy-family;
 }
 
@@ -48,11 +48,43 @@ main {
   box-shadow: $smallshadow;
 }
 
+input:not([type="checkbox"]):not([type="submit"]), select {
+  font:inherit;
+  width: 300px;
+  height: 2.3em;
+  line-height: 2.3em;
+  padding: 0 10px;
+  border: 3px solid skyblue;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #000;
+  box-shadow: $smallshadow;
+}
+
+select {
+  width: auto;
+}
+
+input:not([type="checkbox"]):focus {
+  outline: none;
+  box-shadow: $largeshadow;
+}
+
+input[type="number"] {
+  width: 50px
+}
+
+input[type="checkbox"]:checked {
+  color: skyblue;
+}
+
+
+
 p.step {
   font-weight: 600;
 }
 
-button.go {
+button.go, .register-form input[type="submit"] {
   display: block;
   font-size: 1.5rem;
   margin: 10px auto;
@@ -111,5 +143,11 @@ a.pause {
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+.register-form {
+  label, input {
+    display: block;
   }
 }

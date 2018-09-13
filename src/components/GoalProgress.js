@@ -22,16 +22,27 @@ class GoalProgress extends React.Component {
       }
     ],
   }
+  chartData(goal) {
+    return {
+          labels: ['9/1/2018', '9/3/2018', '9/3/2018', '9/10/2018', '9/11/2018', '9/11/2018', '9/12/2018', '9/13/2018'],
+          datasets: [
+            {data: [5.1, 4.6, 4.1, 4.2, 3.8, 3.7, 3.4, 3.3], label: 'Average seconds per note', fill:false, borderColor: 'magenta'},
+            {data: [3,3,3,3,3,3,3,3], label: 'Target', pointRadius: 0, fill: false, borderColor: 'teal'}
+          ]
+        }
+  }
+
 
   chartOptions(datasets) {
+
     const min = this.minTick(datasets)
     return {
       legend: { labels: { usePointStyle: true }, position: 'bottom'},
       scales: {
         yAxes: [{
           ticks: {
-            stepSize: 0.2,
-            min: 2.8,
+            // stepSize: 0.2,
+            min
           }
         }]
       }
@@ -41,7 +52,7 @@ class GoalProgress extends React.Component {
   minTick(datasets){
     const dataMin = Math.min(datasets[0].data)
     const goal = datasets[1].data[0]
-    const min = Math.floor(Math.min(dataMin, goal)) - 0.2
+    const min = Math.floor(Math.min(dataMin, goal)) - 0.5
     console.log(min)
     return min
   }
@@ -54,11 +65,10 @@ class GoalProgress extends React.Component {
 
 
   render() {
-    const goal = this.state.goals[this.state.currentGoalIdx]
 
     return (
       <div>
-        <Line data={goal.chartData} options={this.chartOptions(goal.chartData.datasets)} />
+        <Line data={this.chartData(this.props.goal)} />
       </div>
     )
   }

@@ -1,47 +1,61 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Register from './Register'
 import token from '../token'
 
 class Home extends Component {
-  menuItems = {
-    Practice: `/${this.props.userId}/practice`,
-    "Set a Goal": `/${this.props.userId}/goal/new`,
-    "View Progress": `/${this.props.userId}/progress`,
-    "Music Buddies": `/${this.props.userId}/buddies`,
-    FAQ: "/faq",
-    "My Account": `/${this.props.userId}/account`
-  };
-
-  getUsers() {
-    const url = "http://musical-app.herokuapp.com/global"
-    const myHeaders = new Headers()
-    myHeaders.append('token', token)
-
-    fetch(url, { method: 'GET', headers: myHeaders })
-    .then(result => result.json())
-    .then(result => console.log(result), err => console.log(err))
+  state = {
+    status: 'intro', // possible values are 'intro', 'register', 'login'
   }
 
-  componentDidMount() {
-    this.getUsers()
+  showRegistration = e => {
+    this.setState({ status: 'register' })
+  }
+
+  showLogin = e => {
+    this.setState({ status: 'login' })
   }
 
   render() {
-    return (
-      <main>
-        <h1>This is the Home page.</h1>
-        <p>The react version is {React.version}</p>
-        <p>This is where user will log in or register.</p>
-        <p>Other pages available:</p>
-        <ul>
-          {Object.keys(this.menuItems).map(item => (
-            <li key={item}>
-              <Link to={this.menuItems[item]}>{item}</Link>
-            </li>
-          ))}
-        </ul>
-      </main>
-    );
+    const welcome = <h1>Welcome to MyNotePractice!</h1>
+
+    if (this.state.status === 'intro'){
+      return (
+        <main>
+          {welcome}
+          <div className="intro">
+            <p>You've found the best tool on the web for practicing musical note identification!</p>
+            <ul>
+              <li>Set your own goals with the notes you want to learn.</li>
+              <li>Choose from treble, bass, and alto clef.</li>
+              <li>See charts showing your progress.</li>
+              <li>Free, safe, and fun for all ages.</li>
+            </ul>
+            <button className="go" onClick={this.showRegistration}>Sign up</button>
+            <button className="go" onClick={this.showLogin}>Log in </button>
+          </div>
+        </main>
+      )
+    }
+
+    if (this.state.status === 'register') {
+      return (
+        <main>
+          {welcome}
+          <Register />
+        </main>
+      )
+    }
+
+    if (this.state.status === 'login') {
+      return (
+        <main>
+          {welcome}
+          <h1>Log in</h1>
+        </main>
+      )
+    }
+
   }
 }
 

@@ -2,6 +2,17 @@ import token from './token'
 
 const baseUrl = "http://musical-app.herokuapp.com"
 
+export async function allUsers() {
+  const url = "http://musical-app.herokuapp.com/global"
+  const myHeaders = new Headers()
+  myHeaders.append('token', token)
+
+  const users = await fetch(url, { method: 'GET', headers: myHeaders })
+  .then(result => result.json())
+  .then(result => console.log(result), err => console.log(err))
+  return users
+}
+
 export async function getUser(userId) {
   const url = `${baseUrl}/${userId}`
   const myHeaders = new Headers()

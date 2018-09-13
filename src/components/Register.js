@@ -55,8 +55,8 @@ export default class Register extends Component {
   }
 
   render() {
-    const months = ['01-January', '02-Feburary', '03-March', '04-April', 
-      '05-May','06-June', '07-July', '08-August', 
+    const months = ['01-January', '02-Feburary', '03-March', '04-April',
+      '05-May','06-June', '07-July', '08-August',
       '09-September', '10-October','11-November', '12-December'].map((m) => {
         return <option value={m.slice(0,2)}>{m}</option>
     });
@@ -75,29 +75,29 @@ export default class Register extends Component {
         <h2 className='register__heading--text'>Register</h2>
         <form action='/register' className='register-form' method="POST">
           <label className='register-form__firstname--label' htmlFor='fname'>First Name</label>
-          <input 
-            id='fname' 
-            name='firstName' 
-            type='text' 
-            minLength='2' 
+          <input
+            id='fname'
+            name='firstName'
+            type='text'
+            minLength='2'
             maxLength='80'
             onChange={this._handleInputChange}
-            required={true} 
+            required={true}
           />
           <label className='register-form__lastname--label' htmlFor='lname'>Last Name</label>
-          <input 
-            id='lname' 
-            name='lastName' 
-            type='text' 
-            minLength='2' 
+          <input
+            id='lname'
+            name='lastName'
+            type='text'
+            minLength='2'
             maxLength='80'
-            onChange={this._handleInputChange} 
+            onChange={this._handleInputChange}
             required={true}
           />
           <label className='register-form__dob--label' htmlFor='dob'>Date of Birth</label>
-          <label className='register-form__dob--month--label' htmlFor='register--form__dob--month'>Month</label> 
-          <select 
-            id='register--form__dob--month' 
+          <label className='register-form__dob--month--label' htmlFor='register--form__dob--month'>Month</label>
+          <select
+            id='register--form__dob--month'
             name='dobMonth'
             onChange={this._handleInputChange}
           >
@@ -112,59 +112,59 @@ export default class Register extends Component {
             { years }
           </select>
           <label className='register-form__email--label' htmlFor='email'>Email</label>
-          <input 
-            type='email' 
-            id='email' 
-            name='userEmail' 
-            required={true} 
+          <input
+            type='email'
+            id='email'
+            name='userEmail'
+            required={true}
           />
           <label className='register-form__repeat-email--label' htmlFor='repeat-email'>Repeat Email</label>
-          <input 
-            type='email' 
-            id='repeat-email' 
-            name='repeatEmail' 
-            required={true} 
+          <input
+            type='email'
+            id='repeat-email'
+            name='repeatEmail'
+            required={true}
           />
-          <input 
-            type='checkbox' 
-            id='emailAsUsername' 
+          <input
+            type='checkbox'
+            id='emailAsUsername'
             name='email-as-user'
-            checked={ this.state.isEmailAsUsername }  
+            checked={ this.state.isEmailAsUsername }
           />
           <label className='register-form__email-as-user--checkbox' htmlFor='emailAsUsername'>Use email as username?</label>
           <label className='register-form__username--label' htmlFor='username'>Username</label>
-          <input 
-            id='username' 
-            name='username' 
-            type='text' 
-            minLength='8' 
-            maxLength='40' 
-            required={true} 
+          <input
+            id='username'
+            name='username'
+            type='text'
+            minLength='8'
+            maxLength='40'
+            required={true}
           />
           <label className='register-form__password--label' htmlFor='password'>Password</label>
-          <input 
-            id='password' 
-            name='password' 
-            type='password' 
-            minLength='8' 
-            required={true} 
+          <input
+            id='password'
+            name='password'
+            type='password'
+            minLength='8'
+            required={true}
           />
           <meter max='4' id='password-strength__meter'></meter>
           <p id='password-strength__text'></p>
           <label className='register-form__repeat-password--label' htmlFor='repeat-password'>Repeat Password</label>
-          <input 
-            id='repeat-password' 
-            name='repeat-password' 
-            type='password' 
-            minLength='8' 
-            required={true} 
+          <input
+            id='repeat-password'
+            name='repeat-password'
+            type='password'
+            minLength='8'
+            required={true}
           />
-          <input 
-            type='submit' 
+          <input
+            type='submit'
             name='submit'
-            onSubmit={this._handleSubmit} 
-            value='Submit' 
-            disabled={false} 
+            onSubmit={this._handleSubmit}
+            value='Submit'
+            disabled={false}
           />
         </form>
       </div>
