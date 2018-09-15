@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import MenuBar from './MenuBar';
+// import MenuBar from './MenuBar';
 import PickNotes from './PickNotes'
-import { sampleUserId } from '../token'
-import { saveGoal } from '../api-helpers'
+
 
 class SetGoal extends Component {
   state = {
@@ -37,15 +36,15 @@ class SetGoal extends Component {
       this.setState({ validationMessage: 'You must select 4 pitches or more.'})
     } else {
       this.setState({ validationMessage: null })
-      saveGoal(goal, this.props.match.params.userId)
-      this.props.history.push(`/${this.props.match.params.userId}/practice`)
+      this.props.saveGoal(goal)
+      this.props.history.push(`/${this.props.match.params.userId}`)
     }
   }
 
   render() {
     return (
       <div>
-        <MenuBar userId={this.props.match.params.userId}/>
+{/*        // <MenuBar userId={this.props.match.params.userId}/>*/}
         <main>
           <h1>Set a goal</h1>
           <form onSubmit={this.submit}>

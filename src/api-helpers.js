@@ -1,6 +1,96 @@
+
+/********** Fake Methods **************/
+
+function newFakeUser() {
+  return {
+    userId: fakeId(),
+    goals: [],
+  }
+}
+
+let day = 1
+
+function fakeQuizResult() {
+  const dateString = new Date(2018, 8, day).toDateString()
+  const averageSpeed = Math.floor(Math.random() * 7000)
+  day >= 30 ? day = 1 : day += 1
+  const newObj = {}
+  newObj[dateString] = averageSpeed
+  return newObj
+}
+
+const fakeUser = {
+  userId: 'K234819375',
+  firstname: 'Kristen',
+  goals: [
+    {
+      goalId: 'T234234',
+      title: 'Assorted Notes',
+      pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09', 'g4t01', 'a4t02', 'b4t03', 'c5t04'],
+      targetProgress: 3000,
+      results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}]
+    },
+    {
+      goalId: 'A2342352',
+      title: 'Viola',
+      pitchIds: ['c3a-4', 'd3a-3', 'e3a-2', 'f3a-1', 'g3a00', 'a3a01', 'b3a02', 'c4a03', 'd4a04', 'e4a05', 'f4a06',
+                              'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11', 'e5a12', 'f5a13'],
+      targetProgress: 4000,
+      results: []
+    },
+  ]
+}
+
+const users = [fakeUser]
+
+function fakeId(){
+  return Math.floor(Math.random() * 100000)
+}
+
+export function fetchUser(userId) {
+  return users.filter(user => user.userId === userId)[0]
+}
+
+export function saveGoal(goal, userId) {
+  goal.goalId = fakeId()
+  const user = fetchUser(userId)
+  user.goals.push(goal)
+  return user
+}
+
+export function destroyGoal(userId, goalId) {
+  const user = fetchUser(userId)
+  const goals = user.goals.filter( goal => goal.goalId !== goalId)
+  user.goals = goals
+  return user
+}
+
+export function createUser(userData) {
+  const newUser = newFakeUser()
+  newUser.firstname = userData.firstname
+  newUser.email = userData.email
+  newUser.username = userData.username
+  newUser.lastname = userData.lastname
+  newUser.password = userData.password
+  newUser.dob = userData.dob // should be in the format MM/DD/YYYY)
+  return newUser
+}
+
+export function saveQuizResults(results, userId, goalId) {
+  const user = fetchUser(userId)
+  const goal = user.goals.filter( goal => goal.goalId !== goalId)[0]
+  const newResult = {}
+  newResult[results.userDate] = results.averageSpeed
+  goal.results.push(newResult)
+  return user
+}
+
+
+/********** Real Methods ***************
+
 import token from './token'
 
-const baseUrl = "http://musical-app.herokuapp.com"
+export const baseUrl = "http://musical-app.herokuapp.com"
 
 export async function allUsers() {
   const url = "http://musical-app.herokuapp.com/global"
@@ -13,7 +103,7 @@ export async function allUsers() {
   return users
 }
 
-export async function getUser(userId) {
+export async function fetchUser(userId) {
   const url = `${baseUrl}/${userId}`
   const myHeaders = new Headers()
   myHeaders.append('token', token)
@@ -27,7 +117,7 @@ export async function getUser(userId) {
   return user
 }
 
-export function getGoals(user) {
+export function getGoalsFromUser(user) {
   const goals = user.goals.map( goal => {
     return {
       title: goal.title,
@@ -36,6 +126,20 @@ export function getGoals(user) {
       pitches: goal.pitches.map( pitch => pitch.pitchid )
     }
   }).reverse()
+  return goals
+}
+
+export async function fetchGoals(userId) {
+  const url = `${baseUrl}/${userId}/goals`
+  const myHeaders = new Headers()
+  myHeaders.append('token', token)
+
+  const goals = await fetch(url, { method: 'GET', headers: myHeaders })
+  .then(res => res.json())
+  .then(res => {
+    console.log('Success: ', res)
+    return res
+  }, err => console.log(err))
   return goals
 }
 

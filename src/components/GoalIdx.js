@@ -8,39 +8,39 @@ import Quiz from './Quiz'
 import DisplayPitches from './DisplayPitches'
 import GoalProgress from './GoalProgress'
 import token, { sampleUserId } from '../token'
-import { saveQuizResults, getUser, getGoals, destroyGoal } from '../api-helpers'
+// import { saveQuizResults, getUser, getGoals, destroyGoal, baseUrl } from '../api-helpers'
 import { selectGoal } from '../misc-helpers'
 
 class Practice extends Component {
   selectGoal = selectGoal.bind(this)
 
   state = {
-    goals: [
-      { title: 'Treble spaces in 5 sec',
-        pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
-        targetProgress: 5000,
-        goalId: '32452345246',
-        current: true,
-      },
-      { title: 'Treble lines in 8 sec',
-        pitches: ['e4t-1', 'g4t01', 'b4t03', 'd5t05', 'f5t07'],
-        targetProgress: 8000,
-      },
-      { title: 'Primer book notes',
-        pitches: ['a3b07', 'b3b08', 'd4t-2', 'e4t-1', 'f4t00'],
-        targetProgress: 5550,
-      },
-      {
-        title: 'Low notes',
-        pitches: ['g2b-1', 'a2b00', 'b2b01', 'c2b02'],
-        targetProgress: 2500,
-      },
-      {
-        title: 'Viola beginning',
-        pitches: ['d4a04', 'e4a05', 'f4a06', 'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11'],
-        targetProgress: 3000,
-      }
-    ],
+    // goals: [
+    //   { title: 'Treble spaces in 5 sec',
+    //     pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
+    //     targetProgress: 5000,
+    //     goalId: '32452345246',
+    //     current: true,
+    //   },
+    //   { title: 'Treble lines in 8 sec',
+    //     pitches: ['e4t-1', 'g4t01', 'b4t03', 'd5t05', 'f5t07'],
+    //     targetProgress: 8000,
+    //   },
+    //   { title: 'Primer book notes',
+    //     pitches: ['a3b07', 'b3b08', 'd4t-2', 'e4t-1', 'f4t00'],
+    //     targetProgress: 5550,
+    //   },
+    //   {
+    //     title: 'Low notes',
+    //     pitches: ['g2b-1', 'a2b00', 'b2b01', 'c2b02'],
+    //     targetProgress: 2500,
+    //   },
+    //   {
+    //     title: 'Viola beginning',
+    //     pitches: ['d4a04', 'e4a05', 'f4a06', 'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11'],
+    //     targetProgress: 3000,
+    //   }
+    // ],
     currentGoalIdx: 0,
     started: false,
     paused: false,
@@ -48,10 +48,9 @@ class Practice extends Component {
     resultSpeeds: null
   }
 
-  componentDidMount = async function() {
-    // Will fetch goal data from our api and set state.
-    // const user = await getUser(this.props.match.params.userId)
-    // this.setState({ goals: getGoals(user) })
+  componentDidMount() {
+    // this.setState({ user })
+    // this.logGoals()
   }
 
   startQuiz = e => {
@@ -59,9 +58,9 @@ class Practice extends Component {
   }
 
   stopQuiz = (results) => {
-    const goalId = this.state.goals[this.state.currentGoalIdx].goalId
+    const goalId = this.props.goals[this.state.currentGoalIdx].goalId
     // console.log('goalId is ', goalId)
-    saveQuizResults(results, this.props.match.params.userId, goalId)
+    this.props.saveQuizResults(results, this.props.match.params.userId, goalId)
     this.setState({ started: false, paused: true, resultSpeeds: results.pitches })
   }
 
@@ -72,16 +71,15 @@ class Practice extends Component {
   deleteGoal = async () => {
     // const confirmation = Window.confirm(`Press 'OK' to permanently delete "${title}". This cannot be undone!`)
     // if (confirmation) {
-      const goalId = this.state.goals[this.state.currentGoalIdx].goalId
+      const goalId = this.props.goals[this.state.currentGoalIdx].goalId
       console.log('Deleting '+ goalId)
-      const user = await destroyGoal(this.props.match.params.userId, goalId)
-      const goals = getGoals(user)
-      this.setState({ user, goals, currentGoalIdx: 0 })
+      this.props.destroyGoal(this.props.match.params.userId, goalId)
+      this.setState({ currentGoalIdx: 0 })
     // }
   }
 
   render() {
-    const currentGoal = this.state.goals[this.state.currentGoalIdx]
+    const currentGoal = this.props.goals[this.state.currentGoalIdx]
 
     if (this.state.started) {
       return (
@@ -117,9 +115,9 @@ class Practice extends Component {
         <MenuBar userId={this.props.match.params.userId}/>
         <main>
           <h1>{}'s Goals</h1>
-          <PickGoal goals={this.state.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
-          <DisplayGoal goal={this.state.goals[this.state.currentGoalIdx]}/>
-          <GoalProgress goal={this.state.goals[this.state.currentGoalIdx]}/>
+          <PickGoal goals={this.props.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
+          <DisplayGoal goal={currentGoal}/>
+          <GoalProgress goal={currentGoal}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
           <Link to={'/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link>
           <p><a href="#" onClick={this.deleteGoal}>Permanently delete the selected goal</a></p>
