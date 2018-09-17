@@ -22,6 +22,8 @@ function fakeQuizResult() {
 const fakeUser = {
   userId: 'K234819375',
   firstname: 'Kristen',
+  password: 'password',
+  username: 'Kristen1',
   goals: [
     {
       goalId: 'T234234',
@@ -48,7 +50,15 @@ function fakeId(){
 }
 
 export function fetchUser(userId) {
-  return users.filter(user => user.userId === userId)[0]
+  return users.find(user => user.userId === userId)
+}
+
+export function authenticate({ username, password }) {
+  console.log('looking for username ', username)
+  console.log('looking for password ', password)
+  const found = users.find(user => (user.username === username) && (user.password === password))
+  console.log('found user ', found)
+  return found;
 }
 
 export function saveGoal(goal, userId) {
@@ -65,7 +75,19 @@ export function destroyGoal(userId, goalId) {
   return user
 }
 
+function validateNewUser(userData) {
+  const found = users.find(user => user.username === userData.username)
+  if (found) {
+    console.log('That username already exists.')
+    return false
+  } else return true
+}
+
 export function createUser(userData) {
+  if (!validateNewUser(userData)) {
+    console.log('Invalid; Could not create new user.')
+    return false
+  }
   const newUser = newFakeUser()
   newUser.firstname = userData.firstname
   newUser.email = userData.email

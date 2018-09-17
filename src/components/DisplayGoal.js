@@ -6,7 +6,7 @@ class DisplayGoal extends React.Component {
   render() {
     return (
       <div className="display-goal">
-        <DisplayPitches noteIds={this.props.goal.pitches}/>
+        <DisplayPitches noteIds={this.props.goal.pitchIds}/>
         <p>Target: { this.props.goal.targetProgress/1000 } seconds per note</p>
       </div>
     )

@@ -15,7 +15,7 @@ class MenuBar extends React.Component {
     if (this.props.userId){
       const menuItems = {
         'Set a Goal': `/${this.props.userId}/goal/new`,
-        'My Goals': `/${this.props.userId}/goals`,
+        'My Goals': `/${this.props.userId}`,
         'Music Buddies': `/${this.props.userId}/buddies`,
         'About': '/about',
         'My Account': `/${this.props.userId}/account`,

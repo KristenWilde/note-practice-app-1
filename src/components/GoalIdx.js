@@ -49,8 +49,6 @@ class Practice extends Component {
   }
 
   componentDidMount() {
-    // this.setState({ user })
-    // this.logGoals()
   }
 
   startQuiz = e => {
@@ -112,16 +110,13 @@ class Practice extends Component {
 
     return (
       <div>
-        <MenuBar userId={this.props.match.params.userId}/>
-        <main>
-          <h1>{}'s Goals</h1>
+          <h1>{this.props.firstname}'s Goals</h1>
           <PickGoal goals={this.props.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
           <DisplayGoal goal={currentGoal}/>
           <GoalProgress goal={currentGoal}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
           <Link to={'/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link>
           <p><a href="#" onClick={this.deleteGoal}>Permanently delete the selected goal</a></p>
-        </main>
       </div>
     )
   }

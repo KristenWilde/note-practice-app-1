@@ -10,11 +10,12 @@ import Account from './Account'
 import FAQ from './FAQ'
 import Register from './Register'
 // import NotFound from './NotFound'
-import { saveGoal, createUser, destroyGoal, logIn, saveQuizResults } from '../api-helpers'
+import { saveGoal, createUser, destroyGoal, authenticate, saveQuizResults } from '../api-helpers'
 
 class App extends Component {
   state = {
     user: null,
+    msg: "",
   }
 
   componentDidMount() {
@@ -28,8 +29,12 @@ class App extends Component {
 
   logIn = (credentials) => {
     // fetch user from api and set state.
-    const user = logIn(credentials)
-    this.setState({ user })
+    const user = authenticate(credentials)
+    if (user) {
+      this.setState({ user })
+    } else {
+      this.setState({ msg: 'Invalid username and/or password.'})
+    }
   }
 
   destroyGoal = (goalId, userId) => {
@@ -38,25 +43,25 @@ class App extends Component {
   }
 
   render() {
-    const userId = this.props.match.params.userId;
 
     return (
       <BrowserRouter>
-        <MenuBar userId={userId}/>
+      <div>
+        <MenuBar userId={this.state.user ? this.state.user.userId : null}/>
         <main>
           <Switch>
-            <Route exact path="/" component={Intro}/>
-            <Route exact path="/register" render={() => <Register createUser={this.createUser}/>}/>
-           {/* <Route exact path="/login" render={() => <LogIn logIn={this.logIn}/>} />*/}
-            <Route path="/:userId" render={() => <GoalIdx user={this.state.user} />} />
-            <Route path="/:userId/new-goal" render={() => <SetGoal saveGoal={this.saveGoal} />} />
 
-            {/*<Route path='/:userId/buddies' component={Buddies}/>*/}
-            <Route path='/:userId/account' render={() => <Account user={this.state.user} />} />
+            <Route exact path="/register" render={() => <Register createUser={this.createUser}/> } />
+            {this.state.user && <Route path="/:userId" render={(props) => <GoalIdx {...props} goals={this.state.user.goals} firstname={this.state.user.firstname}/>} />}
+            {this.state.user && <Route path="/:userId/goal/new" render={() => <SetGoal saveGoal={this.saveGoal} />} />}
+            {this.state.user && <Route path='/:userId/account' render={() => <Account user={this.state.user} />} />}
             <Route exact path='/faq' component={FAQ}/>
+            <Route path="/" render={() => <Intro logIn={this.logIn} msg={this.state.msg}/>}/>
+            {/*<Route path='/:userId/buddies' component={Buddies}/>*/}
             {/*<Route component={NotFound} />*/}
           </Switch>
         </main>
+        </div>
       </BrowserRouter>
     )
   }

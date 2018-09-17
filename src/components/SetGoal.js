@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import MenuBar from './MenuBar';
 import PickNotes from './PickNotes'
 
 
@@ -44,8 +43,6 @@ class SetGoal extends Component {
   render() {
     return (
       <div>
-{/*        // <MenuBar userId={this.props.match.params.userId}/>*/}
-        <main>
           <h1>Set a goal</h1>
           <form onSubmit={this.submit}>
             <fieldset>
@@ -66,7 +63,6 @@ class SetGoal extends Component {
             </fieldset>
             <button type="submit" className="go">Save</button>
           </form>
-        </main>
       </div>
     )
   }
