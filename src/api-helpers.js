@@ -32,14 +32,14 @@ const fakeUser = {
       targetProgress: 3000,
       results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}]
     },
-    {
-      goalId: 'A2342352',
-      title: 'Viola',
-      pitchIds: ['c3a-4', 'd3a-3', 'e3a-2', 'f3a-1', 'g3a00', 'a3a01', 'b3a02', 'c4a03', 'd4a04', 'e4a05', 'f4a06',
-                              'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11', 'e5a12', 'f5a13'],
-      targetProgress: 4000,
-      results: []
-    },
+    // {
+    //   goalId: 'A2342352',
+    //   title: 'Viola',
+    //   pitchIds: ['c3a-4', 'd3a-3', 'e3a-2', 'f3a-1', 'g3a00', 'a3a01', 'b3a02', 'c4a03', 'd4a04', 'e4a05', 'f4a06',
+    //                           'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11', 'e5a12', 'f5a13'],
+    //   targetProgress: 4000,
+    //   results: []
+    // },
   ]
 }
 

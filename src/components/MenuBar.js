@@ -1,35 +1,31 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import '../css/menubar.css'
 
 class MenuBar extends React.Component {
-  state = {
-    menuItems: {
-      'Sign up': '/register',
-      'Log in': '/login',
-      About: '/about',
-    }
-  }
-
-  componentDidMount() {
-    if (this.props.userId){
-      const menuItems = {
-        'Set a Goal': `/${this.props.userId}/goal/new`,
-        'My Goals': `/${this.props.userId}`,
-        'Music Buddies': `/${this.props.userId}/buddies`,
-        'About': '/about',
-        'My Account': `/${this.props.userId}/account`,
-        'Log out': '/',
-      }
-      this.setState({ menuItems })
-    }
-  }
 
   showMenu = event => {
     event.currentTarget.classList.toggle('opened')
   }
 
   render() {
+    let menuItems
+    if (this.props.userId) {
+      menuItems = {
+        'Set a Goal': `/${this.props.userId}/goal/new`,
+        'My Goals': `/${this.props.userId}`,
+        'Music Buddies': `/${this.props.userId}/buddies`,
+        'About': '/about',
+        'My Account': `/${this.props.userId}/account`,
+      }
+    } else {
+      menuItems = {
+        'Sign up': '/register',
+        About: '/about',
+        'Log in': '/login',
+      }
+    }
+
     return (
       <header className="main">
         <h1>MyNotePractice</h1>
@@ -38,11 +34,12 @@ class MenuBar extends React.Component {
             <span />
           </button>
           <ul>
-            {Object.keys(this.state.menuItems).map(item => (
+            {Object.keys(menuItems).map(item => (
               <li key={item}>
-                <Link to={this.state.menuItems[item]}>{item}</Link>
+                <Link to={menuItems[item]}>{item}</Link>
               </li>
             ))}
+            {this.props.userId && <li><a onClick={this.props.logOut}>Log out</a></li>}
           </ul>
         </nav>
       </header>
