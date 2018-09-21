@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import range from 'lodash.range';
-import MenuBar from './MenuBar';
+import Field from './Field';
+import isEmail from 'validator/lib/isEmail';
 import token, { sampleUserId } from '../token';
 
 export default class Register extends Component {
   state = {
-    firstName: '',
-    lastName: '',
-    dob: {
-      month: '',
-      day: '',
-      year: '',
+    fields: {
+      firstname: '',
+      lastname: '',
+      dob: {
+        month: '',
+        day: '',
+        year: '',
+      },
+      password: '',
+      email: ''
     },
-    initPassword: '',
-    repeatPassword: '',
-    initEmail: '',
-    repeatEmail: '',
+    fieldErrors: {},
     isEmailAsUsername: false,
     isMinor: false
   }
@@ -24,35 +26,63 @@ export default class Register extends Component {
     return [this.state.dob.month, this.state.dob.day, this.state.dob.year].join('-');
   }
 
-  _handleInputChange = (e) => {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
+  validate () {
+    const newUser = this.state.fields;
+    const fieldErrors = this.state.fieldErrors;
+    const errMessages = Object.keys(fieldErrors).filter((k) => fieldErrors[k]);
+    // TODO: Add more error cases
+    if (!newUser.firstname) return true;
+    if (!newUser.lastname) return true;
+    if (!newUser.email) return true;
+    if (errMessages.length) return true;
+    
+    return false;
   }
 
-  _handleSubmit = () => {
-    const data = {
-      firstname: this.state.firstName,
-      lastname: this.state.lastName,
-      email: this.state.userEmail,
-      password: this.state.password,
-      dob: this.getDateOfBirth(this.state.dob),
+  _handleInputChange = ({name, value, error}) => {
+    const fields = this.state.fields;
+    const fieldErrors = this.state.fieldErrors;
+
+    fields[name] = value;
+    fieldErrors[name] = error;
+
+    this.setState({ fields, fieldErrors });
+  }
+
+  _handleFormSubmit = (evt) => {
+    const newUser = {
+      ...this.state.fields
     };
-    fetch('http://localhost:3000/register', {
+    evt.preventDefault();
+
+    if (this.validate()) return;
+    // fetchCall here
+    this.setState({
+      newUser,
+      fields: {
+        firstname: '',
+        lastname: '',
+        dob: {
+          month: '',
+          day: '',
+          year: '',
+        },
+        password: '',
+        email: ''
+      }
+    });
+  }
+    /*fetch('http://localhost:3000/register', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(this.state.fields),
       headers: {
         'Content-Type': 'application/json',
         token
       }
     }).then(res => res.json())
     .then(res => console.log('Success:', JSON.stringify(res)))
-    .catch(err => console.error('Error:', err));
-  }
+    .catch(err => console.error('Error:', err));*/
+
 
   render() {
     const months = ['01-January', '02-Feburary', '03-March', '04-April',
@@ -71,28 +101,25 @@ export default class Register extends Component {
 
     return (
       <div>
-        <MenuBar />
         <h2 className='register__heading--text'>Register</h2>
-        <form action='/register' className='register-form' method="POST">
+        <form onSubmit={this._handleFormSubmit} action='/register' className='register-form' method="POST">
           <label className='register-form__firstname--label' htmlFor='fname'>First Name</label>
-          <input
+          <Field
             id='fname'
-            name='firstName'
-            type='text'
+            name='firstname'
             minLength='2'
             maxLength='80'
             onChange={this._handleInputChange}
-            required={true}
+            validate={(val) => (val ? false : 'First Name Required')}
           />
           <label className='register-form__lastname--label' htmlFor='lname'>Last Name</label>
-          <input
+          <Field
             id='lname'
-            name='lastName'
-            type='text'
+            name='lastname'
             minLength='2'
             maxLength='80'
             onChange={this._handleInputChange}
-            required={true}
+            validate={(val) => (val ? false : 'Last Name Required')}
           />
           <label className='register-form__dob--label' htmlFor='dob'>Date of Birth</label>
           <label className='register-form__dob--month--label' htmlFor='register--form__dob--month'>Month</label>
@@ -112,18 +139,19 @@ export default class Register extends Component {
             { years }
           </select>
           <label className='register-form__email--label' htmlFor='email'>Email</label>
-          <input
+          <Field
             type='email'
             id='email'
-            name='userEmail'
-            required={true}
+            name='email'
+            onChange={this._handleInputChange}
+            validate={(val) => (isEmail(val) ? false : 'Invalid Email')}
           />
-          <label className='register-form__repeat-email--label' htmlFor='repeat-email'>Repeat Email</label>
-          <input
+          <label className='register-form__repeat-email--label' htmlFor='confirm-email'>Repeat Email</label>
+          <Field
             type='email'
-            id='repeat-email'
-            name='repeatEmail'
-            required={true}
+            id='confirm-email'
+            onChange={this._handleInputChange}
+            validate={(val) => ((val === this.state.fields.email) ? false : 'Email addresses do not match')}
           />
           <input
             type='checkbox'
@@ -162,9 +190,8 @@ export default class Register extends Component {
           <input
             type='submit'
             name='submit'
-            onSubmit={this._handleSubmit}
             value='Submit'
-            disabled={false}
+            disabled={this.validate()}
           />
         </form>
       </div>
