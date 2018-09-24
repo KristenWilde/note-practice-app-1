@@ -13,7 +13,6 @@ class Intro extends React.Component {
         <ul>
           <li>Set your own goals with the notes you want to learn.</li>
           <li>See charts showing your progress.</li>
-          <li>Free, safe, and fun for all ages.</li>
         </ul>
       </div>
     )
@@ -23,7 +22,7 @@ class Intro extends React.Component {
         <h1>Welcome to MyNotePractice!</h1>
         { info }
         <p className="msg">{this.props.msg}</p>
-        <LogInForm logIn={this.props.logIn} />
+        <LogInForm logIn={this.props.logIn} {...this.props}/>
         <button className="go" onClick={this.showRegistration}>Sign up</button>
       </div>
     )

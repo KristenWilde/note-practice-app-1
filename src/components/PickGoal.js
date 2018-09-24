@@ -12,28 +12,22 @@ class PickGoal extends React.Component {
     this.ulRef.current.classList.toggle('hidden')
   }
 
-  handleChange(idx) {
-    this.props.selectGoal(idx)
-    // this.toggleListVisibility()
-  }
-
   render() {
     return (
       <form id="goal-list">
         <ul ref={this.ulRef} className="hidden">
         {this.props.goals.map( (goal, idx) => {
           return (
-            <li className={idx == this.props.currentGoalIdx ? 'current' : ''} key={idx} >
-            <label>
-            <input
-              type="radio"
-              name="pick-goal"
-              key={idx}
-              onChange={e => this.handleChange(idx)}
-              onClick={this.toggleListVisibility}
-              checked={idx == this.props.currentGoalIdx}
-            />{goal.title}
-            </label>
+            <li className={idx == this.props.currentGoalIdx ? 'current' : ''} key={goal.goalId} >
+              <label>
+                <input
+                  type="radio"
+                  name="pick-goal"
+                  onChange={e => this.props.selectGoal(idx)}
+                  onClick={this.toggleListVisibility}
+                  checked={idx == this.props.currentGoalIdx}
+                />{goal.title}
+              </label>
             </li>
           )
         })}

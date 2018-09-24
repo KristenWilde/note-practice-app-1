@@ -97,13 +97,13 @@ export function randomizedQuizIds(noteIds, rounds){
 export function quizResults(noteScores) {
   const result = {
     userdate: Date.now(),
-    pitches: []
+    pitchIds: []
   }
   const allAverageSpeeds = []
   Object.keys(noteScores).forEach((noteId) => {
     const scores = noteScores[noteId]
     const averageSpeed = Math.round(scores.reduce((sum, score) => sum + score) / scores.length)
-    result.pitches.push({ id: noteId, speed: averageSpeed })
+    result.pitchIds.push({ id: noteId, speed: averageSpeed })
     allAverageSpeeds.push(averageSpeed)
   })
   result.average = Math.round(allAverageSpeeds.reduce((sum, speed) => sum + speed) / allAverageSpeeds.length)

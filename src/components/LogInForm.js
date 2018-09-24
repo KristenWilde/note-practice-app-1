@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link } from 'react-dom'
 
 class LogInForm extends React.Component {
   state = {
     username: '',
     password: '',
+    message: '',
   }
 
   setUsername = (e) => {
@@ -15,19 +17,37 @@ class LogInForm extends React.Component {
   }
 
   submit = (e) => {
-    this.props.logIn({ ...this.state })
+    const username = this.state.username
+    const password = this.state.password
+    const userId = this.props.logIn({ username, password })
+    if (userId) {
+      this.props.history.push('/user/' + userId)
+    } else {
+      this.setState({ message: 'There is something wrong with your username or password.'})
+    }
   }
+  // First submit request to log in user.
+  // On success, re-route to /:userId/goals.
 
   render() {
     return (
       <div>
+        <p className="alert">{this.state.message}</p>
         <dl>
-          <dt><label htmlFor="usernameInput">Username or email:</label></dt>
-          <dd><input type="text" id="usernameInput" onChange={this.setUsername}/></dd>
-          <dt><label htmlFor="passwordInput">Password:</label></dt>
-          <dd><input type="password" id="passwordInput" onChange={this.setPassword}/></dd>
+          <dt>
+            <label htmlFor="usernameInput">Username or email:</label>
+          </dt>
+          <dd>
+            <input type="text" id="usernameInput" onChange={this.setUsername}/>
+          </dd>
+          <dt>
+            <label htmlFor="passwordInput">Password:</label>
+          </dt>
+          <dd>
+            <input type="password" id="passwordInput" onChange={this.setPassword}/>
+          </dd>
         </dl>
-        <button className="go" onClick={this.submit}>Log in </button>
+        <button className="go" onClick={this.submit}>Log in</button>
       </div>
     )
   }

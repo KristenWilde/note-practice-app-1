@@ -4,10 +4,10 @@ import PickNotes from './PickNotes'
 
 class SetGoal extends Component {
   state = {
-    title: null,
+    title: '',
     targetProgress: 4500,
-    validationMessage: null,
-    pitchesSelected: null,
+    validationMessage: '',
+    pitchesSelected: '',
     numPitchesSelected: 0,
   }
 
@@ -26,17 +26,17 @@ class SetGoal extends Component {
   submit = e => {
     e.preventDefault()
     const goal = {
-      goaltitle: this.state.title,
+      title: this.state.title,
       targetprogress: this.state.targetProgress,
-      pitches: this.state.pitchesSelected
+      pitchIds: this.state.pitchesSelected
     }
 
-    if (goal.pitches.length < 4) {
+    if (goal.pitchIds.length < 4) {
       this.setState({ validationMessage: 'You must select 4 pitches or more.'})
     } else {
       this.setState({ validationMessage: null })
       this.props.saveGoal(goal)
-      this.props.history.push(`/${this.props.match.params.userId}`)
+      this.props.history.push(`/user/${this.props.match.params.userId}`)
     }
   }
 

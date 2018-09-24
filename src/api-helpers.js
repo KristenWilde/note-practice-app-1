@@ -30,17 +30,20 @@ const fakeUser = {
       title: 'Assorted Notes',
       pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09', 'g4t01', 'a4t02', 'b4t03', 'c5t04'],
       targetProgress: 3000,
-      results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}]
+      results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}],
+      dateSet: "Sat Aug 29 2018",
+      dateUpdated: "Sun Aug 30 2018",
     },
-    // {
-    //   goalId: 'A2342352',
-    //   title: 'Viola',
-    //   pitchIds: ['c3a-4', 'd3a-3', 'e3a-2', 'f3a-1', 'g3a00', 'a3a01', 'b3a02', 'c4a03', 'd4a04', 'e4a05', 'f4a06',
-    //                           'g4a07', 'a4a08', 'b4a09', 'c5a10', 'd5a11', 'e5a12', 'f5a13'],
-    //   targetProgress: 4000,
-    //   results: []
-    // },
-  ]
+    {
+      goalId: 'A2342352',
+      title: 'Goal 2',
+      pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09'],
+      targetProgress: 3000,
+      results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}],
+      dateSet: "Sat Aug 29 2018",
+      dateUpdated: "Sun Aug 31 2018",
+    },
+  ],
 }
 
 const users = [fakeUser]
@@ -61,15 +64,19 @@ export function authenticate({ username, password }) {
   return found;
 }
 
-export function saveGoal(goal, userId) {
+export function saveGoal(userId, goal) {
   goal.goalId = fakeId()
-  const user = fetchUser(userId)
+  goal.dateSet = new Date()
+  console.log('userId', userId)
+  const user = users.find(user => user.userId === userId)
+  console.log('User ', user)
+  console.log('Goal ', goal)
   user.goals.push(goal)
   return user
 }
 
 export function destroyGoal(userId, goalId) {
-  const user = fetchUser(userId)
+  const user = users.find(user => user.userId === userId)
   const goals = user.goals.filter( goal => goal.goalId !== goalId)
   user.goals = goals
   return user
@@ -98,9 +105,11 @@ export function createUser(userData) {
   return newUser
 }
 
-export function saveQuizResults(results, userId, goalId) {
-  const user = fetchUser(userId)
-  const goal = user.goals.filter( goal => goal.goalId !== goalId)[0]
+export function saveQuizResults(userId, goalId, results) {
+  const user = users.find( user => user.userId === userId )
+  console.log( 'user for saving quiz results ', user)
+  const goal = user.goals.find( goal => goal.goalId !== goalId)
+  goal.dateUpdated = new Date()
   const newResult = {}
   newResult[results.userDate] = results.averageSpeed
   goal.results.push(newResult)
@@ -165,7 +174,7 @@ export async function fetchGoals(userId) {
   return goals
 }
 
-export function saveQuizResults(quizResults, userId, goalId) {
+export function saveQuizResults(userId, goalId, quizResults) {
   console.log('saving quiz results . . .')
   const url = `${baseUrl}/${userId}/${goalId}/speedup`
 
@@ -185,7 +194,7 @@ export function saveQuizResults(quizResults, userId, goalId) {
   ).catch(err => console.log(err))
 }
 
-export function saveGoal(goal, userId) {
+export function saveGoal(userId, goal) {
   const url = `${baseUrl}/${userId}/newgoal`
   const myHeaders = new Headers()
   myHeaders.append('token', token)

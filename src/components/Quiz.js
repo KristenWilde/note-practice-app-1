@@ -96,7 +96,7 @@ class Quiz extends React.Component {
 
   render() {
     return (
-      <main>
+      <div>
         <header className="quiz">
           <h4>{this.props.title}</h4>
           <p className="problemsleft">{this.state.quizIds.length - this.state.idx + 1} notes to go!</p>
@@ -184,7 +184,7 @@ class Quiz extends React.Component {
             <div />
           </div>
         </section>
-      </main>
+      </div>
     )
   }
 }

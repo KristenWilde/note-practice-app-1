@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import '../css/menubar.css'
 
 class MenuBar extends React.Component {
@@ -12,14 +12,15 @@ class MenuBar extends React.Component {
     let menuItems
     if (this.props.userId) {
       menuItems = {
-        'Set a Goal': `/${this.props.userId}/goal/new`,
-        'My Goals': `/${this.props.userId}`,
-        'Music Buddies': `/${this.props.userId}/buddies`,
+        'Set a Goal': `user/${this.props.userId}/goal/new`,
+        'My Goals': `user/${this.props.userId}/goals`,
+        'Music Buddies': `user/${this.props.userId}/buddies`,
         'About': '/about',
-        'My Account': `/${this.props.userId}/account`,
+        'My Account': `user/${this.props.userId}/account`,
       }
     } else {
       menuItems = {
+        Home: '/',
         'Sign up': '/register',
         About: '/about',
         'Log in': '/login',
@@ -36,7 +37,7 @@ class MenuBar extends React.Component {
           <ul>
             {Object.keys(menuItems).map(item => (
               <li key={item}>
-                <Link to={menuItems[item]}>{item}</Link>
+                <NavLink exact activeClassName="active" to={menuItems[item]}>{item}</NavLink>
               </li>
             ))}
             {this.props.userId && <li><a onClick={this.props.logOut}>Log out</a></li>}

@@ -9,6 +9,7 @@ import Buddies from './Buddies'
 import Account from './Account'
 import About from './About'
 import Register from './Register'
+import LogInForm from './LogInForm'
 // import NotFound from './NotFound'
 import { saveGoal, createUser, destroyGoal, authenticate, saveQuizResults } from '../api-helpers'
 
@@ -19,33 +20,45 @@ class App extends Component {
     msg: "",
   }
 
-  componentDidMount() {
-    // If there is a session, get user info and set state.
-  }
-
   createUser = (userData) => {
     const user = createUser(userData)
-    this.setState({ user })
+    if (user.userId) {
+      this.setState({ user })
+    } else {
+      this.setState({ msg: 'Could not create user.'})
+    }
   }
 
   logIn = (credentials) => {
-    // fetch user from api and set state.
     const user = authenticate(credentials)
-    if (user) {
+    if (user && user.userId) {
       this.setState({ user })
-    } else {
-      this.setState({ msg: 'Invalid username and/or password.'})
+      return user.userId
     }
   }
 
   logOut = (e) => {
-    this.setState({ user: null })
+    this.setState({ user: null, msg: 'You have logged out.' })
   }
 
-  destroyGoal = (goalId, userId) => {
-    const user = destroyGoal(goalId, userId)
-    this.setState({ user })
+  saveGoal = (newGoal) => {
+    const user = saveGoal(this.state.user.userId, newGoal)
+    if (user && user.userId) {
+      this.setState({ user })
+    } else {
+      this.setState({ msg: 'Could not save goal ' + newGoal.title })
+    }
   }
+
+  saveQuizResults = (goalId, results) => {
+    const user = saveQuizResults(this.state.user.userId, goalId, results)
+    if (user && user.userId) {
+      this.setState({ user, msg: 'Results saved.' })
+    } else {
+      this.setState({msg: 'Could not save results.'})
+    }
+  }
+
 
   render() {
 
@@ -54,18 +67,50 @@ class App extends Component {
       <div>
         <MenuBar userId={this.state.user ? this.state.user.userId : null} logOut={this.logOut} />
         <main>
-          {/*<Switch>*/}
-
-            <Route exact path="/register" render={() => <Register createUser={this.createUser}/> } />
-            {this.state.user && <Route path="/:userId" render={(props) => <GoalIdx {...props} goals={this.state.user.goals} firstname={this.state.user.firstname}/>} />}
-            {this.state.user && <Route path="/:userId/goal/new" render={() => <SetGoal saveGoal={this.saveGoal} />} />}
-            {this.state.user && <Route path='/:userId/account' render={() => <Account user={this.state.user} />} />}
-            <Route exact path='/about' component={About}/>
-            <Route exact path="/login" render={() => <Intro logIn={this.logIn} msg={this.state.msg}/>}/>
-            <Route exact path="/" render={() => <Intro logIn={this.logIn} msg={this.state.msg}/>}/>
+          <p className="alert">{this.state.msg}</p>
+          <Switch>
+            <Route path="/user/:userId/goal/new"
+              render={(props) => {
+                if (this.state.user) {
+                  return <SetGoal saveGoal={this.saveGoal} {...props}/>
+                } else {
+                  this.setState({msg: "You must log in."})
+                  return <Intro logIn={this.logIn} {...props}/>
+                }
+              }}
+            />
+            <Route path="/user/:userId/account"
+              render={(props) => {
+                if (this.state.user) {
+                  return <Account user={this.state.user} {...props}/>
+                } else {
+                  return <Intro logIn={this.logIn} {...props}/>
+                }
+              }}
+            />
+            <Route path="/user/:userId"
+              render={(props) => {
+                if (this.state.user) {
+                  return (
+                    <GoalIdx 
+                      goals={this.state.user.goals} 
+                      firstname={this.state.user.firstname} 
+                      saveQuizResults={this.saveQuizResults}
+                      {...props}
+                    />
+                  )
+                } else {
+                  return <Intro logIn={this.logIn} {...props}/>
+                }
+              }}
+            />
+            <Route path='/about' component={About}/>
+            <Route path="/login"  render={(props) => <LogInForm logIn={this.logIn} {...props}/>} />
+            <Route exact path="/" render={(props) => <Intro     logIn={this.logIn} {...props}/>} />
+            <Route path="/register" component={Register} />
             {/*<Route path='/:userId/buddies' component={Buddies}/>*/}
-            {<Route render={() => <h1>Not found</h1>} />}
-          {/*</Switch>*/}
+            <Route render={() => <h2>The page you requested is not found.</h2>} />
+          </Switch>
         </main>
         </div>
       </BrowserRouter>
