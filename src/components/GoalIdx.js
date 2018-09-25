@@ -46,16 +46,6 @@ class GoalIdx extends Component {
     this.setState({ paused: false, finished: false })
   }
 
-  deleteGoal = async () => {
-    // const confirmation = Window.confirm(`Press 'OK' to permanently delete "${title}". This cannot be undone!`)
-    // if (confirmation) {
-      const goalId = this.props.goals[this.state.currentGoalIdx].goalId
-      console.log('Deleting '+ goalId)
-      this.props.destroyGoal(this.props.match.params.userId, goalId)
-      this.setState({ currentGoalIdx: 0 })
-    // }
-  }
-
   render() {
     const currentGoal = this.props.goals[this.state.currentGoalIdx]
     console.log('Current goal', currentGoal)
@@ -74,13 +64,22 @@ class GoalIdx extends Component {
     return (
       <div>
           <h1>{this.props.firstname}'s Goals</h1>
-          <PickGoal goals={this.props.goals} selectGoal={this.selectGoal} currentGoalIdx={this.state.currentGoalIdx}/>
-          <p>Target: { currentGoal.targetProgress/1000 } seconds per note</p>
+          <PickGoal 
+            goals={this.props.goals} 
+            selectGoal={this.selectGoal} 
+            currentGoalIdx={this.state.currentGoalIdx}
+            userId={this.props.match.params.userId}
+          />
+          <p>Target: { Number(currentGoal.targetProgress)/1000 } seconds per note</p>
           <DisplayPitches noteIds={currentGoal.pitchIds}/>
           <GoalProgress goal={currentGoal}/>
           <button className="go" onClick={this.startQuiz}>Start</button>
           <Link to={'/user/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link>
-          <p><a href="#" onClick={this.deleteGoal}>Permanently delete the selected goal</a></p>
+          <p>
+            <a href="#" onClick={() => this.props.destroyGoal(currentGoal.goalId)}>
+              Permanently delete this goal (<em>{currentGoal.title}</em>)
+            </a>
+          </p>
       </div>
     )
   }

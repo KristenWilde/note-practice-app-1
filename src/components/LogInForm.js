@@ -32,7 +32,7 @@ class LogInForm extends React.Component {
   render() {
     return (
       <div>
-        <p className="alert">{this.state.message}</p>
+        {this.state.message && <p className="alert">{this.state.message}</p>}
         <dl>
           <dt>
             <label htmlFor="usernameInput">Username or email:</label>

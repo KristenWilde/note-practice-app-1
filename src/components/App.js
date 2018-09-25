@@ -10,10 +10,8 @@ import Account from './Account'
 import About from './About'
 import Register from './Register'
 import LogInForm from './LogInForm'
-// import NotFound from './NotFound'
 import { saveGoal, createUser, destroyGoal, authenticate, saveQuizResults } from '../api-helpers'
 
-// This component holds user state and manages routing.
 class App extends Component {
   state = {
     user: null,
@@ -50,6 +48,15 @@ class App extends Component {
     }
   }
 
+  destroyGoal = (goalId) => {
+    const user = destroyGoal(this.state.user.userId, goalId)
+    if (user && user.userId) {
+      this.setState({ user, msg: 'Goal was deleted.' })
+    } else {
+      this.setState({ msg: 'Could not delete goal.' })
+    }
+  }
+
   saveQuizResults = (goalId, results) => {
     const user = saveQuizResults(this.state.user.userId, goalId, results)
     if (user && user.userId) {
@@ -67,7 +74,6 @@ class App extends Component {
       <div>
         <MenuBar userId={this.state.user ? this.state.user.userId : null} logOut={this.logOut} />
         <main>
-          <p className="alert">{this.state.msg}</p>
           <Switch>
             <Route path="/user/:userId/goal/new"
               render={(props) => {
@@ -96,6 +102,7 @@ class App extends Component {
                       goals={this.state.user.goals} 
                       firstname={this.state.user.firstname} 
                       saveQuizResults={this.saveQuizResults}
+                      destroyGoal={this.destroyGoal}
                       {...props}
                     />
                   )

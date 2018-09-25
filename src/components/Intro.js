@@ -8,11 +8,11 @@ class Intro extends React.Component {
 
   render() {
     const info = (
-      <div>
+      <div id="welcome-info">
         <p>You've found the best tool on the web for practicing musical note identification!</p>
         <ul>
           <li>Set your own goals with the notes you want to learn.</li>
-          <li>See charts showing your progress.</li>
+          <li>See your progress over time.</li>
         </ul>
       </div>
     )
@@ -21,7 +21,6 @@ class Intro extends React.Component {
       <div>
         <h1>Welcome to MyNotePractice!</h1>
         { info }
-        <p className="msg">{this.props.msg}</p>
         <LogInForm logIn={this.props.logIn} {...this.props}/>
         <button className="go" onClick={this.showRegistration}>Sign up</button>
       </div>

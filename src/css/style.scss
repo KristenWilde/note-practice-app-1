@@ -106,7 +106,7 @@ a.pause {
   font-weight: 600;
 }
 
-.warning {
+.alert {
   background-color: $orange;
   padding: 10px;
   border-radius: 3px;
@@ -149,5 +149,12 @@ a.pause {
 .register-form {
   label, input {
     display: block;
+  }
+}
+
+#welcome-info {
+  li:before {
+    font-size: 2rem;
+    content: '♪  ';
   }
 }

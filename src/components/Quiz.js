@@ -94,6 +94,14 @@ class Quiz extends React.Component {
     this.setState({ correct: null })
   }
 
+  pianoAnimation(e) {
+    e.currentTarget.classList.add('pressed')
+  }
+
+  resetPianoAnimation(e) {
+    e.currentTarget.classList.remove('pressed')
+  }
+
   render() {
     return (
       <div>
@@ -141,27 +149,15 @@ class Quiz extends React.Component {
         )}
         <section id="keyboard">
           <div id="answers" onClick={this.handleAnswer}>
-            <div className="answer-button">
-              <span>C</span>
-            </div>
-            <div className="answer-button">
-              <span>D</span>
-            </div>
-            <div className="answer-button">
-              <span>E</span>
-            </div>
-            <div className="answer-button">
-              <span>F</span>
-            </div>
-            <div className="answer-button">
-              <span>G</span>
-            </div>
-            <div className="answer-button">
-              <span>A</span>
-            </div>
-            <div className="answer-button">
-              <span>B</span>
-            </div>
+            {['C','D','E','F','G','A','B'].map(letter => (
+              <div className="answer-button" 
+                onClick={this.pianoAnimation}
+                onAnimationEnd={this.resetPianoAnimation}
+                key={letter}
+              >
+                <span>{letter}</span>
+              </div>
+            ))}
           </div>
           <div id="black-key1" className="black-key">
             <div />

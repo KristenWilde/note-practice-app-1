@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*  Colors:  */
 html {
   font: normal 15px arial, helvetica, sans-serif; }
@@ -86,7 +87,7 @@ a.pause {
 .title {
   font-weight: 600; }
 
-.warning {
+.alert {
   background-color: #ff9e3d;
   padding: 10px;
   border-radius: 3px; }
@@ -116,3 +117,7 @@ a.pause {
 
 .register-form label, .register-form input {
   display: block; }
+
+#welcome-info li:before {
+  font-size: 2rem;
+  content: '♪  '; }

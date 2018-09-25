@@ -84,3 +84,20 @@ header.quiz > * {
 #black-key5 {
   left: 82.1%;
 }
+
+.pressed {
+  animation-name: 'piano-key';
+  animation-duration: .5s;
+}
+
+@keyframes piano-key {
+  0% {
+    background: #eae8de;
+  }
+  50% {
+    background: #eae8de;
+  }
+  100% {
+    background: #fffffc;
+  }
+}

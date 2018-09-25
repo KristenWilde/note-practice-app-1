@@ -27,7 +27,7 @@ class SetGoal extends Component {
     e.preventDefault()
     const goal = {
       title: this.state.title,
-      targetprogress: this.state.targetProgress,
+      targetProgress: this.state.targetProgress,
       pitchIds: this.state.pitchesSelected
     }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link } from 'react-router-dom'
 import '../css/pickgoal.css'
 
 class PickGoal extends React.Component {
@@ -31,6 +32,11 @@ class PickGoal extends React.Component {
             </li>
           )
         })}
+          <li>
+            <Link to={'/user/' + this.props.userId + '/goal/new'}>
+              Set a new goal
+            </Link>
+          </li>
         </ul>
         <div className="showListButton" onClick={this.toggleListVisibility}>
           <span>⌃</span>
