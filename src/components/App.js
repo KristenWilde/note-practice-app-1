@@ -112,9 +112,13 @@ class App extends Component {
               }}
             />
             <Route path='/about' component={About}/>
-            <Route path="/login"  render={(props) => <LogInForm logIn={this.logIn} {...props}/>} />
-            <Route exact path="/" render={(props) => <Intro     logIn={this.logIn} {...props}/>} />
-            <Route path="/register" component={Register} />
+            <Route path="/login"  render={(props) => (
+              <LogInForm logIn={this.logIn} {...props}/>
+            )}/>
+            <Route exact path="/" render={(props) => (
+              <Intro logIn={this.logIn} createUser={this.createUser} {...props}/>
+            )}/>
+            <Route path="/register" component={Register} createUser={this.createUser}/>
             {/*<Route path='/:userId/buddies' component={Buddies}/>*/}
             <Route render={() => <h2>The page you requested is not found.</h2>} />
           </Switch>

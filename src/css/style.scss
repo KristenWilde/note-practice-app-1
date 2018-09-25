@@ -152,9 +152,35 @@ a.pause {
   }
 }
 
-#welcome-info {
+#welcome {
+  h1 {
+    font-size: 2rem;
+  }
+  p.info {
+    line-height: 1.7em;
+  }
   li:before {
     font-size: 2rem;
     content: '♪  ';
+  }
+}
+
+#login-form {
+  border: 1px solid skyblue;
+  border-radius: 7px;
+  padding: 10px;
+}
+
+.form-field-list{
+  width: 100%;
+  overflow: hidden;
+  dt {
+    width: 150px;
+    float: left;
+    
+  }
+  dd {
+    float: left;
+    margin: 0 0 10px 5px;
   }
 }

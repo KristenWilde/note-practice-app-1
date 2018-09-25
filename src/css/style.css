@@ -118,6 +118,27 @@ a.pause {
 .register-form label, .register-form input {
   display: block; }
 
-#welcome-info li:before {
+#welcome h1 {
+  font-size: 2rem; }
+
+#welcome p.info {
+  line-height: 1.7em; }
+
+#welcome li:before {
   font-size: 2rem;
   content: '♪  '; }
+
+#login-form {
+  border: 1px solid skyblue;
+  border-radius: 7px;
+  padding: 10px; }
+
+.form-field-list {
+  width: 100%;
+  overflow: hidden; }
+  .form-field-list dt {
+    width: 150px;
+    float: left; }
+  .form-field-list dd {
+    float: left;
+    margin: 0 0 10px 5px; }

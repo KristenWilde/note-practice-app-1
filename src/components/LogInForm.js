@@ -31,9 +31,9 @@ class LogInForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="login-form">
         {this.state.message && <p className="alert">{this.state.message}</p>}
-        <dl>
+        <dl className="form-field-list">
           <dt>
             <label htmlFor="usernameInput">Username or email:</label>
           </dt>
