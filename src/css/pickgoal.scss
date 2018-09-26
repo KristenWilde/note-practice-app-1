@@ -21,7 +21,7 @@
     background-color: #fff;
   }
   .showListButton {
-    width: 10%;
+    width: 2.8rem;
     border: 1px solid #ccc;
     border-radius: 100%;
     padding: 8px;
@@ -32,6 +32,7 @@
     right: 0;
     background-color: $teal;
     box-shadow: $smallshadow;
+    z-index: 4;
   }
   li {
     

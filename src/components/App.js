@@ -4,13 +4,13 @@ import MenuBar from './MenuBar'
 import Intro from './Intro'
 import GoalIdx from './GoalIdx'
 import SetGoal from './SetGoal'
-import Progress from './Progress'
 import Buddies from './Buddies'
 import Account from './Account'
 import About from './About'
 import Register from './Register'
 import LogInForm from './LogInForm'
 import { saveGoal, createUser, destroyGoal, authenticate, saveQuizResults } from '../api-helpers'
+import { formatQuizResults } from '../music'
 
 class App extends Component {
   state = {
@@ -57,8 +57,10 @@ class App extends Component {
     }
   }
 
-  saveQuizResults = (goalId, results) => {
-    const user = saveQuizResults(this.state.user.userId, goalId, results)
+  saveQuizResults = (goalId, noteScores) => {
+    const userId = this.state.user.userId
+    const results = formatQuizResults(userId, goalId, noteScores)
+    const user = saveQuizResults(userId, goalId, results)
     if (user && user.userId) {
       this.setState({ user, msg: 'Results saved.' })
     } else {

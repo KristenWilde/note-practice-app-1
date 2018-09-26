@@ -1,8 +1,5 @@
 import React from 'react'
 import LogInForm from './LogInForm'
-import Register from './Register'
-import About from './About'
-import Tab from './Tab'
 
 function Intro(props) {
   function showRegistration(){

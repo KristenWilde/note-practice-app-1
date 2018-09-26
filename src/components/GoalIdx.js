@@ -17,38 +17,24 @@ class GoalIdx extends Component {
   state = {
     currentGoalIdx: 0,
     started: false,
-    paused: false,
-    finished: false,
-    resultSpeeds: null
   }
 
   selectGoal = (idx) => {
-    // const goals = this.props.goals.slice()
-    // for (let goal of goals) {
-    //   goal.current = false
-    // }
-    // goals[idx].current = true
-    this.setState({ /*goals,*/ currentGoalIdx: idx })
+    this.setState({ currentGoalIdx: idx })
   }
 
   startQuiz = e => {
     this.setState({ started: true })
   }
 
-  stopQuiz = (results) => {
+  stopQuiz = (noteScores) => {
     const goalId = this.props.goals[this.state.currentGoalIdx].goalId
-    // console.log('goalId is ', goalId)
-    this.props.saveQuizResults(goalId, results)
-    this.setState({ started: false, paused: true, resultSpeeds: results.pitches })
-  }
-
-  startOver = e => {
-    this.setState({ paused: false, finished: false })
+    this.props.saveQuizResults(goalId, noteScores)
+    this.setState({ started: false })
   }
 
   render() {
     const currentGoal = this.props.goals[this.state.currentGoalIdx]
-    console.log('Current goal', currentGoal)
 
     if (this.state.started) {
       return (
@@ -70,9 +56,10 @@ class GoalIdx extends Component {
             currentGoalIdx={this.state.currentGoalIdx}
             userId={this.props.match.params.userId}
           />
-          <p>Target: { Number(currentGoal.targetProgress)/1000 } seconds per note</p>
+          
           <DisplayPitches noteIds={currentGoal.pitchIds}/>
           <GoalProgress goal={currentGoal}/>
+          <p>Target: { Number(currentGoal.targetProgress)/1000 } seconds per note</p>
           <button className="go" onClick={this.startQuiz}>Start</button>
           <Link to={'/user/' + this.props.match.params.userId + '/goal/new'}>Set a new goal</Link>
           <p>

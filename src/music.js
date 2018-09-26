@@ -94,20 +94,31 @@ export function randomizedQuizIds(noteIds, rounds){
   return result;
 }
 
-export function quizResults(noteScores) {
+export function formatQuizResults(userId, goalId, noteScores) {
+  const date = new Date().toDateString()
   const result = {
-    userdate: Date.now(),
-    pitchIds: []
+    userId,
+    goalId,
+    date,
+    speed: undefined,
+    noteResults: []
   }
-  const allAverageSpeeds = []
-  Object.keys(noteScores).forEach((noteId) => {
-    const scores = noteScores[noteId]
-    const averageSpeed = Math.round(scores.reduce((sum, score) => sum + score) / scores.length)
-    result.pitchIds.push({ id: noteId, speed: averageSpeed })
-    allAverageSpeeds.push(averageSpeed)
+  const allSpeeds = []
+
+  Object.keys(noteScores).forEach((pitchId) => {
+    const speed = average(noteScores[pitchId])
+    allSpeeds.push(speed)
+    result.noteResults.push({ pitchId, speed, date })
   })
-  result.average = Math.round(allAverageSpeeds.reduce((sum, speed) => sum + speed) / allAverageSpeeds.length)
+
+  result.speed = average(allSpeeds)
   return result
+}
+
+function average(speeds) {
+  return Math.round(speeds.reduce((sum, speed) => {
+    return sum + speed
+  }, 0) / speeds.length)
 }
 
 export function staffLinesTop(pitchAr){

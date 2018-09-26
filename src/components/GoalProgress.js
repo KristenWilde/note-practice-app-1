@@ -1,77 +1,59 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { getRawPitchData, goalsResults } from '../api-helpers'
+// import PropTypes from 'prop-types'
+// import { getRawPitchData, goalsResults } from '../api-helpers'
 import { Chart, Line } from 'react-chartjs-2'
 
-class GoalProgress extends React.Component {
-  state = {
-    firstname: 'Kristen',
-    goals: [
-      {
-        goalId: '3q4quivuberyrvyhtiw',
-        title: 'Treble Spaces',
-        pitches: ['f4t00', 'a4t02', 'c5t04', 'e5t06'],
-        targetProgress: 3000,
-        chartData: {
-          labels: ['9/1/2018', '9/3/2018', '9/3/2018', '9/10/2018', '9/11/2018', '9/11/2018', '9/12/2018', '9/13/2018'],
-          datasets: [
-            {data: [5.1, 4.6, 4.1, 4.2, 3.8, 3.7, 3.4, 3.3], label: 'Average seconds per note', fill:false, borderColor: 'magenta'},
-            {data: [3,3,3,3,3,3,3,3], label: 'Target', pointRadius: 0, fill: false, borderColor: 'teal'}
-          ]
-        }
-      }
-    ],
-  }
-  chartData(goal) {
+export default function GoalProgress({ goal }) {
+    // Goal: {
+    //   goalId: 'T234234',
+    //   title: 'Assorted Notes',
+    //   pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09', 'g4t01', 'a4t02', 'b4t03', 'c5t04'],
+    //   targetProgress: 3000,
+    //   results: [
+      //   {date: "Sat Aug 29 2018", speed: 5011}, 
+      //   {date: "Sun Aug 30 2018", speed: 7744},
+      //   {date: "Wed Sep 26 2018", speed: 4044}
+      // ],
+    //   dateSet: "Sat Aug 29 2018",
+    //   dateUpdated: "Sun Aug 30 2018",
+    // },
+  const speedsSeconds = goal.results.map(result => result.speed / 1000)
+  const dates = goal.results.map(result => result.date)
+  const targetSeconds = goal.targetProgress / 1000
+
+  function chartData() {
+    const targetSpeedArray = new Array(goal.results.length).fill(targetSeconds)
     return {
-          labels: ['9/1/2018', '9/3/2018', '9/3/2018', '9/10/2018', '9/11/2018', '9/11/2018', '9/12/2018', '9/13/2018'],
-          datasets: [
-            {data: [5.1, 4.6, 4.1, 4.2, 3.8, 3.7, 3.4, 3.3], label: 'Average seconds per note', fill:false, borderColor: 'magenta'},
-            {data: [3,3,3,3,3,3,3,3], label: 'Target', pointRadius: 0, fill: false, borderColor: 'teal'}
-          ]
-        }
+      labels: dates,
+      datasets: [
+        {data: speedsSeconds, label: 'Average seconds per note', fill: false, borderColor: 'magenta'},
+        {data: targetSpeedArray, label: 'Target', pointRadius: 0, fill: false, borderColor: 'teal'}
+      ]
+    }
   }
 
-
-  chartOptions(datasets) {
-
-    const min = this.minTick(datasets)
+  function chartOptions() {
     return {
-      legend: { labels: { usePointStyle: true }, position: 'bottom'},
+      legend: { display: false},
       scales: {
         yAxes: [{
           ticks: {
-            // stepSize: 0.2,
-            min
+            min: chartMin()
           }
         }]
       }
     }
   }
 
-  minTick(datasets){
-    const dataMin = Math.min(datasets[0].data)
-    const goal = datasets[1].data[0]
-    const min = Math.floor(Math.min(dataMin, goal)) - 0.5
-    console.log(min)
-    return min
+  function chartMin() {
+    const minSpeed = Math.min(...speedsSeconds)
+    console.log('chartMin',Math.floor(Math.min(minSpeed, targetSeconds)) - 0.5)
+    return Math.floor(Math.min(minSpeed, targetSeconds)) - 0.5
   }
 
-  // componentDidMount(){
-    // const rawData = getRawPitchData(this.props.match.params.userId)
-    // const allGoalsResults = goalsResults(this.props.match.params.userId)
-    // this.setState({ rawData, allGoalsResults })
-  // }
-
-
-  render() {
-
-    return (
-      <div>
-        <Line data={this.chartData(this.props.goal)} />
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Line data={chartData(goal)} options={chartOptions()} />
+    </div>
+  )
 }
-
-export default GoalProgress

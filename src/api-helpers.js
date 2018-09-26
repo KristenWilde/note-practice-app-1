@@ -28,9 +28,46 @@ const fakeUser = {
     {
       goalId: 'T234234',
       title: 'Assorted Notes',
-      pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09', 'g4t01', 'a4t02', 'b4t03', 'c5t04'],
+      pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09'],
       targetProgress: 3000,
-      results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}],
+      results: [
+        {
+          userId: 'K234819375',
+          goalId: 'T234234',
+          date: "Sat Aug 29 2018", 
+          speed: 5011, 
+          noteResults: [
+            {pitchId: 'g3b06', speed: 6022, date: "Sat Aug 29 2018"},
+            {pitchId: 'a3b07', speed: 4777, date: "Sat Aug 29 2018"},
+            {pitchId: 'b3b08', speed: 5088, date: "Sat Aug 29 2018"},
+            {pitchId: 'c4b09', speed: 4343, date: "Sat Aug 29 2018"}
+          ]
+        }, 
+        {
+          userId: 'K234819375',
+          goalId: 'T234234',
+          date: "Sun Aug 30 2018", 
+          speed: 7744,
+          noteResults: [
+            {pitchId: 'g3b06', speed: 6133, date: "Sun Aug 30 2018"},
+            {pitchId: 'a3b07', speed: 5177, date: "Sun Aug 30 2018"},
+            {pitchId: 'b3b08', speed: 8088, date: "Sun Aug 30 2018"},
+            {pitchId: 'c4b09', speed: 5343, date: "Sun Aug 30 2018"}
+          ]
+        },
+        {
+          userId: 'K234819375',
+          goalId: 'T234234',
+          date: "Wed Sep 26 2018", 
+          speed: 4044,
+          noteResults: [
+            {pitchId: 'g3b06', speed: 3133, date: "Wed Sep 26 2018"},
+            {pitchId: 'a3b07', speed: 4177, date: "Wed Sep 26 2018"},
+            {pitchId: 'b3b08', speed: 3088, date: "Wed Sep 26 2018"},
+            {pitchId: 'c4b09', speed: 4300, date: "Wed Sep 26 2018"}
+          ]
+        }
+      ],
       dateSet: "Sat Aug 29 2018",
       dateUpdated: "Sun Aug 30 2018",
     },
@@ -39,7 +76,7 @@ const fakeUser = {
       title: 'Goal 2',
       pitchIds: ['g3b06', 'a3b07', 'b3b08', 'c4b09'],
       targetProgress: 3000,
-      results: [{"Sat Aug 29 2018": 8011}, {"Sun Aug 30 2018": 7744}],
+      results: [],
       dateSet: "Sat Aug 29 2018",
       dateUpdated: "Sun Aug 31 2018",
     },
@@ -105,14 +142,13 @@ export function createUser(userData) {
   return newUser
 }
 
-export function saveQuizResults(userId, goalId, results) {
+export function saveQuizResults(userId, goalId, newResult) {
   const user = users.find( user => user.userId === userId )
   console.log( 'user for saving quiz results ', user)
-  const goal = user.goals.find( goal => goal.goalId !== goalId)
-  goal.dateUpdated = new Date()
-  const newResult = {}
-  newResult[results.userDate] = results.averageSpeed
+  const goal = user.goals.find( goal => goal.goalId === goalId)
   goal.results.push(newResult)
+  console.log('goal with new result', goal)
+  console.log('user with new result', user)
   return user
 }
 

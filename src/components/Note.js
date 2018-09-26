@@ -4,12 +4,13 @@ import '../css/staffnotes.css'
 
 function Note({ id, staff, status, selectPitch, noteType, showNextPitch, resetStatus }) {
 
+  const position = parseInt(id.slice(3,5), 10)
 
   function left(position) {
     if (noteType === 'quiz-note') {
-      return 15
+      return 17
     }
-    return Math.abs(position % 2) * 7 + 9
+    return Math.abs(position % 2) * 7 + 13
   }
 
   const handleClick = e => {
@@ -26,7 +27,6 @@ function Note({ id, staff, status, selectPitch, noteType, showNextPitch, resetSt
     }
   }
 
-    const position = parseInt(id.slice(3,5), 10)
 
     const ledgerLineBelow1 = <div className="ledger-line" style={{bottom: '-2em', left: `${left(position) - .6}em`}}></div>
     const ledgerLineBelow2 = <div className="ledger-line" style={{bottom: '-4em', left: `${left(position) - .6}em`}}></div>
