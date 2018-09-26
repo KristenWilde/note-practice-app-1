@@ -1,50 +1,47 @@
 import React from 'react'
-import {Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import '../css/pickgoal.css'
 
-class PickGoal extends React.Component {
-  //props: currentGoalIdx, goals, selectGoal
-  constructor(props) {
-    super(props);
-    this.ulRef = React.createRef();
+export default function PickGoal({ userId, currentGoalIdx, goals, selectGoal }) {
+
+  function toggleListVisibility(list) {
+    list.classList.toggle('hidden')
   }
 
-  toggleListVisibility = () => {
-    this.ulRef.current.classList.toggle('hidden')
+  function currentClass(idx) {
+    if (idx === currentGoalIdx) return 'current'
   }
 
-  render() {
-    return (
-      <form id="goal-list">
-        <ul ref={this.ulRef} className="hidden">
-        {this.props.goals.map( (goal, idx) => {
-          return (
-            <li className={idx == this.props.currentGoalIdx ? 'current' : ''} key={goal.goalId} >
-              <label>
-                <input
-                  type="radio"
-                  name="pick-goal"
-                  onChange={e => this.props.selectGoal(idx)}
-                  onClick={this.toggleListVisibility}
-                  checked={idx == this.props.currentGoalIdx}
-                />{goal.title}
-              </label>
-            </li>
-          )
-        })}
-          <li>
-            <Link to={'/user/' + this.props.userId + '/goal/new'}>
-              Set a new goal
-            </Link>
+  return (
+    <form id="goal-list">
+      <ul className="hidden">
+      {goals.map( (goal, idx) => {
+        return (
+          <li className={currentClass(idx)} key={goal.goalId} >
+            <label>
+              <input
+                type="radio"
+                name="pick-goal"
+                onChange={e => selectGoal(idx)}
+                checked={idx === currentGoalIdx}
+                onClick={e => toggleListVisibility(e.target.parentElement.parentElement.parentElement)}
+              />{goal.title}
+            </label>
           </li>
-        </ul>
-        <div className="showListButton" onClick={this.toggleListVisibility}>
-          <span>⌃</span>
-        </div>
-      </form>
-    )
-  }
+        )
+      })}
+        <li>
+          <Link to={'/user/' + userId + '/goal/new'}>
+            Set a new goal
+          </Link>
+        </li>
+      </ul>
+      <div 
+        className="showListButton"
+        onClick={e => toggleListVisibility(e.currentTarget.previousElementSibling)}
+      >
+        <span>⌃</span>
+      </div>
+    </form>
+  )
 }
-
-
-export default PickGoal
