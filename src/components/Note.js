@@ -2,52 +2,48 @@ import React from 'react'
 // import PropTypes from 'prop-types';
 import '../css/staffnotes.css'
 
-class Note extends React.Component {
-  // Props: id - 'a4t02'
-  //        status -  'selected' or ''
-  //        position - positive or neg integer. 0 is bottom space.
-  //        selectPitch - function.
+function Note({ id, staff, status, selectPitch, noteType, showNextPitch, resetStatus }) {
 
-  left(position) {
-    if (this.props.noteType === 'quiz-note') {
+
+  function left(position) {
+    if (noteType === 'quiz-note') {
       return 15
     }
     return Math.abs(position % 2) * 7 + 9
   }
 
-  handleClick = e => {
-    if (this.props.selectPitch) {
-      this.props.selectPitch(e.target.id, this.props.staff)
+  const handleClick = e => {
+    if (selectPitch) {
+      selectPitch(e.target.id, staff)
     }
   }
 
-  handleAnimationEnd = e => {
+  const handleAnimationEnd = e => {
     if (e.animationName === 'fade-out'){
-      this.props.showNextPitch()
+      showNextPitch()
     } else {
-      this.props.resetStatus()
+      resetStatus()
     }
   }
 
-  render() {
-    const position = parseInt(this.props.id.slice(3,5), 10)
+    const position = parseInt(id.slice(3,5), 10)
 
-    const ledgerLineBelow1 = <div className="ledger-line" style={{bottom: '-2em', left: `${this.left(position) - .6}em`}}></div>
-    const ledgerLineBelow2 = <div className="ledger-line" style={{bottom: '-4em', left: `${this.left(position) - .6}em`}}></div>
-    const ledgerLineAbove1 = <div className="ledger-line" style={{bottom: '10em', left: `${this.left(position) - .6}em`}}></div>
-    const ledgerLineAbove2 = <div className="ledger-line" style={{bottom: '12em', left: `${this.left(position) - .6}em`}}></div>
+    const ledgerLineBelow1 = <div className="ledger-line" style={{bottom: '-2em', left: `${left(position) - .6}em`}}></div>
+    const ledgerLineBelow2 = <div className="ledger-line" style={{bottom: '-4em', left: `${left(position) - .6}em`}}></div>
+    const ledgerLineAbove1 = <div className="ledger-line" style={{bottom: '10em', left: `${left(position) - .6}em`}}></div>
+    const ledgerLineAbove2 = <div className="ledger-line" style={{bottom: '12em', left: `${left(position) - .6}em`}}></div>
 
     return(
       <div>
         <div
-          id={this.props.id}
-          className={`note ${this.props.noteType} ${this.props.status}`}
-          style={{bottom: `${position}em`, left: `${this.left(position)}em` }}
-          onClick={this.handleClick}
-          key={this.props.id}
-          onAnimationEnd={this.handleAnimationEnd}
+          id={id}
+          className={`note ${noteType} ${status}`}
+          style={{bottom: `${position}em`, left: `${left(position)}em` }}
+          onClick={handleClick}
+          key={id}
+          onAnimationEnd={handleAnimationEnd}
         >
-          {this.props.id[0].toUpperCase()}
+          {id[0].toUpperCase()}
         </div>
         {position >= 11 && ledgerLineAbove2}
         {position >= 9 && ledgerLineAbove1}
@@ -55,7 +51,6 @@ class Note extends React.Component {
         {position < -4 && ledgerLineBelow2}
       </div>
     )
-  }
 }
 
 export default Note

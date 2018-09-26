@@ -53,7 +53,7 @@ class GoalIdx extends Component {
     if (this.state.started) {
       return (
         <Quiz
-          pitches={currentGoal.pitchIds}
+          pitchIds={currentGoal.pitchIds}
           title={currentGoal.title}
           targetProgress={currentGoal.targetProgress}
           stopQuiz={this.stopQuiz}

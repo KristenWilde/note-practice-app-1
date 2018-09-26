@@ -13,7 +13,7 @@
   }
   ul {
     position: absolute;
-
+    z-index: 3;
     top: 0;
     left: 0;
     width:90%;
@@ -30,7 +30,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    background-color: #fff;
+    background-color: $teal;
     box-shadow: $smallshadow;
   }
   li {
