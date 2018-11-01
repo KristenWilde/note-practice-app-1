@@ -16,7 +16,6 @@ const initialValues = {
   email: '',
   confirmEmail: '',
   username: '',
-  isEmailAsUsername: false,
 };
 
 function getDateOfBirth(user) {
@@ -57,14 +56,14 @@ export default function RegisterFormContainer() {
   return (
       <Formik
         initialValues={initialValues}
-        onSubmit={((values) => console.log(values))}
+        onSubmit={handleSubmit}
         render={RegisterForm}
         validate={validate(getValidationSchema)}
       />
   );
 }
 function RegisterForm(props) {
-  const { isSubmitting, errors, handleChange, handleSubmit } = props;
+  const { isSubmitting, errors, handleChange, handleSubmit, setFieldValue, values } = props;
 
   return (
     <div>
@@ -112,6 +111,7 @@ function RegisterForm(props) {
     <Field type='checkbox'
       id='emailAsUsername'
       name='isEmailAsUsername'
+      onChange={(evt) => handleEmailAsUsername(evt, setFieldValue, values)}
     />
     <label className='register-form__email-as-user--checkbox' htmlFor='emailAsUsername'>Use email as username?</label>
     <label className='register-form__username--label' htmlFor='username'>Username</label>
@@ -138,6 +138,11 @@ function RegisterForm(props) {
     </form>
     </div>
   );
+}
+
+function handleEmailAsUsername(evt, setFieldValue, values) {
+  evt.target.checked ? setFieldValue('username', values.email) :
+  setFieldValue('username', '');
 }
 
 function handleSubmit(values, {setSubmitting, setErrors}) {
